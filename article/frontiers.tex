@@ -50,79 +50,99 @@ As a primary goal, the abstract should render the general significance and conce
 \end{abstract}
 
 \section{Introduction}
-When muscle activity reaches a certain level of intensity and duration, it affects the subsequent performance of the muscles themselves.
-More precisely, it affects the subsequent muscle load and contraction that can be performed voluntarily (task-dependent muscle activity) or by electrically induced contraction (twitch contraction, intermittent and tetanic) [14][15][1][16][17].
+Muscle activity reaching a certain level of intensity and duration affects the subsequent performance of the muscles themselves,
+specifically the muscle load and contraction that can subsequently be performed voluntarily (task-dependent muscle activity) or by electrically induced contraction (twitch contraction, intermittent and tetanic) [14][15][1][16][17].
 Repeated muscle activity can produce two completely different muscle responses: (1) fatigue and (2) potentiation or post-activation potentiation (PAP). 
-Before proceeding, we first define a \textit{twitch}:
+We pause momentarily to define a \textit{twitch}:
 according to Hodgson et al (2005) [2], ``a twitch is a brief muscle contraction in response to a single presynaptic action potential or a single, synchronised volley of action potentials.''
 At the muscle contraction level, fatigue induces a decrease in amplitude and velocity of twitch contraction, while PAP causes an increase in amplitude and velocity of twitch contraction and thus enhanced contractile response [4][2][3].
-However, fatigue can coexist with PAP [18], and measured muscular performance represents the net balance between processes that cause fatigue and processes that cause potentiation [18].
-PAP has been demonstrated using electrically induced twitch contractions and attributed to phosphorylation of myosin regulatory light chains [21], which makes actin and myosin more sensitive to \ce{Ca^2+} [2];
+Fatigue can coexist with PAP [18], and measured muscular performance represents the net balance between processes that cause fatigue and processes that cause potentiation [18].
+PAP has been demonstrated using electrically induced twitch contractions and attributed to phosphorylation of myosin regulatory light chains [21], which makes actin and myosin more sensitive to \ce{Ca^2+} ions [2];
 the muscle's potentiated state has also been attributed to an increase in $ \alpha $-motoneuron excitability [16].
 The two most prevalent measures of neuromuscular output used to quantify the effect of the above-described muscle activation have been (1) muscle twitch amplitude [20], and (2) H-reflex and M-wave amplitude [3].
 
-% TODO: define twitch potentiation
-The analysis of twitch contraction induced by electrical stimulation following muscle activity is the standard method for determining twitch potentiation (TP).
-TP is a well-established and reproducible phenomenon that manifests as both enhanced twitch amplitude [19][27][28] and decreased time to attaining maximum amplitude [4][20][21].
+Twitch potentiation (TP) is a well-established and reproducible phenomenon that manifests as both enhanced muscle twitch amplitude [19][27][28] and decreased time to attaining maximum amplitude [4][20][21].
 TP increases the force and rate of force development (RFD) in low-frequency tetanic isometric contractions, but increases RFD only in high frequency tetanic contractions.
-Tensiomyography (TMG) is a standard method for experimental assessment of twitch contraction parameters on selective muscles [36][37][38][39][40][41][42].
+The standard method for detecting TP is the analysis of muscular twitch contraction induced by electrical stimulation following muscle activity,
+and tensiomyography (TMG) is a standard method for experimental assessment of twitch contraction parameters on selective muscles [36][37][38][39][40][41][42].
 
-The significance of PAP to functional performance has not been well established [2].
+Currently, the significance of PAP to functional performance has not been well established [2].
 More research is required to clarify the functional significance of PAP and, in particular, the efficiency of training in producing long-term neuromuscular adaptations [2].
 Scientists, sports coaches, and athletes can benefit from understanding potentiation and fatigue individually, and also the simultaneous occurrence of both phenomena. % TODO phrase better
-A current interest in PAP studies related to sport and rehabilitation is finding specific muscle loading protocols that induce significant PAP, while minimizing fatigue and the risk of injury or repeated injury.
-Developing simpler methods but maintaining comparable or improved reliability can be helpful for further understanding and quantifying TP and PAP. % TODO what does this mean?
+A current interest in PAP studies related to sport and rehabilitation is finding specific muscle loading protocols that induce significant PAP while minimizing fatigue and the risk of injury or repeated injury. % TODO references?
+Developing simpler protocols that maintain comparable or improved reliability would be helpful for further understanding and quantifying TP and PAP. % TODO what does this mean?
 The simplicity and specificity of potentiation-based measurement allows more reliable analysis of different types of motor tasks, exercise or rehabilitation strategies.
-In particular, it would be helpful to quantify the level of twitch potentiation not only using discrete twitch contraction parameters (maximal amplitude, contraction time, maximal twitch RFD [29][30][31], M-wave amplitude [3]), but by analyzing and quantifying changes in the continuous time series, such as by applying the statistical parametric mapping (SPM) method [32][33][34][35].
 
-This study aimed to assess TP in sports training diagnostics (mainly for speed and explosive power development) by analyzing TMG signals both (1) as continuous time series using SPM in the time domain and (2) using discrete TP parameters summarizing a muscle's twitch contraction properties.
-Specifically, the study aimed to find if TMG and SPM can identify statistically significant differences between twitch contraction of the rectus femoris muscle in pre- and post-exercise states and, if yes, identify and quantify time-domain changes of twitch potentiation.
+Currently, it is standard to quantify the level of twitch potentiation using discrete twitch contraction parameters (maximal amplitude of muscle contraction, contraction time, maximal twitch RFD [29][30][31], M-wave amplitude [3]) computed retrospectively from measurements of muscle displacement, force production, or electrical activity with respect to time.
+However, a promising new approach to quantifying TP would analyze 
+muscle response as a one-dimensional biomechanical time series directly in the time domain,
+for example using the method of statistical parametric mapping (SPM) [32][33][34][35].
+This study assessed TP in a sports training diagnostics setting (with an emphasis on speed and explosive power development) by analyzing TMG measurements of electrically induced muscle contraction both
+(1) using SPM applied directly to the one-dimensional, measured TMG time series and 
+(2) using discrete (zero-dimensional) TP parameters, computed retrospectively from the measured TMG signal, that summarize the muscle's twitch contraction properties.
+Specifically, the study aimed to find if the combination of TMG measurement and SPM analysis can identify statistically significant differences between twitch contraction of the rectus femoris muscle in pre- and post-exercise states and, if yes, to identify and quantify the associated time-domain changes of twitch potentiation.
 
 \section{Materials and Methods}
 \subsection{Participants}
 The present study analyzed 55 subjects (age $ \SI{28.17 \pm 10.9}{\year} $; height $ \SI{178.15 \pm 10.43}{\centi \meter} $; weight \SI{71.84 \pm 12.82}{\kilogram}, 28 male and 27 female) using an approximation of a simple random sampling strategy.
 % TODO describe the smiple random random sampling strategy?
 To be approved for participation, subjects were required to be injury-free at the beginning of the testing protocol.
-The intention and experimental procedure were described to all subjects, and written informed consent was obtained.
+The intention and experimental procedure was described to all subjects, and written informed consent was obtained.
 The investigation was approved by the Institutional Research Ethics Committee (University of Belgrade, Faculty of Sport and Physical Education), following the recommendations of the Declaration of Helsinki.
 
 \subsection{Study Design}
-The study used tensiomyograhy to measure changes in the twitch-contraction properties of the rectus femoris muscle.
-The tensiomyographic measurements used an opto-inductive sensor with a spring with spring constant \SI{0.17}{\newton \per \milli \meter}, which generates an initial pressure of approximately \SI{1.5e-2}{\newton \per \milli \meter \squared} on a tip area of \SI{11.34}{\milli \meter \squared}.
-Two self-adhesive electrodes (UltraStim\textregistered{} Wire, Axelgaard, USA) were positioned approximately along the anatomical axis of the femur, proximal on the beginning of RF and distal \SI{10}{\centi \meter} apart [11], symmetrically \SI{2}{\centi \meter} from the sensor on the rectus femoris muscle.
-The positive electrode (anode) was placed proximally, and the negative electrode (cathode) distally, as shown in Figure \TODO{reference}.
+The study used tensiomyograhy (TMG) to measure pre- and post-exercise changes in the twitch-contraction properties of the rectus femoris (RF) muscle.
+The tensiomyographic measurement used an opto-inductive sensor with a spring of spring constant \SI{0.17}{\newton \per \milli \meter}, which generated an initial pressure of approximately \SI{1.5e-2}{\newton \per \milli \meter \squared} on a tip area of \SI{11.34}{\milli \meter \squared}.
+Two self-adhesive electrodes (UltraStim\textregistered{} Wire, Axelgaard, USA) were positioned approximately along the anatomical axis of the femur, proximal on the beginning of RF and distal \SI{10}{\centi \meter} apart [11], symmetrically \SI{2}{\centi \meter} from the sensor on the RF muscle.
+The positive electrode (anode) was placed proximally, and the negative electrode (cathode) distally, as shown in Figure 1.
 % TODO: image of sensor position
-The electrodes remained fixed on the skin during the complete measurement and exercise procedure.
+The electrodes remained fixed on the skin for the duration of the measurement and exercise procedure.
 The sensor tip's position on the rectus femoris muscle was marked for reference at the beginning of the measurement protocol, and the same tip position was used for all measurements.
-A single-twitch electrical stimulus (a DC pulse of \SI{1}{\milli \second} duration) induced an isometric muscle contraction.
-Measured muscle responses were recorded and analyzed using a standardized algorithm for the TMG S1 system (TMG-BMC, Ljubljana, Slovenia).
-Three parameters were used to evaluate TMG signal:
-Td (delay time), Tc (contraction time), and Dm (displacement of muscle belly during contraction).
-A typical TMG signal, with all parameters defined, is shown in Figure \TODO{reference}.
+A single-twitch electrical stimulus (a DC pulse of \SI{1}{\milli \second} duration) induced an isometric muscle contraction,
+and the muscle response was recorded and analyzed using a standardized algorithm for the TMG S1 system (TMG-BMC, Ljubljana, Slovenia).
+Three parameters were used to evaluate the TMG signal:
+Td (delay time), Tc (contraction time), and Dm (maximum displacement of muscle belly during contraction).
+A typical TMG signal, with all parameters defined, is shown in Figure 2.
+% TODO: figure
 
-The standard TMG protocol of increasing stimulation intensity was used in the measurements of rectus femoris muscle [36][37][38].
-After each twitch electrical stimulus, the electrical current was increased until the supramaximal muscle response was reached;
+The electrical stimulation intensity applied to the rectus femoris muscle was increased using the standard TMG protocol [36][37][38].
+After each twitch electrical stimulus, the electrical current was increased until the muscle reached supramaximal response;
 the current level for supramaximal muscle response was then used for electrical stimulation in all subsequent measurements.
-% Once we have determined the current intensity in the first measurement in the supra-maximal response level, we used the same current intensity in all subsequent measurements before and after 4 “incline squat” (ISQ) sets.
+
 The study used the following protocol of exercises and measurements:
 % TODO: describe protocol
-We used the following potentiation protocol of exercises and measurements, repeated four times in a precise time sequence: pre-exercise measurement (PRE), after 15s, ISQ, after 12s, post-exercise measurement (POE), after 150s rest 2nd set and PRE, after 15s, ISQ, after 12s, post-exercise measurement (POE).
-The complete procedure and timing of the exercise measurement protocol are depicted in Figure \TODO{reference}.
-The volunteers performed ISQ on a platform with a slope angle of 30°, holding additional load (between 2 x 0 to 2 x 20kg in each hand (Figure \TODO{reference}a, \TODO{reference}b).
-The load was chosen based on the 10- repetitions maximum test performed a day before.
-The dynamic of the squat movement was 1s down, 1s up (a metronome kept the rhythm), and knee angles were between 0° and 90°.
-The angle of the torso femur is constant throughout the movement at 0°.
+We used the following potentiation protocol of exercises and measurements, repeated four times in a precise time sequence:
+\begin{itemize}
+
+    \item pre-exercise measurement (PRE), followed within \SI{15}{\second} by
+
+    \item incline squat, followed within \SI{12}{\second} by
+
+    \item post-exercise measurement (POE), followed by
+
+    \item a rest period of \SI{150}{\second}.
+
+\end{itemize}
+The above described procedure was repeated four times.
+The complete procedure and timing of the exercise measurement protocol are depicted in Figure 3.
+% TODO reference figure 3
+
+The volunteers performed ISQ on a platform with a slope angle of $ \ang{30} $, holding an additional load of between $ \SI[parse-numbers = false]{2 \times 0}{\kilogram} $ and $ \SI[parse-numbers = false]{2 \times 20}{\kilogram} $ in each hand (Figure 4a, 4b);
+% TODO figure 4a and 4b
+the load was chosen based on a ten-repetition maximum test performed the day before.
+The time of the squat movement was \SI{1}{\second} down and \SI{1}{\second} up (a metronome kept time).
+The knee angle ranged between $ \ang{0} $ and $ \ang{90} $, while the torso-femur angle remained constant at $ \ang{0} $ throughout the movement.
 Each subject performed four sets of ISQ, with eight repetitions in each set and a \SI{150}{\second} rest between sets.
 
-The effect of the incline squat on the rectus femoris muscle was measured using TMG within \SI{12}{\second} after the last repetition in each set.
+The effect of the incline squat on the rectus femoris muscle was measured with TMG within \SI{12}{\second} of the final repetition in each set.
 A pre-exercise measurement preceded the second, third and fourth sets.
-Subjects began the next set of ISQ with \SI{15}{\second} after the pre-exercise measurement.
+Subjects began each set of ISQ with \SI{15}{\second} after the pre-exercise measurement.
 
-An inverse dynamics analysis of a three-segment planar human body model, assuming a quasi-static condition (see Appendix 1) [10][7][8], was used to estimate the load on the quadriceps muscles (especially RF, which is loaded in this exercise at the full amplitude of knee movement) during ISQ.
+An inverse dynamics analysis of a three-segment planar human body model, assuming a quasi-static condition (see Appendix 1) [10][7][8], was used to estimate the load on the quadriceps muscles (especially the RF, which is loaded at the full amplitude of knee movement) during the ISQ.
 The model's body segment properties were estimated using anthropometric data and the subject’s body height and body mass as input parameters [9].
 % TODO: clarify with the anthropometric data is. Is this the distance from knee to foot?
 The subjects' motion in the sagittal plane was recorded on video, and one exercise repetition was selected for estimating the inter-segmental angles (Figure 4).
-The peak value of the knee joint net moment was estimated at the lowest body position during the ISQ,
+The peak value of the net knee joint moment was estimated at the lowest body position in the ISQ,
 and normalized to the volunteer’s body mass to reduce the effect of inter-subject variance [5][6].
 The normalized peak values of the knee joint moment were used to compare the loading of the knee extensor muscles during the ISQ between the volunteers.
 
@@ -132,20 +152,20 @@ Statistical parametric mapping analysis of TMG signals was performed in the Pyth
 % TODO reference Python  
 using the SPM1d library [34][35] (\url{https://www.spm1d.org}).
 
-Statistical parametric mapping applies random field theory to make inferences about the topological features of statistical processes that are continuous functions of space or time. 
+% Statistical parametric mapping applies random field theory to make inferences about the topological features of statistical processes that are continuous functions of space or time. 
 % TODO describe coherently what SPM does
 
 Descriptive statistics were calculated on each twitch potentiation and SPM parameter, and the Shapiro–Wilk test was used to verify the normality of the data.
 Data are presented as means $ \pm $ standard deviations (SD).
-The differences between pre-exercise and post-exercise conditions were determined using Student’s dependent t-test.
+The differences between pre-exercise and post-exercise conditions were determined using Student’s dependent t-test for paired samples.
 All statistical tests were performed at the significance level $ \alpha = 0.05 $.
 % A few times we have had "significance set to p < 0.5.
 % What does that mean?
 
 % TODO make this entire description of SPM coherent
-One dimensional paired SPM t-tests were performed to determine the main effects of ISQ on the signal and twitch-contraction properties of the RF muscle.
+One dimensional paired SPM t-tests were used to determine the main effects of ISQ on the signal and twitch-contraction properties of the RF muscle.
 The $ p $-value was calculated for clusters crossing the critical threshold ($ t^{*} $), with the significance level set to $ \alpha = 0.05 $ (Pataky, 2013 [13]).
-The significance level $ \alpha = 0.05 $ was set for all analyses, and specific p-values were reported for each supra-threshold region of the curve analyzed.
+The significance level $ \alpha = 0.05 $ was set for all analyses, and specific p-values were reported for each supra-threshold region of the SPM t-continuum.
 The first \SI{100}{\milli \second} of the RF twitch contraction signal was used as the region of interest for all SPM analyses.
 One-dimensional SPM analysis returns regions of significance in the form of clusters (Pataky).
 These are contiguous values over which the curve is determined to be not consistent with random sampling.
