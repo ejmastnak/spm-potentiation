@@ -3,10 +3,13 @@
 \usepackage{url, hyperref, lineno, microtype, subcaption}
 \usepackage[onehalfspacing]{setspace}
 
-\usepackage{graphicx}
+\usepackage{graphicx, multirow}
 \usepackage{siunitx, mhchem}
 \usepackage{textcomp} % registered trademark and copyright symbols
-\sisetup{separate-uncertainty=true, exponent-product=\cdot, range-units=single}
+\sisetup{separate-uncertainty=true, 
+    exponent-product=\cdot,
+    per-mode=symbol,
+    range-units=single}
 \DeclareSIUnit{\year}{yr}
 \graphicspath{{"figures/"}}
 
@@ -203,6 +206,26 @@ The details of twitch contraction parameters before and after ISQ appear in Tabl
 % TODO: table 1
 % TODO: table 2
 
+\begin{table}[htb!]
+    \centering
+    \caption{TMG parameters; pre-exercise and post-exercise parameter values are compared for each set.}
+    \vspace{1ex}
+
+    \renewcommand{\arraystretch}{1.2}
+    \input{tables/tmg_tabular.tex}
+    \label{tab:tmg_params}
+\end{table}
+
+\begin{table}[htb!]
+    \centering
+    \caption{TMG parameters; the post-exercise parameter values from each set are compared to the pre-exercise values from the first set.}
+    \vspace{1ex}
+
+    \renewcommand{\arraystretch}{1.2}
+    \input{tables/tmg_tabular_staggered.tex}
+    \label{tab:tmg_params_staggered}
+\end{table}
+
 SPM analysis (SPM t-test) showed a statistically significant difference in TMG measured muscle twitch before and after ISQ in all four sets (a p-value $ p < 0.0001 $ at a significance level $ \alpha = 0.05 $).
 The first \SI{100}{\milli \second} of the TMG signal was used as the region of interest for all SPM analyses, because this is the region in which both the maximal amplitude of twitch contraction and the phase of twitch amplitude decrease occur (Figure 5).
 % TODO reference Figure 5
@@ -228,8 +251,17 @@ $ \mathrm{SPMAAT} = 194.3 $ in set 1,
 $ \mathrm{SPMAAT} = 258.5 $ in set 2,
 $ \mathrm{SPMAAT} = 197.4 $ in set 3, and
 $ \mathrm{SPMAAT} = 208.8 $ in set 4.
-The details of parameters associated with SPM analysis of TMG signals appear in Table 3.
-% TODO: table 3
+The details of parameters associated with SPM analysis of TMG signals appear in Table~\ref{tab:spm_params}.
+
+\begin{table}[htb!]
+    \centering
+    \caption{SPM Parameters}
+    \vspace{1ex}
+
+    \renewcommand{\arraystretch}{1.1}
+    \input{tables/spm_tabular.tex}
+    \label{tab:spm_params}
+\end{table}
 
 \section{Discussion}
 
