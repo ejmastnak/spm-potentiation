@@ -3,6 +3,7 @@
 meta/
 template/
 collab/
+doc/
 __pycache__/
 
 # LaTeX compilation files
