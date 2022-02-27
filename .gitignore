@@ -7,6 +7,9 @@ doc/
 src/misc/
 __pycache__/
 
+# Python code to generate the tables is already under VC
+article/tables/
+
 # LaTeX compilation files
 # --------------------------------------------- #
 *.aux
