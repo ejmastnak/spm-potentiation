@@ -149,13 +149,13 @@ def make_tmg_param_table(output_file, staggered=False):
 
         # Dm
         writer.write('% Dm\n    ')
-        writer.write('\\multirow{3}{*}{\\textbf{Dm}} & Mean PR $ [\\si{\\milli \\meter}] $')
+        writer.write('\\multirow{3}{*}{\\parbox{2cm}{\\centering \\textbf{\\Dm}\\\\ {\\footnotesize Max.\\\\[-0.8ex] displacement}}} & Mean PR $ [\\si{\\milli \\meter}] $')
         writer.write(dm_pre_str + "\\\\")
         writer.write('\n    ')
         writer.write(' & Mean PO $ [\\si{\\milli \\meter}] $')
         writer.write(dm_post_str + "\\\\")
         writer.write('\n    ')
-        writer.write(' & Percent difference')
+        writer.write(' & Percent change')
         writer.write(dm_diff_str + "\\\\")
         writer.write('\n    ')
         writer.write('\\hline {\\rule{0pt}{2.0ex}} \\hspace{-7pt}')
@@ -164,13 +164,13 @@ def make_tmg_param_table(output_file, staggered=False):
 
         # Td
         writer.write('% Td\n    ')
-        writer.write('\\multirow{3}{*}{\\textbf{Td}} & Mean PR $ [\\si{\\milli \\second}] $')
+        writer.write('\\multirow{3}{*}{\\parbox{2cm}{\\centering \\textbf{\\Td}\\\\ {\\footnotesize Delay time}}} & Mean PR $ [\\si{\\milli \\second}] $')
         writer.write(td_pre_str + "\\\\")
         writer.write('\n    ')
         writer.write(' & Mean PO $ [\\si{\\milli \\second}] $')
         writer.write(td_post_str + "\\\\")
         writer.write('\n    ')
-        writer.write(' & Percent difference')
+        writer.write(' & Percent change')
         writer.write(td_diff_str + "\\\\")
         writer.write('\n    ')
         writer.write('\\hline {\\rule{0pt}{2.0ex}} \\hspace{-7pt}')
@@ -179,13 +179,13 @@ def make_tmg_param_table(output_file, staggered=False):
 
         # Tc
         writer.write('% Tc\n    ')
-        writer.write('\\multirow{3}{*}{\\textbf{Tc}} & Mean PR $ [\\si{\\milli \\second}] $')
+        writer.write('\\multirow{3}{*}{\\parbox{2cm}{\\centering \\textbf{\\Td}\\\\ {\\footnotesize Contraction time}}} & Mean PR $ [\\si{\\milli \\second}] $')
         writer.write(tc_pre_str + "\\\\")
         writer.write('\n    ')
         writer.write(' & Mean PO $ [\\si{\\milli \\second}] $')
         writer.write(tc_post_str + "\\\\")
         writer.write('\n    ')
-        writer.write(' & Percent difference')
+        writer.write(' & Percent change')
         writer.write(tc_diff_str + "\\\\")
         writer.write('\n    ')
         writer.write('\\hline {\\rule{0pt}{2.0ex}} \\hspace{-7pt}')
@@ -194,13 +194,13 @@ def make_tmg_param_table(output_file, staggered=False):
 
         # RDD max
         writer.write('% RDD max\n    ')
-        writer.write('\\multirow{3}{*}{\\textbf{$ \\text{RDD}_{\\text{max}} $}} & Mean PR $ [\\si{\\milli \\meter \\per \\milli \\second}] $')
+        writer.write('\\multirow{3}{*}{\\parbox{2cm}{\\centering \\textbf{\\RDDMax}\\\\ {\\footnotesize Max. derivative}}} & Mean PR $ [\\si{\\milli \\meter \\per \\milli \\second}] $')
         writer.write(rddmax_pre_str + "\\\\")
         writer.write('\n    ')
         writer.write(' & Mean PO $ [\\si{\\milli \\meter \\per \\milli \\second}] $')
         writer.write(rddmax_post_str + "\\\\")
         writer.write('\n    ')
-        writer.write(' & Percent difference')
+        writer.write(' & Percent change')
         writer.write(rddmax_diff_str + "\\\\")
         writer.write('\n    ')
         writer.write('\\hline {\\rule{0pt}{2.0ex}} \\hspace{-7pt}')
@@ -209,13 +209,13 @@ def make_tmg_param_table(output_file, staggered=False):
 
         # RDD max time
         writer.write('% RDD max time\n    ')
-        writer.write('\\multirow{3}{*}{\\textbf{$ \\text{TRDD}_{\\text{max}} $}} & Mean PR $ [\\si{\\milli \\second}] $')
+        writer.write('\\multirow{3}{*}{\\parbox{2cm}{\\centering \\textbf{\\RDDMaxTime}\\\\ {\\footnotesize Time of max.\\\\[-0.8ex] derivative}}} & Mean PR $ [\\si{\\milli \\second}] $')
         writer.write(rddmax_time_pre_str + "\\\\")
         writer.write('\n    ')
         writer.write(' & Mean PO $ [\\si{\\milli \\second}] $')
         writer.write(rddmax_time_post_str + "\\\\")
         writer.write('\n    ')
-        writer.write(' & Percent difference')
+        writer.write(' & Percent change')
         writer.write(rddmax_time_diff_str + "\\\\")
         writer.write('\n    ')
 
@@ -240,6 +240,7 @@ def make_spm_param_table(output_file):
 
     Columns: Set number (1, 2, 3, and 4)
     Rows: The following SPM param values:
+          - Threshold
           - Significance start time [ms]
           - Significance end time [ms]
           - Centroid time [ms]
@@ -253,6 +254,7 @@ def make_spm_param_table(output_file):
         SPM Parameters & Set 1 & Set 2 & Set 3 & Set 4\\
         \hline
         \hline {\rule{0pt}{2.0ex}} \hspace{-7pt}
+        Threshold & & & & \\
         Start time $ [\si{\milli \second}] $ & & & & \\
         End time $ [\si{\milli \second}] $ & & & & \\
         Centroid time $ [\si{\milli \second}] $ & & & & \\
@@ -281,6 +283,7 @@ def make_spm_param_table(output_file):
 
     # 1D arrays holding each SPM parameter for all sets.
     # Index number assumes the order in constants.SPM_PARAM_NAMES.
+    thresholds     = spm_params[1, :]
     start_times    = spm_params[3, :]
     end_times      = spm_params[4, :]
     centroid_times = spm_params[5, :]
@@ -288,6 +291,11 @@ def make_spm_param_table(output_file):
     spm_maxima     = spm_params[7, :]
     cluster_areas  = spm_params[8, :]
     
+    # Threshold
+    threshold_str = ""
+    for s in range(0, num_sets):
+        threshold_str += " & {:.2f}".format(thresholds[s])
+
     # Start time
     start_time_str = ""
     for s in range(0, num_sets):
@@ -323,27 +331,38 @@ def make_spm_param_table(output_file):
         writer.write('\n    ')
         writer.write('\\hline {\\rule{0pt}{2.0ex}} \\hspace{-7pt}')
         writer.write('\n    ')
+
         writer.write('SPM Parameters & Set 1 & Set 2 & Set 3 & Set 4\\\\')
         writer.write('\n    ')
         writer.write('\\hline')
         writer.write('\n    ')
         writer.write('\\hline {\\rule{0pt}{2.0ex}} \\hspace{-7pt}')
         writer.write('\n    ')
+
+        writer.write('SPM threshold $ t^{*} $')
+        writer.write(threshold_str + '\\\\')
+        writer.write('\n    ')
+
         writer.write('Start time $ [\\si{\\milli \\second}] $')
         writer.write(start_time_str + '\\\\')
         writer.write('\n    ')
+
         writer.write('End time $ [\\si{\\milli \\second}] $')
         writer.write(end_time_str + '\\\\')
         writer.write('\n    ')
+
         writer.write('Centroid time $ [\\si{\\milli \\second}] $')
         writer.write(centroid_time_str + '\\\\')
         writer.write('\n    ')
+
         writer.write('Centroid $ t $-value')
         writer.write(centroid_t_str + '\\\\')
         writer.write('\n    ')
+
         writer.write('SPM maximum')
         writer.write(spm_max_str + '\\\\')
         writer.write('\n    ')
+
         writer.write('Area above threshold')
         writer.write(cluster_area_str + '\\\\')
         writer.write('\n    ')
@@ -357,5 +376,5 @@ if __name__ == "__main__":
     # output_dir = "/home/ej/"
     # make_spm_param_table(output_dir + "spm_tabular.tex")
 
-    # make_tmg_param_table(output_dir + "tmg_tabular.tex")
+    make_tmg_param_table(output_dir + "tmg_tabular.tex")
     make_tmg_param_table(output_dir + "tmg_tabular_staggered.tex", staggered=True)
