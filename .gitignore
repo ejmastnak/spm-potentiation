@@ -4,6 +4,7 @@ meta/
 template/
 collab/
 doc/
+src/misc/
 __pycache__/
 
 # LaTeX compilation files
