@@ -1,11 +1,14 @@
 %%% Version 4.4 Generated 2018/06/15 %%%
 \documentclass[utf8]{style/FrontiersinHarvard}
-\usepackage{url, hyperref, lineno, microtype, subcaption}
+\usepackage{url, hyperref, lineno, microtype}
 \usepackage[onehalfspacing]{setspace}
 
-\usepackage{graphicx, multirow}
+\usepackage{multirow}
+\usepackage{xspace}
 \usepackage{siunitx, mhchem}
 \usepackage{textcomp} % registered trademark and copyright symbols
+\usepackage{graphicx, subcaption}
+
 \sisetup{separate-uncertainty=true, 
     exponent-product=\cdot,
     per-mode=symbol,
@@ -29,6 +32,25 @@ $^{2}$Laboratory X, Institute X, Department X, Organization X, City X , State XX
 % Define custom macros
 % --------------------------------------------- %
 \newcommand{\TODO}[1]{{\textbf{TODO:} {\color{red} #1}}}
+
+% TMG parameters
+% --------------------------------------------- %
+\newcommand{\Dm}{\ensuremath{\text{Dm}}\xspace}
+\newcommand{\Td}{\ensuremath{\text{Td}}\xspace}
+\newcommand{\Tc}{\ensuremath{\text{Tc}}\xspace}
+\newcommand{\RDDMax}{\ensuremath{ \text{RDD}_{\text{max}}}\xspace}
+\newcommand{\RDDMaxTime}{\ensuremath{ \text{TRDD}_{\text{max}}}\xspace}
+% --------------------------------------------- %
+
+% SPM parameters
+% --------------------------------------------- %
+\newcommand{\SPMStart}{\ensuremath{\text{Dm}}\xspace}
+\newcommand{\SPMEnd}{\ensuremath{\text{Td}}\xspace}
+\newcommand{\SPMCentroidTime}{\ensuremath{\text{Tc}}\xspace}
+\newcommand{\SPMCentroidT}{\ensuremath{\text{Dm}}\xspace}
+\newcommand{\SPMMax}{\ensuremath{\text{Dm}}\xspace}
+\newcommand{\SPMArea}{\ensuremath{\text{Dm}}\xspace}
+% --------------------------------------------- %
 
 \begin{document}
 \onecolumn
@@ -83,7 +105,7 @@ for example using the method of statistical parametric mapping (SPM) [32][33][34
 This study assessed TP in a sports training diagnostics setting (with an emphasis on speed and explosive power development) by analyzing TMG measurements of electrically induced muscle contraction both
 (1) using SPM applied directly to the one-dimensional, measured TMG time series and 
 (2) using discrete (zero-dimensional) TP parameters, computed retrospectively from the measured TMG signal, that summarize the muscle's twitch contraction properties.
-Specifically, the study aimed to find if the combination of TMG measurement and SPM analysis can identify statistically significant differences between twitch contraction of the rectus femoris muscle in pre- and post-exercise states and, if yes, to identify and quantify the associated time-domain changes of twitch potentiation.
+Specifically, the study aimed to find if the combination of TMG measurement and SPM analysis can identify statistically significant differences between twitch contraction of the rectus femoris muscle in pre- and post-ISQ states and, if yes, to identify and quantify the associated time-domain changes of twitch potentiation.
 
 \section{Materials and Methods}
 \subsection{Participants}
@@ -94,7 +116,7 @@ The intention and experimental procedure was described to all subjects, and writ
 The investigation was approved by the Institutional Research Ethics Committee (University of Belgrade, Faculty of Sport and Physical Education), following the recommendations of the Declaration of Helsinki.
 
 \subsection{Study Design}
-The study used tensiomyograhy (TMG) to measure pre- and post-exercise changes in the twitch-contraction properties of the rectus femoris (RF) muscle.
+The study used tensiomyograhy (TMG) to measure pre- and post-ISQ changes in the twitch-contraction properties of the rectus femoris (RF) muscle.
 The tensiomyographic measurement used an opto-inductive sensor with a spring of spring constant \SI{0.17}{\newton \per \milli \meter}, which generated an initial pressure of approximately \SI{1.5e-2}{\newton \per \milli \meter \squared} on a tip area of \SI{11.34}{\milli \meter \squared}.
 Two self-adhesive electrodes (UltraStim\textregistered{} Wire, Axelgaard, USA) were positioned approximately along the anatomical axis of the femur, proximal on the beginning of RF and distal \SI{10}{\centi \meter} apart [11], symmetrically \SI{2}{\centi \meter} from the sensor on the RF muscle.
 The positive electrode (anode) was placed proximally, and the negative electrode (cathode) distally, as shown in Figure 1.
@@ -117,11 +139,11 @@ The study used the following protocol of exercises and measurements:
 We used the following potentiation protocol of exercises and measurements, repeated four times in a precise time sequence:
 \begin{itemize}
 
-    \item pre-exercise measurement (PRE), followed within \SI{15}{\second} by
+    \item pre-ISQ measurement (PRE), followed within \SI{15}{\second} by
 
     \item incline squat, followed within \SI{12}{\second} by
 
-    \item post-exercise measurement (POE), followed by
+    \item post-ISQ measurement (POE), followed by
 
     \item a rest period of \SI{150}{\second}.
 
@@ -138,8 +160,8 @@ The knee angle ranged between $ \ang{0} $ and $ \ang{90} $, while the torso-femu
 Each subject performed four sets of ISQ, with eight repetitions in each set and a \SI{150}{\second} rest between sets.
 
 The effect of the incline squat on the rectus femoris muscle was measured with TMG within \SI{12}{\second} of the final repetition in each set.
-A pre-exercise measurement preceded the second, third and fourth sets.
-Subjects began each set of ISQ with \SI{15}{\second} after the pre-exercise measurement.
+A pre-ISQ measurement preceded the second, third and fourth sets.
+Subjects began each set of ISQ with \SI{15}{\second} after the pre-ISQ measurement.
 
 An inverse dynamics analysis of a three-segment planar human body model, assuming a quasi-static condition (see Appendix 1) [10][7][8], was used to estimate the load on the quadriceps muscles (especially the RF, which is loaded at the full amplitude of knee movement) during the ISQ.
 The model's body segment properties were estimated using anthropometric data and the subject’s body height and body mass as input parameters [9].
@@ -160,13 +182,13 @@ using the SPM1d library [34][35] (\url{https://www.spm1d.org}).
 
 Descriptive statistics were calculated on each twitch potentiation and SPM parameter, and the Shapiro–Wilk test was used to verify the normality of the data.
 Data are presented as means $ \pm $ standard deviations (SD).
-The differences between pre-exercise and post-exercise conditions were determined using Student’s dependent t-test for paired samples.
+The differences between pre-ISQ and post-ISQ conditions were determined using Student’s dependent $ t $-test for paired samples.
 All statistical tests were performed at the significance level $ \alpha = 0.05 $.
 % A few times we have had "significance set to p < 0.5.
 % What does that mean?
 
 % TODO make this entire description of SPM coherent
-One dimensional paired SPM t-tests were used to determine the main effects of ISQ on the signal and twitch-contraction properties of the RF muscle.
+One dimensional paired SPM $ t $-tests were used to determine the main effects of ISQ on the signal and twitch-contraction properties of the RF muscle.
 The $ p $-value was calculated for clusters crossing the critical threshold ($ t^{*} $), with the significance level set to $ \alpha = 0.05 $ (Pataky, 2013 [13]).
 The significance level $ \alpha = 0.05 $ was set for all analyses, and specific p-values were reported for each supra-threshold region of the SPM t-continuum.
 The first \SI{100}{\milli \second} of the RF twitch contraction signal was used as the region of interest for all SPM analyses.
@@ -175,7 +197,7 @@ These are contiguous values over which the curve is determined to be not consist
 The following variables of the SPM statistics were collected or computed:
 \begin{itemize}
 
-    \item diff-set is the difference between pre- and post-exercise (ISQ) twitch contraction measured on rectus femoris muscle;
+    \item diff-set is the difference between pre- and post-ISQ (ISQ) twitch contraction measured on rectus femoris muscle;
 
     \item Centroid time is the time of the centroid of area Above threshold (see Figure 5a-d);
 
@@ -183,32 +205,41 @@ The following variables of the SPM statistics were collected or computed:
 
     \item Maximum is the t maximum value;
 
-    \item Area Above Threshold is the area (integral) of statistically significant difference between the mean of pre- and post-exercise twitch contraction applying SPM t-statistical analysis and corresponds to the level of potentiation;
+    \item Area Above Threshold is the area (integral) of statistically significant difference between the mean of pre- and post-ISQ twitch contraction applying SPM t-statistical analysis and corresponds to the level of potentiation;
 
-    \item Start Time is beginning of the statistically significant difference between pre- and post-exercise mean of rectus femoris twitch contraction;
+    \item Start Time is beginning of the statistically significant difference between pre- and post-ISQ mean of rectus femoris twitch contraction;
 
-    \item End Time is the end of the statistically significant difference between pre and post-exercise mean of rectus femoris twitch contraction.
+    \item End Time is the end of the statistically significant difference between pre and post-ISQ mean of rectus femoris twitch contraction.
 
 \end{itemize}
 
 \section{Results}
-In all four exercise sets, the difference in pre-exercise and post-exercise twitch contraction parameters (Td, Tc, Dm, RDDMax, and RDDMaxTime), tested with Student's t-test, was statistically significant with a $ p $ value $ p < 0.0001 $ at a significance level $ \alpha = 0.05 $.
-As an estimate of muscle load, the mean calculated value of peak knee torque in the ISQ was \SI{126.5 \pm 17.6}{\newton \meter}.
-Two schemes were used to compare pre- and post-exercise discrete parameters:
+In all four measurement sets, the difference in the volunteers' pre-ISQ and post-ISQ twitch contraction parameters 
+(\Td, \Tc, \Dm, \RDDMax, and \RDDMaxTime)
+was statistically significant, with a $ p $ value $ p < 0.0001 $ when tested with a dependent Student's $ t $-test for paired samples at a significance level $ \alpha = 0.05 $.
+The study used two related schemes to compare pre- and post-ISQ twitch contraction parameters:
 \begin{enumerate}
 
-    \item comparing the pre- and post-exercise twitch parameters in each set, and
+    \item In the first method, pre- and post-ISQ twitch contraction parameters are compared set by set;
+    the parameter values appear in Table~\ref{tab:tmg_params}.
 
-    \item comparing the post-exercise twitch parameters in each set to the pre-exercise parameters in the first set.
+    \item In the second method, post-ISQ twitch parameters in each set are compared to the pre-ISQ parameters in the \textit{first} set;
+    the parameter values appear in Table~\ref{tab:tmg_params_staggered}.
+    % TODO: reasoning why this method is used.
 
 \end{enumerate}
-The details of twitch contraction parameters before and after ISQ appear in Tables 1 and 2.
-% TODO: table 1
-% TODO: table 2
 
 \begin{table}[htb!]
     \centering
-    \caption{TMG parameters; pre-exercise and post-exercise parameter values are compared for each set.}
+    \caption{Set-by-set comparison of pre- and post-ISQ twitch contraction parameter values averaged across all subjects---note the consistent, potentiation-like increase in muscle amplitude and decrease in contraction time following ISQ.
+    The difference between pre- and post-ISQ values for all parameters was statistically with a $ p $ value $ p < 0.0001 $ when tested with a Student's $ t $-test for paired samples at a significance level $ \alpha = 0.05 $.
+    Parameters were introduced in Materials and Methods; for review:
+    \Dm is maximum displacement of TMG sensor from muscle belly;
+    \Td is time from start of TMG signal to 10\% of its maximum value \Dm;
+    \Tc is time from 10\% of \Dm to 90\% of \Dm;
+    \RDDMax is maximum value of the TMG signal's time derivative,
+    \RDDMaxTime is time at which \RDDMax occurs.
+    }
     \vspace{1ex}
 
     \renewcommand{\arraystretch}{1.2}
@@ -218,7 +249,11 @@ The details of twitch contraction parameters before and after ISQ appear in Tabl
 
 \begin{table}[htb!]
     \centering
-    \caption{TMG parameters; the post-exercise parameter values from each set are compared to the pre-exercise values from the first set.}
+    \caption{Post-ISQ twitch contraction parameter values from sets 1, 2, 3, and 4 compared to the pre-ISQ values from set 1,
+    so mean pre-ISQ values are shown only for set 1.
+    All parameters have the same meanings as in Table~\ref{tab:tmg_params}.
+    As in Table~\ref{tab:tmg_params}, note the consistent, potentiation-like increase in muscle amplitude and decrease in contraction time.
+    }
     \vspace{1ex}
 
     \renewcommand{\arraystretch}{1.2}
@@ -226,42 +261,40 @@ The details of twitch contraction parameters before and after ISQ appear in Tabl
     \label{tab:tmg_params_staggered}
 \end{table}
 
-SPM analysis (SPM t-test) showed a statistically significant difference in TMG measured muscle twitch before and after ISQ in all four sets (a p-value $ p < 0.0001 $ at a significance level $ \alpha = 0.05 $).
-The first \SI{100}{\milli \second} of the TMG signal was used as the region of interest for all SPM analyses, because this is the region in which both the maximal amplitude of twitch contraction and the phase of twitch amplitude decrease occur (Figure 5).
-% TODO reference Figure 5
+SPM anaysis of TMG measurements using a two-sample SPM $ t $-test showed a statistically significant difference in pre-ISQ and post-ISQ muscle twitch in all four sets, in each case with a p-value $ p < 0.0001 $ at a significance level $ \alpha = 0.05 $.
+The first \SI{100}{\milli \second} of the TMG signal were used as the region of interest for all SPM analyses, because this is the region in which both the maximal amplitude of twitch contraction and the phase of twitch amplitude decrease occur.
+The results of each set's SPM $ t $-tests are plotted in Figure~\ref{fig:spm_plot}, while discrete parameters summarizing each set's SPM test appear in Table~\ref{tab:spm_params}.
+% The value of the SPM $ t $-statistic significance threshold $ t^{*} $ remained approximately constant across all four measurement sets, ranging between $ t^{*} = 2.76 $ and $ t^{*} = 2.79 $.
 
-The threshold $ t^{*} $ values for the significance of the changes in all four measurement sets were approximately constant, ranging between $ t^{*} = 2.76 $ and $ t^{*} = 2.79 $.
-The mean onset of a statistically significant pre- and post-exercise difference in muscle twitch, represented by the SPM parameter SPMStartTime (St), occurred at 
-$ \mathrm{St} = \SI{12.45}{\milli \second} $ in set 1,
-$ \mathrm{St} = \SI{12.71}{\milli \second} $ in set 2,
-$ \mathrm{St} = \SI{12.16}{\milli \second} $ in set 3, and
-$ \mathrm{St} = \SI{11.97}{\milli \second} $ in set 4.
-The mean end of the statistically significant difference in muscle twitch, represented by the SPM parameter SPMEndTime (Et), occurred at
-$ \mathrm{Et} = \SI{59.80}{\milli \second} $ in set 1,
-$ \mathrm{Et} = \SI{59.66}{\milli \second} $ in set 2,
-$ \mathrm{Et} = \SI{58.10}{\milli \second} $ in set 3, and
-$ \mathrm{Et} = \SI{58.82}{\milli \second} $ in set 4.
-The maximum SPM t value (SPMMax) was
-$ \mathrm{SPMMax} = 7.77 $ in set 1,
-$ \mathrm{SPMMax} = 9.49 $ in set 2,
-$ \mathrm{SPMMax} = 8.27 $ in set 3, and
-$ \mathrm{SPMMax} = 8.12 $ in set 4.
-The area of the SPM signal above the threshold value (SPMAAT) was
-$ \mathrm{SPMAAT} = 194.3 $ in set 1,
-$ \mathrm{SPMAAT} = 258.5 $ in set 2,
-$ \mathrm{SPMAAT} = 197.4 $ in set 3, and
-$ \mathrm{SPMAAT} = 208.8 $ in set 4.
-The details of parameters associated with SPM analysis of TMG signals appear in Table~\ref{tab:spm_params}.
+\begin{figure}
+	\centering
+    \includegraphics[width=\textwidth]{spm-plot.jpg}
+    \caption{For all four sets, a two-sample SPM $ t $-test comparing the first \SI{100}{\milli \second} of normalized pre- and post-ISQ TMG measurements across all subjects found a statistically significant difference between pre- and post-ISQ muscle twitch responses.
+    The left column shows mean normalized pre-ISQ (black solid line) and post-ISQ (red solid line) TMG measurements, together with their standard deviation clouds, across all subjects for each measurement set.
+    The right column shows the results of the SPM $ t $-test for each set;
+    the dashed line denotes the threshold $ t^{*} $ at which each set's pre- and post-ISQ TMG signals differ significantly, while the maroon cloud emphasizes the region of significance.}
+    \label{fig:spm_plot}
+\end{figure}
 
 \begin{table}[htb!]
     \centering
-    \caption{SPM Parameters}
+    \caption{
+        Discrete parameters summarizing the results of the two-sample SPM $ t $-tests show in Figure~\ref{fig:spm_plot}.
+        Parameters were introduced in Materials and Methods; for review:
+        ``Start time'' is the time at which the SPM $ t $-statistic attains the significance threshold value $ t^{*} $;
+        ``End time'' is the time at which the SPM $ t $-statistic falls below the significance threshold value $ t^{*} $;
+        ``Centroid time'' and ``Centroid $ t $-value'' give the (time, $ t $) coordinate of the SPM significance region's centroid (the region shown in maroon in Figure~\ref{fig:spm_plot});
+        ``SPM maximum'' is maximum value attained by the SPM $ t $-statistic;
+        ``Area above threshold'' is area of the SPM significance region.
+    }
     \vspace{1ex}
 
     \renewcommand{\arraystretch}{1.1}
     \input{tables/spm_tabular.tex}
     \label{tab:spm_params}
 \end{table}
+
+As an estimate of muscle load, the calculated mean value of peak knee torque during the ISQ was \SI{126.5 \pm 17.6}{\newton \meter}.
 
 \section{Discussion}
 
