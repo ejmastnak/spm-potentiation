@@ -64,7 +64,7 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
     post_sd = np.std(post_data, ddof=1, axis=1)
     pre_sd = np.std(pre_data, ddof=1, axis=1)
 
-    fig, axes = plt.subplots(1, 2, figsize=(8, 4))
+    fig, axes = plt.subplots(1, 2)
 
     # Plot time-series measurements (generally TMG data)
     # --------------------------------------------- #
@@ -114,6 +114,8 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
     ax.fill_between(time, t.z, ti.zstar, where=t.z >= ti.zstar,
             interpolate=True, color=tfill_color)
 
+    plt.tight_layout()
+
     if save_figures:
         plt.savefig(figure_output_path, format=fig_format, dpi=fig_dpi)
 
@@ -121,6 +123,7 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
         plt.show()
     else:  # ...or clear plot during automated batch tasks to clear memory
         plt.close(fig)
+
 
 def get_annotation_text(ti):
     """
