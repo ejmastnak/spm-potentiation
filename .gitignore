@@ -21,3 +21,7 @@ article/tables/
 *.pdf
 *.synctex.gz
 *.toc
+
+# Binary image files generated from code
+*.jpg
+*.png
