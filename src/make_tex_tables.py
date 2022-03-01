@@ -80,7 +80,7 @@ def make_tmg_param_table(output_file, staggered=False):
             dm_pre_str += " & ${:.2f}$".format(dm_pre[s]) if s == 0 else " & -"
         dm_post_str += " & ${:.2f}$".format(dm_post[s])
         dm_diff = 100 * (dm_post[s] - dm_pre[s]) / dm_pre[s]
-        dm_diff_str += " & ${:+.2f}$\\%".format(dm_diff)
+        dm_diff_str += " & ${:+.1f}$\\%".format(dm_diff)
 
     # Td
     td_pre_str = ""
@@ -93,7 +93,7 @@ def make_tmg_param_table(output_file, staggered=False):
             td_pre_str += " & ${:.2f}$".format(td_pre[s]) if s == 0 else " & -"
         td_post_str += " & ${:.2f}$".format(td_post[s])
         td_diff = 100 * (td_post[s] - td_pre[s]) / td_pre[s]
-        td_diff_str += " & ${:+.2f}$\\%".format(td_diff)
+        td_diff_str += " & ${:+.1f}$\\%".format(td_diff)
 
     # Tc
     tc_pre_str = ""
@@ -106,7 +106,7 @@ def make_tmg_param_table(output_file, staggered=False):
             tc_pre_str += " & ${:.2f}$".format(tc_pre[s]) if s == 0 else " & -"
         tc_post_str += " & ${:.2f}$".format(tc_post[s])
         tc_diff = 100 * (tc_post[s] - tc_pre[s]) / tc_pre[s]
-        tc_diff_str += " & ${:+.2f}$\\%".format(tc_diff)
+        tc_diff_str += " & ${:+.1f}$\\%".format(tc_diff)
 
     # RDD max
     rddmax_pre_str = ""
@@ -119,7 +119,7 @@ def make_tmg_param_table(output_file, staggered=False):
             rddmax_pre_str += " & ${:.2f}$".format(rddmax_pre[s]) if s == 0 else " & -"
         rddmax_post_str += " & ${:.2f}$".format(rddmax_post[s])
         rddmax_diff = 100 * (rddmax_post[s] - rddmax_pre[s]) / rddmax_pre[s]
-        rddmax_diff_str += " & ${:+.2f}$\\%".format(rddmax_diff)
+        rddmax_diff_str += " & ${:+.1f}$\\%".format(rddmax_diff)
 
     # RDD max
     rddmax_time_pre_str = ""
@@ -132,7 +132,7 @@ def make_tmg_param_table(output_file, staggered=False):
             rddmax_time_pre_str += " & ${:.2f}$".format(rddmax_time_pre[s]) if s == 0 else " & -"
         rddmax_time_post_str += " & ${:.2f}$".format(rddmax_time_post[s])
         rddmax_time_diff = 100 * (rddmax_time_post[s] - rddmax_time_pre[s]) / rddmax_time_pre[s]
-        rddmax_time_diff_str += " & ${:+.2f}$\\%".format(rddmax_time_diff)
+        rddmax_time_diff_str += " & ${:+.1f}$\\%".format(rddmax_time_diff)
 
     with open(output_file, 'w') as writer:
         writer.write('\\begin{tabular}{|c|l|c|c|c|c|}')
@@ -149,10 +149,10 @@ def make_tmg_param_table(output_file, staggered=False):
 
         # Dm
         writer.write('% Dm\n    ')
-        writer.write('\\multirow{3}{*}{\\parbox{2cm}{\\centering \\textbf{\\Dm}\\\\ {\\footnotesize Max.\\\\[-0.8ex] displacement}}} & Mean PR $ [\\si{\\milli \\meter}] $')
+        writer.write('\\multirow{3}{*}{\\parbox{2cm}{\\centering \\textbf{\\Dm}\\\\ {\\footnotesize Max.\\\\[-0.8ex] displacement}}} & Pre-ISQ Mean $ [\\si{\\milli \\meter}] $')
         writer.write(dm_pre_str + "\\\\")
         writer.write('\n    ')
-        writer.write(' & Mean PO $ [\\si{\\milli \\meter}] $')
+        writer.write(' & Post-ISQ Mean $ [\\si{\\milli \\meter}] $')
         writer.write(dm_post_str + "\\\\")
         writer.write('\n    ')
         writer.write(' & Percent change')
@@ -164,10 +164,10 @@ def make_tmg_param_table(output_file, staggered=False):
 
         # Td
         writer.write('% Td\n    ')
-        writer.write('\\multirow{3}{*}{\\parbox{2cm}{\\centering \\textbf{\\Td}\\\\ {\\footnotesize Delay time}}} & Mean PR $ [\\si{\\milli \\second}] $')
+        writer.write('\\multirow{3}{*}{\\parbox{2cm}{\\centering \\textbf{\\Td}\\\\ {\\footnotesize Delay time}}} & Pre-ISQ Mean $ [\\si{\\milli \\second}] $')
         writer.write(td_pre_str + "\\\\")
         writer.write('\n    ')
-        writer.write(' & Mean PO $ [\\si{\\milli \\second}] $')
+        writer.write(' & Post-ISQ Mean $ [\\si{\\milli \\second}] $')
         writer.write(td_post_str + "\\\\")
         writer.write('\n    ')
         writer.write(' & Percent change')
@@ -179,10 +179,10 @@ def make_tmg_param_table(output_file, staggered=False):
 
         # Tc
         writer.write('% Tc\n    ')
-        writer.write('\\multirow{3}{*}{\\parbox{2cm}{\\centering \\textbf{\\Td}\\\\ {\\footnotesize Contraction time}}} & Mean PR $ [\\si{\\milli \\second}] $')
+        writer.write('\\multirow{3}{*}{\\parbox{2cm}{\\centering \\textbf{\\Td}\\\\ {\\footnotesize Contraction time}}} & Pre-ISQ Mean $ [\\si{\\milli \\second}] $')
         writer.write(tc_pre_str + "\\\\")
         writer.write('\n    ')
-        writer.write(' & Mean PO $ [\\si{\\milli \\second}] $')
+        writer.write(' & Post-ISQ Mean $ [\\si{\\milli \\second}] $')
         writer.write(tc_post_str + "\\\\")
         writer.write('\n    ')
         writer.write(' & Percent change')
@@ -194,10 +194,10 @@ def make_tmg_param_table(output_file, staggered=False):
 
         # RDD max
         writer.write('% RDD max\n    ')
-        writer.write('\\multirow{3}{*}{\\parbox{2cm}{\\centering \\textbf{\\RDDMax}\\\\ {\\footnotesize Max. derivative}}} & Mean PR $ [\\si{\\milli \\meter \\per \\milli \\second}] $')
+        writer.write('\\multirow{3}{*}{\\parbox{2cm}{\\centering \\textbf{\\RDDMax}\\\\ {\\footnotesize Max. derivative}}} & Pre-ISQ Mean $ [\\si{\\milli \\meter \\per \\milli \\second}] $')
         writer.write(rddmax_pre_str + "\\\\")
         writer.write('\n    ')
-        writer.write(' & Mean PO $ [\\si{\\milli \\meter \\per \\milli \\second}] $')
+        writer.write(' & Post-ISQ Mean $ [\\si{\\milli \\meter \\per \\milli \\second}] $')
         writer.write(rddmax_post_str + "\\\\")
         writer.write('\n    ')
         writer.write(' & Percent change')
@@ -209,10 +209,10 @@ def make_tmg_param_table(output_file, staggered=False):
 
         # RDD max time
         writer.write('% RDD max time\n    ')
-        writer.write('\\multirow{3}{*}{\\parbox{2cm}{\\centering \\textbf{\\RDDMaxTime}\\\\ {\\footnotesize Time of max.\\\\[-0.8ex] derivative}}} & Mean PR $ [\\si{\\milli \\second}] $')
+        writer.write('\\multirow{3}{*}{\\parbox{2cm}{\\centering \\textbf{\\RDDMaxTime}\\\\ {\\footnotesize Time of max.\\\\[-0.8ex] derivative}}} & Pre-ISQ Mean $ [\\si{\\milli \\second}] $')
         writer.write(rddmax_time_pre_str + "\\\\")
         writer.write('\n    ')
-        writer.write(' & Mean PO $ [\\si{\\milli \\second}] $')
+        writer.write(' & Post-ISQ Mean $ [\\si{\\milli \\second}] $')
         writer.write(rddmax_time_post_str + "\\\\")
         writer.write('\n    ')
         writer.write(' & Percent change')
