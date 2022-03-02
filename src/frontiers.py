@@ -284,6 +284,12 @@ def tmp_make_spm_plot_for_article(pre_data_dir, post_data_dir,
             ax.set_xlabel("Time [ms]")
         ax.set_ylabel("SPM $t$-statistic", labelpad=-0.1)
 
+        ax.set_ylim(-7, 10)
+        y_ticks = [-5, 0, 5, 10]
+        y_tick_lables = ["-5", "0", "5", "10"]
+        ax.set_yticks(y_ticks)
+        ax.set_yticklabels(y_tick_lables)
+
         # Plot SPM t-statistic
         ax.plot(time, t.z, color=tline_color)  # plot t-curve
 
@@ -445,7 +451,7 @@ def tmp_srdjan_set_analysis_wrapper():
     # Generate one figure holding SPM plots for all sets
     tmp_make_spm_plot_for_article(pre_data_dir, post_data_dir, 
             points_per_msmnt=points_per_msmnt,
-            max_sets=max_sets, skiprows=2)
+            max_sets=max_sets, skiprows=2, show_plot=True)
 
 
 def practice():
