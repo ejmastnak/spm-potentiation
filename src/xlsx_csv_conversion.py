@@ -3,16 +3,12 @@ import os
 import constants, frontiers_utils
 
 """
-A set of functions for converting Excel TMG measurement files
-into plain-text CSV files.
+A set of functions for converting raw, TMG-formatted 
+Excel measurement files into plain-text CSV files.
+The functions implement various ways of organizing the Excel file's
+pre- and post-exercise measurements into formats more suitable to
+later data processing.
 """
-
-# - Column headers contain:
-#   - Subject ID
-#   - The measurement's set number
-#   - The measurement's number in the TMG Excel from original measurement session (see `raw-data.md`)
-#   Example: `ID42-S1-M2`
-
 
 def convert_verbatim(xlsx_file, output_dir):
     """
@@ -34,6 +30,7 @@ def convert_verbatim(xlsx_file, output_dir):
 
 
 """
+PARAMTER DOCUMENTATION FOR CONVERSION FUNCTIONS
 --------------------------------------------------------------------------
 The same parameters are used in multiple functions below, 
 and are documented in one place here to avoid repetition.
@@ -77,27 +74,31 @@ def split_by_pre_post(input_dir, xlsx_filename,
     df = frontiers_utils.xlsx_to_pandas_df(xlsx_file)
 
     try:
-      sets = check_sets_before_conversion(xlsx_filename, df,
+      sets = _check_sets_before_conversion(xlsx_filename, df,
               msmnts_per_pre_set, msmnts_per_post_set)
     except:
         return
+    msmnts_per_full_set = msmnts_per_pre_set + msmnts_per_post_set
 
     pre_col_nums, post_col_nums = [], []
+    pre_headers, post_headers = [], []
     # I have hesitantly opted for 1-based indexing 
     # to align with physical sets and measurements.
     for s in range(1, sets + 1):
         if s > max_set:
             break
         for m in range(1, msmnts_per_pre_set + 1):
-            pre_col_nums.append((s - 1) * msmnts_per_full_set + m)
+            col = (s - 1) * msmnts_per_full_set + m
+            pre_col_nums.append(col)
+            pre_headers.append("S{}-M{}".format(s, col))
         for m in range(1, msmnts_per_post_set + 1):
-            post_col_nums.append((s - 1) * reps_per_set + m + pre_reps)
+            col = (s - 1) * msmnts_per_full_set + m + msmnts_per_pre_set
+            post_col_nums.append(col)
+            pre_headers.append("S{}-M{}".format(s, col))
 
     print("Pre-exercise column numbers: {}".format(pre_col_nums))
     print("Post-exercise column numbers: {}".format(post_col_nums))
     print()
-
-    pre_headers, post_headers = get_column_headers(pre_col_nums, post_col_nums)
 
     # Write CSV files
     df.to_csv(pre_output_dir + xlsx_filename.replace(".xlsx", "-pre.csv"),
@@ -122,38 +123,43 @@ def split_by_pre_post_and_set(input_dir, xlsx_filename,
     df = frontiers_utils.xlsx_to_pandas_df(xlsx_file)
 
     try:
-      sets = check_sets_before_conversion(xlsx_filename, df,
+      sets = _check_sets_before_conversion(xlsx_filename, df,
               msmnts_per_pre_set, msmnts_per_post_set)
     except:
         return
+    msmnts_per_full_set = msmnts_per_pre_set + msmnts_per_post_set
 
     output_dir = frontiers_utils.make_output_dir(output_dir + xlsx_filename.replace(".xlsx", ""))
-    for set in range(1, sets + 1):
-        if set > max_set:
+    for s in range(1, sets + 1):
+        if s > max_set:
             break
-        print("Set Number: {}".format(set))
+        print("Set Number: {}".format(s))
+
+        pre_col_nums, post_col_nums = [], []
+        pre_headers, post_headers = [], []
 
         # I have hesitantly opted for 1-based indexing 
         # to align with physical sets and measurements.
-        pre_cols, post_cols = [], []
-        for rep in range(1, pre_reps + 1):
-            pre_cols.append((set - 1) * reps_per_set + rep)
-        for rep in range(1, post_reps + 1):
-            post_cols.append((set - 1) * reps_per_set + rep + pre_reps)
+        for m in range(1, msmnts_per_pre_set + 1):
+            col = (s - 1) * msmnts_per_full_set + m
+            pre_col_nums.append(col)
+            pre_headers.append("S{}-M{}".format(s, col))
+        for m in range(1, msmnts_per_post_set + 1):
+            col = (s - 1) * msmnts_per_full_set + m + msmnts_per_pre_set
+            post_col_nums.append(col)
+            post_headers.append("S{}-M{}".format(s, col))
 
-        print("Pre-exercise column numbers: {}".format(pre_cols))
-        print("Post-exercise column numbers: {}".format(post_cols))
+        print("Pre-exercise column numbers: {}".format(pre_col_nums))
+        print("Post-exercise column numbers: {}".format(post_col_nums))
         print()
-
-        pre_headers, post_headers = get_column_headers(pre_cols, post_cols)
 
         # Write CSV files for the current set
         df.to_csv(pre_output_dir + xlsx_filename.replace(".xlsx",
-            "-pre-set-{}.csv".format(set)), header=pre_headers,
-            index=False, columns=pre_cols)
+            "-pre-set-{}.csv".format(s)), header=pre_headers,
+            index=False, columns=pre_col_nums)
         df.to_csv(post_output_dir + xlsx_filename.replace(".xlsx",
-            "-post-set-{}.csv".format(set)), header=post_headers,
-            index=False, columns=post_cols)
+            "-post-set-{}.csv".format(s)), header=post_headers,
+            index=False, columns=post_col_nums)
 
 
 def split_by_pre_post_and_set_using_first_msmt(input_dir, xlsx_filename, 
@@ -174,39 +180,53 @@ def split_by_pre_post_and_set_using_first_msmt(input_dir, xlsx_filename,
     df = frontiers_utils.xlsx_to_pandas_df(xlsx_file)
 
     try:
-      sets = check_sets_before_conversion(xlsx_filename, df,
+      sets = _check_sets_before_conversion(xlsx_filename, df,
               msmnts_per_pre_set, msmnts_per_post_set)
     except:
         return
+    msmnts_per_full_set = msmnts_per_pre_set + msmnts_per_post_set
 
-    pre_cols, post_cols = [], []
-    # Note use of 1-based indexing to align with physical sets and measurements.
-    for set in range(1, sets + 1):
-        if set > max_set:
+    pre_col_nums, post_col_nums = [], []
+    pre_headers, post_headers = [], []
+
+    # I have hesitantly opted for 1-based indexing 
+    # to align with physical sets and measurements.
+    for s in range(1, sets + 1):
+        if s > max_set:
             break
-        pre_cols.append((set - 1) * reps_per_set + 1)
-        post_cols.append((set - 1) * reps_per_set + pre_reps + 1)
+        pre_col = (s - 1) * msmnts_per_full_set + 1
+        pre_col_nums.append(pre_col)
+        pre_headers.append("S{}-M{}".format(s, pre_col))
 
-    print("Pre-exercise column numbers: {}".format(pre_cols))
-    print("Post-exercise column numbers: {}".format(post_cols))
+        post_col = (s - 1) * msmnts_per_full_set + msmnts_per_pre_set + 1
+        post_col_nums.append(post_col)
+        pre_headers.append("S{}-M{}".format(s, post_col))
+
+    print("Pre-exercise column numbers: {}".format(pre_col_nums))
+    print("Post-exercise column numbers: {}".format(post_col_nums))
     print()
-
-    pre_headers, post_headers = get_column_headers(pre_cols, post_cols)
 
     # Write CSV files
     df.to_csv(pre_output_dir + xlsx_filename.replace(".xlsx", "-pre.csv"),
-            header=pre_headers, index=False, columns=pre_cols)
+            header=pre_headers, index=False, columns=pre_col_nums)
     df.to_csv(post_output_dir + xlsx_filename.replace(".xlsx", "-post.csv"),
-            header=post_headers, index=False, columns=post_cols)
+            header=post_headers, index=False, columns=post_col_nums)
 
 
-def check_sets_before_conversion(xlsx_filename, raw_df, msmnts_per_pre_set, msmnts_per_post_set):
+def _check_sets_before_conversion(xlsx_filename, raw_df, msmnts_per_pre_set, msmnts_per_post_set):
     """
-    Helps prevent situation described in below error message.
+    Cross-checks consistency the measurement structure in a raw Excel file 
+    (inputted as Pandas DataFrame, but no matter) with the user-specified
+    number of pre- and post-exercise measurements per set for the data in
+    the inputted Excel file.
+    In practice, this function helps check the inputted Excel file 
+    for dropped measurements or other minor irregularities.
+
+    The Excel filename is included only for logging purposes.
     """
     n_cols = raw_df.shape[1]
     msmnts_per_full_set = msmnts_per_pre_set + msmnts_per_post_set
-    sets = n_cols/msmns_per_full_set
+    sets = n_cols/msmnts_per_full_set
 
     if not sets.is_integer():
         raise ValueError
@@ -215,20 +235,3 @@ def check_sets_before_conversion(xlsx_filename, raw_df, msmnts_per_pre_set, msmn
         return None
     else:
         return int(sets)
-
-
-def get_column_headers(pre_cols, post_cols):
-    """
-    Boilerplate code for converting a Numpy array of column numbers
-    corresponding to measurement numbers into a Python list of the
-    measurement numbers in human-friendlier form.
-
-    Example input: [1, 9, 17, 25]
-    Example output: ["Measurement 1", "Measurement 9", etc...]
-    """
-    pre_headers, post_headers = [], []
-    for col in pre_cols:
-        pre_headers.append("Measurement {}".format(col))
-    for col in post_cols:
-        post_headers.append("Measurement {}".format(col))
-    return pre_headers, post_headers
