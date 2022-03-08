@@ -1,6 +1,6 @@
 import os
 import constants, frontiers_utils
-from xlsx_csv_conversion import xlsx_to_pre_post_csv
+import xlsx_csv_conversion
 
 """
 This script is used to process the raw TMG-formatted Excel measurements,
@@ -42,44 +42,43 @@ def frontiers_conversion_wrapper():
 
     """
     input_dir  = constants.ROOT_DATA_DIR + "/excel-raw/"
-    output_dir = constants.ROOT_DATA_DIR + "/csv-processed/"
+    output_dir = constants.INITIAL_DATA_DIR
 
-    pre_output_dir  = constants.ROOT_DATA_DIR + "/csv-processed/pre-exercise/"
-    post_output_dir = constants.ROOT_DATA_DIR + "/csv-processed/post-exercise/"
+    pre_output_dir  = output_dir + "pre-exercise/"
+    post_output_dir = output_dir + "post-exercise/"
 
     # Convert files with 1 pre and post measurement per measurement set
     # --------------------------------------------- #
     input_dir = constants.ROOT_DATA_DIR + "/excel-raw/1/"
-    pre_reps  = 1   # number of pre-exercise measurements per set
-    post_reps = 1   # number of post-exercise measurements per set
+    msmnts_per_pre_set = 1   # number of pre-exercise measurements per set
+    msmnt_per_post_set = 1   # number of post-exercise measurements per set
     max_sets  = 4   # ignore sets in Excel file larger than max_sets
 
-    # Keep only first measurement in each set
-    conversion_mode = constants.PRE_POST_BY_SET_FIRST_REP
     for xlsx_filename in frontiers_utils.natural_sort(os.listdir(input_dir)):
         if ".xlsx" in xlsx_filename and "$" not in xlsx_filename:
             print(xlsx_filename)
-            xlsx_to_pre_post_csv(input_dir, xlsx_filename,
+            xlsx_csv_conversion.split_by_pre_post_and_set_using_first_msmt(
+                    input_dir, xlsx_filename,
                     pre_output_dir, post_output_dir,
-                    conversion_mode, pre_reps=pre_reps,
-                    post_reps=post_reps, max_set=max_sets)
+                    msmnts_per_pre_set, msmnt_per_post_set,
+                    max_set=max_sets)
 
     # Convert files with 8 pre and post measurements per measurement set,
     # --------------------------------------------- #
     input_dir = constants.ROOT_DATA_DIR + "/excel-raw/8/"
-    pre_reps  = 8
-    post_reps = 8
+    msmnts_per_pre_set = 8
+    msmnt_per_post_set = 8
     max_sets  = 4
 
-    # Keep only first measurement in each set
-    conversion_mode = constants.PRE_POST_BY_SET_FIRST_REP
     for xlsx_filename in frontiers_utils.natural_sort(os.listdir(input_dir)):
         if ".xlsx" in xlsx_filename and "$" not in xlsx_filename:
             print(xlsx_filename)
-            xlsx_to_pre_post_csv(input_dir, xlsx_filename,
+            xlsx_csv_conversion.split_by_pre_post_and_set_using_first_msmt(
+                    input_dir, xlsx_filename,
                     pre_output_dir, post_output_dir,
-                    conversion_mode, pre_reps=pre_reps,
-                    post_reps=post_reps, max_set=max_sets)
+                    msmnts_per_pre_set, msmnt_per_post_set,
+                    max_set=max_sets)
+
 
 # SPM pre-processing
 """
