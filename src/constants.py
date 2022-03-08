@@ -1,4 +1,11 @@
+# Root directory with measurement data
+ROOT_DATA_DIR = "/home/ej/Media/tmg-bmc-media/frontiers-2022/data/"
 
+# Intial step in pipeline of processing data
+INITIAL_DATA_DIR = ROOT_DATA_DIR + "csv-for-initial-analysis/"
+
+
+# --------------------------------------------- #
 # CSV data file row at which to begin reading data (0-indexed)
 start_row = 1  
 
@@ -89,7 +96,7 @@ VERBATIM = 1
 #         One file holds all potentiated measurements in the measurement session.
 # All baseline measurements are clumped into one CSV file and all
 # potentiated measurements are clumped into a separate CSV file.
-PRE_POST_BY_SESSION = 2
+SEPARATE_PRE_AND_POST = 2
 
 # Input: One TMG-formatted Excel file
 # Output: Two CSV files PER MEASUREMENT SET in Excel file:
