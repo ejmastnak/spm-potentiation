@@ -94,7 +94,7 @@ def split_by_pre_post(input_dir, xlsx_filename,
         for m in range(1, msmnts_per_post_set + 1):
             col = (s - 1) * msmnts_per_full_set + m + msmnts_per_pre_set
             post_col_nums.append(col)
-            pre_headers.append("S{}-M{}".format(s, col))
+            post_headers.append("S{}-M{}".format(s, col))
 
     print("Pre-exercise column numbers: {}".format(pre_col_nums))
     print("Post-exercise column numbers: {}".format(post_col_nums))
@@ -200,7 +200,7 @@ def split_by_pre_post_and_set_using_first_msmt(input_dir, xlsx_filename,
 
         post_col = (s - 1) * msmnts_per_full_set + msmnts_per_pre_set + 1
         post_col_nums.append(post_col)
-        pre_headers.append("S{}-M{}".format(s, post_col))
+        post_headers.append("S{}-M{}".format(s, post_col))
 
     print("Pre-exercise column numbers: {}".format(pre_col_nums))
     print("Post-exercise column numbers: {}".format(post_col_nums))
