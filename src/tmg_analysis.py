@@ -2,11 +2,14 @@
 This script is used to:
 - Compute TMG parameters for each subject's measurements
 - Perform basic statistical analysis of TMG parameters across subjects
-
 """
-
+import numpy as np
+import pandas as pd
 import os
 import constants, frontiers_utils
+
+import tmg.tmg_params as tmg_params
+import tmg.constants as tmg_constants
 
 def compute_tmg_params_for_all_subjects():
     """
@@ -26,15 +29,33 @@ def compute_tmg_params_for_all_subjects():
             original measurement session (see `raw-data.md`)
 
     """
-    input_dir = constants.INITIAL_DATA_DIR
+    input_dirs = [constants.INITIAL_DATA_DIR + "pre-exercise/", 
+            constants.INITIAL_DATA_DIR + "post-exercise/"]
+    output_dirs = [constants.TMG_PARAMS_BY_SUBJECT_DIR + "pre-exercise/", 
+            constants.TMG_PARAMS_BY_SUBJECT_DIR + "post-exercise/"]
 
-    pre_dir = input_dir + "pre-exercise/"
-    for filename in frontiers_utils.natural_sort(os.listdir(pre_dir)):
-        print(filename)
+    # Process both pre- and post-exercise data using the same code
+    for i in range(2):
+        for filename in frontiers_utils.natural_sort(os.listdir(input_dirs[i])):
+            # Measurement CSV files are first read into Pandas DataFrames
+            # instead of directly into Numpy arrays for easier access to 
+            # the header row than Numpy's `loadtxt` would allow.
 
-    # Loop through all pre-exercise and all post-exericise CSV measurement files.
-    # Looping through these files will be repeated elsewhere.
-    # Can I build a Python iterator object or something to do this?
+            df = pd.read_csv(input_dirs[i] + filename, sep=',', header=0)
+            column_headers = df.columns.values.tolist()
+            data = df.to_numpy()
+
+            # 2D Numpy array to hold TMG params across all four sets
+            param_array = np.zeros([len(tmg_constants.TMG_PARAM_NAMES), 4])
+            for m in range(4):
+                tmg_signal = data[:, m]
+                param_array[:, m] = tmg_params.get_params_of_tmg_signal(tmg_signal)
+
+            param_df = pd.DataFrame(param_array,
+                    columns=column_headers,
+                    index=tmg_constants.TMG_PARAM_NAMES)
+            output_filename = filename.replace(".csv", "-tmg-params.csv")
+            param_df.to_csv(output_dirs[i] + output_filename)
 
 
 def get_params_of_tmg_file(input_dir, xlsx_filename, output_dir,
@@ -164,5 +185,24 @@ Output data: per-set CSV files in `/output/tmg-param-stats-staggered/`
 
 """
 
+def practice():
+    filename = "/home/ej/Media/tmg-bmc-media/frontiers-2022/data/csv-for-initial-analysis/post-exercise/1-BR20200910125909-post.csv"
+    df = pd.read_csv(filename, sep=',', header=0)
+    column_headers = df.columns.values.tolist()
+    data = df.to_numpy()
+
+    # 2D Numpy array to hold TMG params across all four sets
+    param_array = np.zeros([len(tmg_constants.TMG_PARAM_NAMES), 4])
+    for m in range(4):
+        tmg_signal = data[:, m]
+        param_array[:, m] = tmg_params.get_params_of_tmg_signal(tmg_signal)
+
+    df = pd.DataFrame(param_array,
+            columns=column_headers,
+            index=tmg_constants.TMG_PARAM_NAMES)
+    df.to_csv("~/test.csv")
+
+
 if __name__ == "__main__":
     compute_tmg_params_for_all_subjects()
+    # practice()
