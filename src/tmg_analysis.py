@@ -95,21 +95,7 @@ Output data: per-set CSV files in `/output/tmg-param-stats-staggered/`
 """
 
 def practice():
-    filename = "/home/ej/Media/tmg-bmc-media/frontiers-2022/data/csv-for-initial-analysis/post-exercise/1-BR20200910125909-post.csv"
-    df = pd.read_csv(filename, sep=',', header=0)
-    column_headers = df.columns.values.tolist()
-    data = df.to_numpy()
-
-    # 2D Numpy array to hold TMG params across all four sets
-    param_array = np.zeros([len(tmg_constants.TMG_PARAM_NAMES), 4])
-    for m in range(4):
-        tmg_signal = data[:, m]
-        param_array[:, m] = tmg_params.get_params_of_tmg_signal(tmg_signal)
-
-    df = pd.DataFrame(param_array,
-            columns=column_headers,
-            index=tmg_constants.TMG_PARAM_NAMES)
-    df.to_csv("~/test.csv")
+    print("Hi!")
 
 
 if __name__ == "__main__":
