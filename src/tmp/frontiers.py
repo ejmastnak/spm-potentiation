@@ -64,7 +64,7 @@ def analysis_by_athlete(pre_data_dir, post_data_dir,
 
         # (zero-based) first row of TMG data that is read from CSV files
         # In practice only zero-th row of TMG data is skipped.
-        tmg_data_start_row = constants.TMG_DATA_START_ROW_FOR_SPM
+        tmg_data_start_row = constants.TMG_ROWS_TO_SKIP_FOR_SPM
         fig_format = "png"
         fig_dpi = 300
 
@@ -149,7 +149,7 @@ def normalized_analysis_by_set(pre_data_dir, post_data_dir,
 
         # (zero-based) first row of TMG data that is read from CSV files
         # In practice only zero-th row is skipped.
-        tmg_data_start_row = constants.TMG_DATA_START_ROW_FOR_SPM
+        tmg_data_start_row = constants.TMG_ROWS_TO_SKIP_FOR_SPM
         fig_format = "png"
         fig_dpi = 300
 
@@ -187,7 +187,7 @@ def tmp_srdjan_set_analysis(pre_data_dir, post_data_dir,
 
         # (zero-based) first row of TMG data that is read from CSV files
         # In practice only zero-th row is skipped.
-        tmg_data_start_row = constants.TMG_DATA_START_ROW_FOR_SPM
+        tmg_data_start_row = constants.TMG_ROWS_TO_SKIP_FOR_SPM
         fig_format = "jpg"
         fig_dpi = 500
 
@@ -209,7 +209,7 @@ def tmp_make_spm_plot_for_article(pre_data_dir, post_data_dir,
     for which I am uncertain how the normalization was performed.
     """
     fig, axes = plt.subplots(max_sets, 2, figsize=(6.8, 8))
-    tmg_data_start_row = constants.TMG_DATA_START_ROW_FOR_SPM
+    tmg_data_start_row = constants.TMG_ROWS_TO_SKIP_FOR_SPM
     output_dir = "/home/ej/Documents/projects/tmg-bmc/frontiers-2022/article/figures/"
     output_file = output_dir + "spm-plot.jpg"
 
