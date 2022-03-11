@@ -149,6 +149,7 @@ def get_annotation_text(ti):
     else:
         return "$t^* = {:.2f}$\n$\\alpha = {:.2f}$".format(ti.zstar, ti.alpha)
 
+
 def remove_spines(ax):
     """ Simple auxiliary function to remove upper and right spines from the passed axis"""
     ax.spines['top'].set_visible(False)
