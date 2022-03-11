@@ -7,40 +7,6 @@ before application of SPM analysis.
 
 START_ROWS_TO_AVERAGE = 3  # number of initial data points to average over when fixing initial false potentiation
 
-def fix_false_spm_significance(pre_data, post_data):
-    """
-    Fixes issue of SPM showing significance regions for miniscule 
-    (e.g. order 0.001 mm) differences between post-exercise and initial 
-    measurements over the first few milliseconds of a TMG measurement.
-
-    These differences arise from random artifacts from initial filtering, 
-    and do not represent physical information.
-    The differences are removed by subtracting the average of the difference 
-    between pre and post-exercise data over the first few ms of the TMG curve
-    from the post-exercise data.
-
-    This is safe to do without appreciable affecting the later (i.e. > ~5 ms)
-    portion of a TMG signal because differences in the first few ms are of the
-    order 0.001 mm, while typical values in the TMG curve are of the order 5 mm.
-
-    :param pre_data: 2D Numpy array containing raw pre-exericse data.
-        Rows traverse time and columns traverse measurements
-    :param post_data: 2D Numpy array containing raw post-exercise data.
-    :return: adjusted pre/post-exercise data such that false SPM significance disappears
-    """
-    # the average of the average pre-exercise signal over the first few data points
-    pre_mean = np.mean(np.mean(pre_data[0:START_ROWS_TO_AVERAGE, :], axis=1))
-    post_mean = np.mean(np.mean(post_data[0:START_ROWS_TO_AVERAGE, :], axis=1))
-    if post_mean > pre_mean:
-        post_data -= np.mean(post_mean - pre_mean)
-
-    # elif mode == BASE_ATRO:
-    #     if pre_mean > post_mean:
-    #         pre_data -= np.mean(pre_mean - post_mean)
-
-    return pre_data, post_data
-
-
 def process_pre_data(pre_data, normalize=False, position_offset=0.0):
     if pre_data is None:  # null check
         return
