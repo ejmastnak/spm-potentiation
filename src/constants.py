@@ -1,16 +1,33 @@
-# Root directory with measurement data
+# Root project directory
 ROOT_PROJECT_DIR = "/home/ej/Media/tmg-bmc-media/frontiers-2022/"
+
+# Root directory with measurement data
 ROOT_DATA_DIR = ROOT_PROJECT_DIR + "data/"
+
+# Root directory for computed output data
 ROOT_OUTPUT_DIR = ROOT_PROJECT_DIR + "output/"
 
 # Intial step in pipeline of processing data
 INITIAL_DATA_DIR = ROOT_DATA_DIR + "csv-for-initial-analysis/"
+
+# Further processed version of INITIAL_DATA_DIR for use with SPM
 SPM_DATA_DIR = ROOT_DATA_DIR + "csv-for-spm/"
+
+# Normalized version of SPM_DATA_DIR for cross-subject comparison
 NORMED_SPM_DATA_DIR = ROOT_DATA_DIR + "csv-for-spm-normed/"
 
+# Computed TMG parameters for each subject
 TMG_PARAMS_BY_SUBJECT_DIR = ROOT_OUTPUT_DIR + "tmg-params-by-subject/"
+
+# Analysis of TMG parameters across all subjects for each set
 TMG_PARAM_STATS_BY_SET_DIR = ROOT_OUTPUT_DIR + "tmg-param-stats-by-set/"
 TMG_PARAM_STATS_RELTO_SET1_DIR = ROOT_OUTPUT_DIR + "tmg-param-stats-relto-set1/"
+
+# SPM parameters for each subject
+SPM_PARAMS_BY_SUBJECT_DIR = ROOT_OUTPUT_DIR + "spm-params-by-subject"
+
+# SPM t-statistic plots for each subject
+SPM_PLOTS_BY_SUBJECT_DIR = ROOT_OUTPUT_DIR + "spm-plots-by-subject"
 
 # --------------------------------------------- #
 # The number of rows to skip from the beginning of a raw TMG signal
