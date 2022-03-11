@@ -1,9 +1,16 @@
 # Root directory with measurement data
-ROOT_DATA_DIR = "/home/ej/Media/tmg-bmc-media/frontiers-2022/data/"
+ROOT_PROJECT_DIR = "/home/ej/Media/tmg-bmc-media/frontiers-2022/"
+ROOT_DATA_DIR = ROOT_PROJECT_DIR + "data/"
+ROOT_OUTPUT_DIR = ROOT_PROJECT_DIR + "output/"
 
 # Intial step in pipeline of processing data
 INITIAL_DATA_DIR = ROOT_DATA_DIR + "csv-for-initial-analysis/"
+SPM_DATA_DIR = ROOT_DATA_DIR + "csv-for-spm/"
+NORMED_SPM_DATA_DIR = ROOT_DATA_DIR + "csv-for-spm-normed/"
 
+TMG_PARAMS_BY_SUBJECT_DIR = ROOT_OUTPUT_DIR + "tmg-params-by-subject/"
+TMG_PARAM_STATS_BY_SET_DIR = ROOT_OUTPUT_DIR + "tmg-param-stats-by-set/"
+TMG_PARAM_STATS_RELTO_SET1_DIR = ROOT_OUTPUT_DIR + "tmg-param-stats-relto-set1/"
 
 # --------------------------------------------- #
 # CSV data file row at which to begin reading data (0-indexed)
@@ -75,13 +82,6 @@ EXTREMA_INTERP_WINDOW_SIZE = 2
 # [ms] time granularity to use when interpolating extrema (generally of rdd signal)
 EXTREMA_INTERP_DT = 0.01  
 
-# Names of TMG parameters
-TMG_PARAM_NAMES = ["Dm:", "Td:", "Tc:", "Ts:", "Tr:", "P1:", "P2:", "P3:",
-        "RDD Max:", "RDD Min:", "RDD Peak to Peak:",
-        "RDD Max Time:", "RDD Min Time:", "Max to Min Time:"]
-
-# Names of statistical quantities used to analyze TMG parameters
-TMG_STAT_NAMES = ['base-avg', 'pot-avg', 'base-sample-std', 'pot-sample-std', 't-statistic', 't-test-p-value']
 
 # BEGIN CONVERSION MODE CONSTANTS
 # --------------------------------------------- #
