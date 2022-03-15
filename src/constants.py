@@ -24,10 +24,16 @@ TMG_PARAM_STATS_BY_SET_DIR = ROOT_OUTPUT_DIR + "tmg-param-stats-by-set/"
 TMG_PARAM_STATS_RELTO_SET1_DIR = ROOT_OUTPUT_DIR + "tmg-param-stats-relto-set1/"
 
 # SPM parameters for each subject
-SPM_PARAMS_BY_SUBJECT_DIR = ROOT_OUTPUT_DIR + "spm-params-by-subject"
+SPM_PARAMS_BY_SUBJECT_DIR = ROOT_OUTPUT_DIR + "spm-params-by-subject/"
 
 # SPM t-statistic plots for each subject
-SPM_PLOTS_BY_SUBJECT_DIR = ROOT_OUTPUT_DIR + "spm-plots-by-subject"
+SPM_PLOTS_BY_SUBJECT_DIR = ROOT_OUTPUT_DIR + "spm-plots-by-subject/"
+
+# SPM parameters for each set
+SPM_PARAMS_BY_SET_DIR = ROOT_OUTPUT_DIR + "spm-params-by-set/"
+
+# SPM t-statistic plots for each set
+SPM_PLOTS_BY_SET_DIR = ROOT_OUTPUT_DIR + "spm-plots-by-set/"
 
 # --------------------------------------------- #
 # The number of rows to skip from the beginning of a raw TMG signal
