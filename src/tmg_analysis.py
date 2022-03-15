@@ -9,8 +9,8 @@ import pandas as pd
 from scipy.stats import ttest_rel
 import constants, frontiers_utils
 
-import tmg.tmg_params as tmg_params
-import tmg.constants as tmg_constants
+import tmg_biomechanics.tmg_params as tmg_params
+import tmg_biomechanics.constants as tmg_constants
 
 def compute_tmg_params_for_all_subjects():
     """
