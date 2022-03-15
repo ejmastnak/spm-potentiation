@@ -414,15 +414,13 @@ def make_spm_plot_for_article():
     fig_dpi = 500
     fig_format = "jpg"
 
-    pre_color = plotting.pre_color
-    post_color = plotting.post_color
-    post_color2 = plotting.post_color2
-    pre_alpha = plotting.pre_alpha
-    post_alpha = plotting.post_alpha
-
-    tline_color = plotting.tline_color
-    tfill_color = plotting.tfill_color
-    tfill_color2 = plotting.tfill_color2
+    pre_color    = constants.PRE_COLOR
+    post_color   = constants.POST_COLOR
+    pre_alpha    = constants.PRE_ALPHA
+    post_alpha   = constants.POST_ALPHA
+    tline_color  = constants.T_LINE_COLOR
+    tfill_color  = constants.T_FILL_COLOR
+    tfill_color2 = constants.T_FILL_COLOR2
 
     linewidth = 1.5
 

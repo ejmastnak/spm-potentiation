@@ -3,19 +3,8 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 import spm1d
-import spm_analysis
+import spm_analysis, constants
 
-# START COLORS
-pre_color = "#000000"  # black
-post_color = "#dd502d"  # orange
-post_color2 = "#3997bf"  # blue
-pre_alpha = 0.20
-post_alpha = 0.75
-
-tline_color = "#000000"  # black
-tfill_color = "#7e3728"  # light orange
-tfill_color2 = "#244d90"  # light blue
-# END COLORS
 
 def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
         figure_output_path, fig_format="png", fig_dpi=300,
@@ -81,16 +70,16 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
     ax.set_ylabel(tmg_y_axis_label)
 
     # Mean value of time-series measurements
-    ax.plot(time, pre_mean, color=pre_color, linewidth=2.5, 
+    ax.plot(time, pre_mean, color=constants.PRE_COLOR, linewidth=2.5, 
             label="Pre-exercise mean", zorder=4)
-    ax.plot(time, post_mean, color=post_color, linewidth=2.5,
+    ax.plot(time, post_mean, color=constants.POST_COLOR, linewidth=2.5,
             label="Post-exercise mean", zorder=3)
 
     # Standard deviation clouds
     ax.fill_between(time, post_mean - post_sd, post_mean + post_sd, 
-            color=post_color, alpha=post_alpha, zorder=2)
+            color=constants.POST_COLOR, alpha=constants.POST_ALPHA, zorder=2)
     ax.fill_between(time, pre_mean - pre_sd, pre_mean + pre_sd,
-            color=pre_color, alpha=pre_alpha, zorder=1)
+            color=constants.PRE_COLOR, alpha=constants.PRE_ALPHA, zorder=1)
 
     ax.axhline(y=0, color='black', linestyle=':')  # dashed line at y = 0
     ax.legend(framealpha=1.0)
@@ -104,7 +93,7 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
     ax.set_ylabel("SPM $t$-statistic", labelpad=-0.1)
 
     # Plot SPM t-statistic
-    ax.plot(time, t.z, color=tline_color)  # plot t-curve
+    ax.plot(time, t.z, color=constants.T_LINE_COLOR)  # plot t-curve
 
     # Plot dashed line at y = 0
     ax.axhline(y=0, color='black', linestyle=':')  
@@ -119,7 +108,7 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
 
     # Shade between curve and threshold
     ax.fill_between(time, t.z, ti.zstar, where=t.z >= ti.zstar,
-            interpolate=True, color=tfill_color)
+            interpolate=True, color=constants.T_FILL_COLOR)
 
     plt.tight_layout()
 

@@ -146,3 +146,17 @@ PRE_POST_BY_SET_ALL_REPS = 3
 # the first rep of each set is saved to the outputted CSV file.
 PRE_POST_BY_SET_FIRST_REP = 4
 # --------------------------------------------- #
+
+
+# Colors and other parametrs for Matplotlib plots
+# --------------------------------------------- #
+PRE_COLOR   = "#000000"  # black
+POST_COLOR  = "#dd502d"  # orange
+POST_COLOR2 = "#3997bf"  # blue
+PRE_ALPHA   = 0.20
+POST_ALPHA  = 0.75
+
+T_LINE_COLOR  = "#000000"  # black
+T_FILL_COLOR  = "#7e3728"  # light orange
+T_FILL_COLOR2 = "#244d90"  # light blue
+# --------------------------------------------- #
