@@ -124,8 +124,8 @@ def perform_spm_tests_by_set():
 
     # Perform SPM analysis for each set
     for s in range(sets_per_measurement_file):
-        param_output_file = param_output_dir + "set-{}-params.csv".format(s + 1)
-        plot_output_file = plot_output_dir + "set-{}-plot.jpg".format(s + 1)
+        param_output_file = param_output_dir + "set{}-params.csv".format(s + 1)
+        plot_output_file = plot_output_dir + "set{}-plot.jpg".format(s + 1)
 
         pre_data = pre_tensor[:, s, :]
         post_data = post_tensor[:, s, :]
