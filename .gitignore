@@ -5,7 +5,10 @@ template/
 collab/
 doc/
 src/misc/
+src/tmg/
 __pycache__/
+
+src/test.py
 
 # Python code to generate the tables is already under VC
 article/tables/
