@@ -1,6 +1,8 @@
 # Root project directory
 ROOT_PROJECT_DIR = "/home/ej/Media/tmg-bmc-media/frontiers-2022/"
 
+ARTICLE_DIR = "/home/ej/Documents/projects/tmg-bmc/frontiers-2022/article/"
+
 # Root directory with measurement data
 ROOT_DATA_DIR = ROOT_PROJECT_DIR + "data/"
 
@@ -34,6 +36,12 @@ SPM_PARAMS_BY_SET_DIR = ROOT_OUTPUT_DIR + "spm-params-by-set/"
 
 # SPM t-statistic plots for each set
 SPM_PLOTS_BY_SET_DIR = ROOT_OUTPUT_DIR + "spm-plots-by-set/"
+
+# Figures appearing the LaTeX article
+ARTICLE_FIGURE_DIR = ARTICLE_DIR + "figures/"
+
+# Tables appearing the LaTeX article
+ARTICLE_TABLE_DIR = ARTICLE_DIR + "tables/"
 
 # --------------------------------------------- #
 # The number of rows to skip from the beginning of a raw TMG signal
