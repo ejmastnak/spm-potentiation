@@ -19,6 +19,7 @@ tfill_color2 = "#244d90"  # light blue
 
 def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
         figure_output_path, fig_format="png", fig_dpi=300,
+        tmg_y_axis_label="Displacement", x_axis_label="Time [ms]",
         show_plot=True, save_figures=False):
     """
     Plots the pre and post-exercise data's mean and standard deviation clouds on axis 0.
@@ -49,6 +50,12 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
     fig_dpi : int
         Passed to `dpi` parameter Matplotlib's `savefig` function.
         Controls DPI at which to save figures.
+    tmg_y_axis_label : str
+        Label, passed to Matplotlib's `ax.set_ylabel`, for the y axis
+        of the plot showing TMG signals.
+    x_axis_label : str
+        Label, passed to Matplotlib's `ax.set_xlabel`, for the x axis
+        of both the plot showing TMG signals and the SPM t-statistic plot.
     show_plot : bool
         Whether or not to show matplotlib plot.
         Generally set to False for automated processes.
@@ -70,8 +77,8 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
     # --------------------------------------------- #
     ax = axes[0]
     remove_spines(ax)
-    ax.set_xlabel("Time [ms]")
-    ax.set_ylabel("Displacement [mm]")
+    ax.set_xlabel(x_axis_label)
+    ax.set_ylabel(tmg_y_axis_label)
 
     # Mean value of time-series measurements
     ax.plot(time, pre_mean, color=pre_color, linewidth=2.5, 
@@ -93,7 +100,7 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
     # --------------------------------------------- #
     ax = axes[1]
     remove_spines(ax)
-    ax.set_xlabel("Time [ms]")
+    ax.set_xlabel(x_axis_label)
     ax.set_ylabel("SPM $t$ statistic", labelpad=-0.1)
 
     # Plot SPM t-statistic
