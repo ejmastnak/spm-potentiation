@@ -1,33 +1,39 @@
+import os
 import numpy as np
-import constants
+import matplotlib.pyplot as plt
+import plotting, constants, frontiers_utils, spm_analysis
 """
-Used to create LaTeX tables of already-computed TMG and SPM parameters
-intended for inclusion into the LaTeX paper.
+A set of functions used to create the LaTeX tables and figures that appear 
+in the journal article; in this sense, this script represents the final 
+step in this project's analysis pipeline.
 """
 
-def make_tmg_param_table(output_file, staggered=False):
+def make_tmg_param_table(staggered=False):
     """
-    Input data: The `setX-tmg-stats.csv` values stored in
-                `frontiers-2022/output/tmg-param-stats-by-set/`
-
-                Assumes TMG params in CSV file appear in the same order as in
-                `constants.TMG_PARAM_NAMES`. 
-                This is the same order used by the function `tmg_stats.analyze_tmg_params`
-                which generates the CSV files in `tmg-param-stats-by-set/`.
-
     Creates a single LaTeX table that, for each measurement set,
     compares pre- and post-exercise values of each TMG parameter.
 
     Columns: Set number (1, 2, 3, and 4)
-    Rows: The following SPM param values:
+    Rows: The following TMG param values:
           - Dm [mm]
           - Td [ms]
           - Tc [ms]
           - RDDMax [mm/ms]
           - RDDMaxTime [ms]
 
+    Input data: The `setX-tmg-stats.csv` values stored in
+                `constants.TMG_PARAMS_BY_SET_DIR`
+                Assumes TMG params in CSV file appear in the same order
+                as in `constants.TMG_PARAM_NAMES`, which is the same order
+                used by the function `tmg_analysis.analyze_tmg_params_by_set`
+                which generates the CSV files in `constants.TMG_PARAMS_BY_SET_DIR`.
+
     """
-    data_dir = "/home/ej/Media/tmg-bmc-media/frontiers-2022/output/tmg-param-stats-by-set/"
+    if not staggered:
+        output_file = constants.ARTICLE_TABLE_DIR + "tmg_tabular.tex"
+    elif staggered:
+        output_file = constants.ARTICLE_TABLE_DIR + "tmg_tabular_staggered.tex"
+    data_dir = constants.TMG_PARAM_STATS_BY_SET_DIR
     param_names = constants.TMG_PARAM_NAMES
     skiprows = 1     # skips Parameter name heading on first row
     pre_cols = (1)   # pre-exercise mean
@@ -38,19 +44,19 @@ def make_tmg_param_table(output_file, staggered=False):
     post_params = np.zeros([len(param_names), num_sets])
     for s in range(1, num_sets + 1):  # 1-based numbering
         if not staggered:
-            one_set_pre_params = np.loadtxt(data_dir + "set{}-rdd-stats.csv".format(s),
+            one_set_pre_params = np.loadtxt(data_dir + "set{}-tmg-stats.csv".format(s),
                     delimiter=",",
                     usecols=pre_cols,
                     skiprows=skiprows)
         if staggered:
             # Use set 1 for all pre-exercise params
-            one_set_pre_params = np.loadtxt(data_dir + "set{}-rdd-stats.csv".format(1),
+            one_set_pre_params = np.loadtxt(data_dir + "set{}-tmg-stats.csv".format(1),
                     delimiter=",",
                     usecols=pre_cols,
                     skiprows=skiprows)
         pre_params[:,s-1] = one_set_pre_params
 
-        one_set_post_params = np.loadtxt(data_dir + "set{}-rdd-stats.csv".format(s),
+        one_set_post_params = np.loadtxt(data_dir + "set{}-tmg-stats.csv".format(s),
                 delimiter=",",
                 usecols=post_cols,
                 skiprows=skiprows)
@@ -224,17 +230,8 @@ def make_tmg_param_table(output_file, staggered=False):
         writer.write('\\end{tabular}')
 
 
-def make_spm_param_table(output_file):
+def make_spm_param_table():
     """
-    Input data: The `setX-params.csv` values currently stored in
-                `/frontiers-2022/output/tmp-srdjan-normalized/spm-params-by-set/`
-                Assumes SPM params in CSV file appear in the same order as in
-                `constants.SPM_PARAM_NAMES`. 
-                This is the same order used by the functions
-                `spm_analysis.get_spm_cluster_params()` and
-                `spm_analysis.get_ti_parameters_as_df()`,
-                which generate the CSV files in `spm-params-by-set/`.
-
     Creates a single LaTeX table that, for each measurement set,
     compares pre- and post-exercise values of each SPM parameter.
 
@@ -248,24 +245,16 @@ def make_spm_param_table(output_file):
           - Maximum
           - Area above threshold
 
-    % TEMPLATE
-    \begin{tabular}{|l|c|c|c|c|}
-        \hline {\rule{0pt}{2.0ex}} \hspace{-7pt}
-        SPM Parameters & Set 1 & Set 2 & Set 3 & Set 4\\
-        \hline
-        \hline {\rule{0pt}{2.0ex}} \hspace{-7pt}
-        Threshold & & & & \\
-        Start time $ [\si{\milli \second}] $ & & & & \\
-        End time $ [\si{\milli \second}] $ & & & & \\
-        Centroid time $ [\si{\milli \second}] $ & & & & \\
-        Centroid $ t $-value & & & & \\
-        SPM maximum & & & & \\
-        Area above threshold & & & & \\
-        \hline
-    \end{tabular}
+    Input data: The `setX-params.csv` files stored in 
+                `constants.SPM_PARAMS_BY_SET_DIR`.
+                Assumes SPM params in CSV file appear in the same order 
+                as in `constants.SPM_PARAM_NAMES`, which is the same order 
+                used by the function `spm_analysis.perform_spm_tests_by_set()`,
+                which generates the CSV files in `constants.SPM_PARAMS_BY_SET_DIR`.
 
     """
-    data_dir = "/home/ej/Media/tmg-bmc-media/frontiers-2022/output/tmp-srdjan-normalized/spm-params-by-set/"
+    data_dir = constants.SPM_PARAMS_BY_SET_DIR
+    output_file = constants.ARTICLE_TABLE_DIR + "spm_tabular.tex"
     param_names = constants.SPM_PARAM_NAMES
     skiprows = 1   # skips "Cluster Number" heading on first row
     usecols = (1)  # use column 2 (param values); ignore column 1 (param names)
@@ -371,10 +360,159 @@ def make_spm_param_table(output_file):
         writer.write('\\end{tabular}')
 
 
-if __name__ == "__main__":
-    output_dir = "/home/ej/Documents/projects/tmg-bmc/frontiers-2022/article/tables/"
-    # output_dir = "/home/ej/"
-    # make_spm_param_table(output_dir + "spm_tabular.tex")
+def make_spm_plot_for_article():
+    """
+    Generates a 4-axis Maplotlib plot showing SPM results for
+    sets 1, 2, 3, and 4 for use in the Frontiers journal article.
 
-    make_tmg_param_table(output_dir + "tmg_tabular.tex")
-    make_tmg_param_table(output_dir + "tmg_tabular_staggered.tex", staggered=True)
+    Essentially the same figures as produced by 
+    `spm_analysis.perform_spm_tests_by_set`, just placed in a single figure
+    to meet the Frontiers requirement that subfigures be in a single figure.
+
+    Input data: the normalized per-subject measurement files in `constants.NORMED_SPM_DATA_DIR`
+
+    """
+    save_figure=True, 
+    show_plot=False
+
+    pre_input_dir = constants.NORMED_SPM_DATA_DIR + "pre-exercise/"
+    post_input_dir = constants.NORMED_SPM_DATA_DIR + "post-exercise/"
+    output_file = constants.ARTICLE_FIGURE_DIR + "spm-plot.jpg"
+
+    sets_per_measurement_file = 4
+    rows_per_measurement_file = constants.TMG_ROWS_TO_USE_FOR_SPM - constants.TMG_ROWS_TO_SKIP_FOR_SPM
+    subjects_in_database = 55
+
+    # 3D Numpy tensor to hold all pre-exercise measurements in database
+    pre_tensor = np.zeros([rows_per_measurement_file,
+        sets_per_measurement_file,
+        subjects_in_database])
+
+    # 3D Numpy tensor to hold all post-exercise measurements in database
+    post_tensor = np.zeros([rows_per_measurement_file,
+        sets_per_measurement_file,
+        subjects_in_database])
+
+    # Load pre-exercise measurements into memory
+    for i, filename in enumerate(frontiers_utils.natural_sort(os.listdir(pre_input_dir))):
+        data = np.loadtxt(pre_input_dir + filename, delimiter=',', skiprows=1)
+        pre_tensor[:, :, i] = data
+
+    # Load post-exercise measurements into memory
+    for i, filename in enumerate(frontiers_utils.natural_sort(os.listdir(post_input_dir))):
+        data = np.loadtxt(post_input_dir + filename, delimiter=',', skiprows=1)
+        post_tensor[:, :, i] = data
+    
+    # --------------------------------------------- #
+    # BEGIN PLOTTING
+    # --------------------------------------------- #
+    fig, axes = plt.subplots(sets_per_measurement_file, 2, figsize=(6.8, 8))
+    tmg_data_start_row = constants.TMG_ROWS_TO_SKIP_FOR_SPM
+
+    subfib_labels = ["(1)", "(2)", "(3)", "(4)"]
+
+    fig_dpi = 500
+    fig_format = "jpg"
+
+    pre_color = plotting.pre_color
+    post_color = plotting.post_color
+    post_color2 = plotting.post_color2
+    pre_alpha = plotting.pre_alpha
+    post_alpha = plotting.post_alpha
+
+    tline_color = plotting.tline_color
+    tfill_color = plotting.tfill_color
+    tfill_color2 = plotting.tfill_color2
+
+    linewidth = 1.5
+
+    # Loop through each set of normalized measurements
+    for s in range(sets_per_measurement_file):
+        pre_data = pre_tensor[:, s, :]
+        post_data = post_tensor[:, s, :]
+        t, ti = spm_analysis._get_spm_ti(pre_data, post_data)
+
+        # Begin plotting
+        # --------------------------------------------- #
+        N = np.shape(post_data)[0]       # number of rows in pre/post_data
+        time = np.linspace(0, N - 1, N)  # [ms] assuming 1 kHz sampling
+
+        post_mean = np.mean(post_data, axis=1)
+        pre_mean = np.mean(pre_data, axis=1)
+        post_sd = np.std(post_data, ddof=1, axis=1)
+        pre_sd = np.std(pre_data, ddof=1, axis=1)
+
+        # Plot TMG measurement
+        # --------------------------------------------- #
+        ax = axes[s, 0]
+        plotting.remove_spines(ax)
+
+        # Only put x label on bottom axis to save vertical space
+        if s == sets_per_measurement_file - 1:  
+            ax.set_xlabel("Time [ms]")
+        ax.set_ylabel("Normalized displacement")
+
+        # Mean value of time-series measurements
+        ax.plot(time, pre_mean, color=pre_color, linewidth=linewidth, 
+                label="Pre-ISQ mean", zorder=4)
+        ax.plot(time, post_mean, color=post_color, linewidth=linewidth,
+                label="Post-ISQ mean", zorder=3)
+
+        # Standard deviation clouds
+        ax.fill_between(time, post_mean - post_sd, post_mean + post_sd, 
+                color=post_color, alpha=post_alpha, zorder=2)
+        ax.fill_between(time, pre_mean - pre_sd, pre_mean + pre_sd,
+                color=pre_color, alpha=pre_alpha, zorder=1)
+
+        ax.text(-0.30, 0.5, subfib_labels[s], transform=ax.transAxes, fontsize=12)
+        ax.legend(framealpha=1.0)
+        # --------------------------------------------- #
+
+        # Plot SPM results
+        # --------------------------------------------- #
+        ax = axes[s, 1]
+        plotting.remove_spines(ax)
+
+        # Only put x label on bottom axis to save vertical space
+        if s == sets_per_measurement_file - 1:  
+            ax.set_xlabel("Time [ms]")
+        ax.set_ylabel("SPM $t$-statistic", labelpad=-0.1)
+
+        ax.set_ylim(-7, 12)
+        y_ticks = [-5, 0, 5, 10]
+        y_tick_lables = ["-5", "0", "5", "10"]
+        ax.set_yticks(y_ticks)
+        ax.set_yticklabels(y_tick_lables)
+
+        # Plot SPM t-statistic
+        ax.plot(time, t.z, color=tline_color)  # plot t-curve
+
+        # Plot dashed line at y = 0
+        ax.axhline(y=0, color='black', linestyle=':')  
+
+        # Plot dashed line at SPM significance threshold
+        ax.axhline(y=ti.zstar, color='#000000', linestyle='--')
+
+        # Text box showing alpha, threshold value, and p value
+        ax.text(73, ti.zstar + 1.0, plotting.get_annotation_text(ti),
+                va='bottom', ha='left', 
+                bbox=dict(facecolor='#FFFFFF', edgecolor='#222222', boxstyle='round,pad=0.3'))
+
+        # Shade between curve and threshold
+        ax.fill_between(time, t.z, ti.zstar, where=t.z >= ti.zstar,
+                interpolate=True, color=tfill_color)
+
+    plt.tight_layout()
+
+    if save_figure:
+        plt.savefig(output_file, dpi=fig_dpi, bbox_inches='tight', pad_inches = 0)
+
+    if show_plot:
+        plt.show()
+
+
+if __name__ == "__main__":
+    make_spm_param_table()
+    make_tmg_param_table()
+    make_tmg_param_table(staggered=True)
+    make_spm_plot_for_article()
