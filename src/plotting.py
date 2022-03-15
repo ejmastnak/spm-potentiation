@@ -101,7 +101,7 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
     ax = axes[1]
     remove_spines(ax)
     ax.set_xlabel(x_axis_label)
-    ax.set_ylabel("SPM $t$ statistic", labelpad=-0.1)
+    ax.set_ylabel("SPM $t$-statistic", labelpad=-0.1)
 
     # Plot SPM t-statistic
     ax.plot(time, t.z, color=tline_color)  # plot t-curve
