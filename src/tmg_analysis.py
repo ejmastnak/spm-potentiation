@@ -152,14 +152,7 @@ def analyze_tmg_params_by_set(use_first_set_as_baseline=False):
         df_stats.to_csv(stats_output_file)
 
 
-
-def practice():
-    print("Hi!")
-
-
 if __name__ == "__main__":
-    # compute_tmg_params_for_all_subjects()
-    # analyze_tmg_params_by_set()
+    compute_tmg_params_for_all_subjects()
+    analyze_tmg_params_by_set()
     analyze_tmg_params_by_set(use_first_set_as_baseline=True)
-    
-    # practice()
