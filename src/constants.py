@@ -1,5 +1,5 @@
 # Root project directory
-ROOT_PROJECT_DIR = "/home/ej/Media/tmg-bmc-media/frontiers-2022/"
+ROOT_PROJECT_DIR = "/home/ej/Documents/projects/tmg-bmc/frontiers-2022/"
 
 ARTICLE_DIR = "/home/ej/Documents/projects/tmg-bmc/frontiers-2022/article/"
 
