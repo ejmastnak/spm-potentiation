@@ -1,0 +1,12 @@
+- Record raw Excel TMG measurements for all subjects.
+- Process raw TMG measurements, which does the following to each Excel file:
+  - Converts to CSV files
+  - Separates into pre-ISQ and post-ISQ
+  - For each subject, keeps only first four measurement sets and only the first pre-ISQ and first post-ISQ measurement form each set
+- Process data for SPM, which does the following:
+  - Normalize
+  - Trim to first 100 ms
+- Compute TMG parameters for each subject
+- Perform statistical analysis of TMG parameters across all subjects
+- Perform SPM analysis by subject
+- Perform SPM analysis by set

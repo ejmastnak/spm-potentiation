@@ -1,0 +1,51 @@
+\input{~/dotfiles/config/latex/templates/preamble}
+\input{~/dotfiles/config/latex/templates/vector-calc-macros}
+
+\begin{document}
+    \textbf{What's involved}
+    \begin{itemize}
+    
+        \item A set of $ I $ 1D (generally time-series) curves representing independent experimental observations.
+        Let $ K $ denote the number of nodes (i.e. data points) per curve.
+
+        Assemble curves into an $ I \times K $ matrix $ \mat{Y} $.
+
+        Result: matrix $ \mat{Y} \in \mathbb{R}^{I \times K} $ where $ I $ is the number of curves and $ K $ is the number of data points per curve.
+
+        \item A number $ J $ of experimental factors (generally two, e.g. for pre- and post-exercise)
+
+        \item A matrix $ \mat{X} \in \mathbb{R}^{I \times J} $
+
+        \item Describe a general linear parameteric statistical test using a general linear model for $ \mat{Y} $ of the form
+        \begin{equation*}
+            \mat{Y} = \mat{X} \vec{\beta} + \vec{\epsilon},
+        \end{equation*}
+        where $ \vec{\beta} \in \mathbb{R}^{J \times K} $ is a matrix of unknown regression parameters and $ \vec{\epsilon} \in \mat{R}^{I \times K} $ matrix of residuals.
+
+        \item Least-squares estimates of the regression parameters are given by the pseudo-inverse
+        \begin{equation*}
+            \hat{\vec{\beta}} = (\mat{X}^{\top} \mat{X})^{-1} \mat{X}^{\top} \mat{Y}.
+        \end{equation*}
+        Interpretation: the parameter matrix $ \hat{\vec{\beta}} $ contains $ J $ curves reflecting the mean trends for each of the $ J $ experimental factors.
+        
+        \item Compute residuals associated with the least-squares estimate $ \hat{\vec{\beta}} $ via
+        \begin{equation*}
+            \vec{\epsilon} = \mat{Y} - \mat{X} \hat{\vec{\beta}}.
+        \end{equation*}
+        
+        \item Compute variance curves $ \sigma^{2} $ via
+        \begin{equation*}
+            \hat{\sigma}^{2} = \frac{\mathrm{diag}(\vec{\epsilon}^{\top} \vec{\epsilon})}{I - \rank (\mat{X})},
+        \end{equation*}
+        which produces $ \hat{\sigma}^{2} \in \mathbb{R}^{K} $, i.e. the number of nodes in the curves in $ \mat{Y} $.
+        
+        \item The $ t $ statistic is computed according to
+        \begin{equation*}
+            t_{k} = \frac{\vec{c}^{\top} \hat{\vec{\beta}}_{k}}{\hat{\sigma}_{k} \sqrt{\vec{c}^{\top} (\mat{X}^{\top} \mat{X})^{-1} \vec{c}}},
+        \end{equation*}
+        where $ \vec{c} \in \mathbb{R}^{J} $ is a contrast vector assigning weights to the $ J $ experimental factors.
+        A two-sample t test uses $ \vec{c} = (-1, 1)^{\top} $.
+        
+    
+    \end{itemize}
+\end{document}
