@@ -9,7 +9,7 @@ src/__pycache__/
 src/test.py
 
 # Python code to generate tables is already under VC
-article/tables/
+manuscript/tables/
 
 # LaTeX compilation files
 # --------------------------------------------- #
