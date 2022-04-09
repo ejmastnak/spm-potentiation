@@ -360,6 +360,122 @@ def make_spm_param_table():
         writer.write('\\end{tabular}')
 
 
+def make_sample_spm_plot():
+    """
+    Generates a 2-axis Maplotlib plot showing the results of a
+    representative SPM paired t-test using unnormalized TMG data from a
+    single subject.
+
+    Input data: the normalized per-subject measurement files in `constants.NORMED_SPM_DATA_DIR`
+
+    """
+    save_figure=True
+    show_plot=False
+
+    file_basename = "54-ZI20211112121510"
+    pre_file = constants.SPM_DATA_DIR + "pre-exercise/" + file_basename + "-pre.csv"
+    post_file = constants.SPM_DATA_DIR + "post-exercise/" + file_basename + "-post.csv"
+    output_file = constants.ARTICLE_FIGURE_DIR + "spm-example.jpg"
+
+    pre_data = np.loadtxt(pre_file, delimiter=',', skiprows=1)
+    post_data = np.loadtxt(post_file, delimiter=',', skiprows=1)
+
+    # --------------------------------------------- #
+    # BEGIN PLOTTING
+    # --------------------------------------------- #
+    width_inches = 7
+    fig, axes = plt.subplots(1, 2, figsize=(width_inches, 0.5*width_inches))
+    tmg_data_start_row = constants.TMG_ROWS_TO_SKIP_FOR_SPM
+
+    fig_dpi = 350
+    fig_format = "jpg"
+
+    pre_color    = constants.PRE_COLOR
+    post_color   = constants.POST_COLOR
+    pre_alpha    = constants.PRE_ALPHA
+    post_alpha   = constants.POST_ALPHA
+    tline_color  = constants.T_LINE_COLOR
+    tfill_color  = constants.T_FILL_COLOR
+    tfill_color2 = constants.T_FILL_COLOR2
+    linewidth = 1.5
+
+    # Loop through each set of normalized measurements
+    t, ti = spm_analysis._get_spm_ti(pre_data, post_data)
+
+    # Begin plotting
+    # --------------------------------------------- #
+    N = np.shape(post_data)[0]       # number of rows in pre/post_data
+    time = np.linspace(0, N - 1, N)  # [ms] assuming 1 kHz sampling
+
+    post_mean = np.mean(post_data, axis=1)
+    pre_mean = np.mean(pre_data, axis=1)
+    post_sd = np.std(post_data, ddof=1, axis=1)
+    pre_sd = np.std(pre_data, ddof=1, axis=1)
+
+    # Plot TMG measurement
+    # --------------------------------------------- #
+    ax = axes[0]
+    plotting.remove_spines(ax)
+
+    ax.set_xlabel("Time [ms]")
+    ax.set_ylabel("Displacement [mm]")
+
+    # Mean value of time-series measurements
+    ax.plot(time, pre_mean, color=pre_color, linewidth=linewidth, 
+            label="Pre-ISQ mean", zorder=4)
+    ax.plot(time, post_mean, color=post_color, linewidth=linewidth,
+            label="Post-ISQ mean", zorder=3)
+
+    # Standard deviation clouds
+    ax.fill_between(time, post_mean - post_sd, post_mean + post_sd, 
+            color=post_color, alpha=post_alpha, zorder=2)
+    ax.fill_between(time, pre_mean - pre_sd, pre_mean + pre_sd,
+            color=pre_color, alpha=pre_alpha, zorder=1)
+
+    ax.legend(framealpha=1.0, loc="lower right")
+    # --------------------------------------------- #
+
+    # Plot SPM results
+    # --------------------------------------------- #
+    ax = axes[1]
+    plotting.remove_spines(ax)
+
+    ax.set_xlabel("Time [ms]")
+    ax.set_ylabel("SPM $t$-statistic", labelpad=-0.1)
+
+    ax.set_ylim(-7, 12)
+    y_ticks = [-5, 0, 5, 10]
+    y_tick_lables = ["-5", "0", "5", "10"]
+    ax.set_yticks(y_ticks)
+    ax.set_yticklabels(y_tick_lables)
+
+    # Plot SPM t-statistic
+    ax.plot(time, t.z, color=tline_color)  # plot t-curve
+
+    # Plot dashed line at y = 0
+    ax.axhline(y=0, color='black', linestyle=':')  
+
+    # Plot dashed line at SPM significance threshold
+    ax.axhline(y=ti.zstar, color='#000000', linestyle='--')
+
+    # Text box showing alpha, threshold value, and p value
+    ax.text(73, ti.zstar + 1.0, plotting.get_annotation_text(ti),
+            va='bottom', ha='left', 
+            bbox=dict(facecolor='#FFFFFF', edgecolor='#222222', boxstyle='round,pad=0.3'))
+
+    # Shade between curve and threshold
+    ax.fill_between(time, t.z, ti.zstar, where=t.z >= ti.zstar,
+            interpolate=True, color=tfill_color)
+
+    plt.tight_layout()
+
+    if save_figure:
+        plt.savefig(output_file, dpi=fig_dpi, bbox_inches='tight', pad_inches = 0)
+
+    if show_plot:
+        plt.show()
+
+
 def make_setwise_spm_subplots():
     """
     Generates a 4-axis Maplotlib plot showing SPM results for
@@ -377,7 +493,7 @@ def make_setwise_spm_subplots():
 
     pre_input_dir = constants.NORMED_SPM_DATA_DIR + "pre-exercise/"
     post_input_dir = constants.NORMED_SPM_DATA_DIR + "post-exercise/"
-    output_file = constants.ARTICLE_FIGURE_DIR + "spm-plot.jpg"
+    output_file = constants.ARTICLE_FIGURE_DIR + "spm-subplot.jpg"
 
     sets_per_measurement_file = 4
     rows_per_measurement_file = constants.TMG_ROWS_TO_USE_FOR_SPM - constants.TMG_ROWS_TO_SKIP_FOR_SPM
@@ -510,8 +626,9 @@ def make_setwise_spm_subplots():
 
 
 if __name__ == "__main__":
-    make_spm_param_table()
-    make_tmg_param_table()
-    make_tmg_param_table(staggered=True)
-    make_setwise_spm_subplots()
+    # make_spm_param_table()
+    # make_tmg_param_table()
+    # make_tmg_param_table(staggered=True)
+    make_sample_spm_plot()
+    # make_setwise_spm_subplots()
 
