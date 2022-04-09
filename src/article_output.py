@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+import tmg_biomechanics.tmg_params as tmg_params
 import plotting, constants, frontiers_utils, spm_analysis
 """
 A set of functions used to create the LaTeX tables and figures that appear 
@@ -360,13 +361,164 @@ def make_spm_param_table():
         writer.write('\\end{tabular}')
 
 
+def make_sample_tmg_plot():
+    """
+    Generates a 2-axis Maplotlib plot showing a TMG signal (axis 0)
+    and its time deriviatve (axis 1), with the following parameters defined:
+    - Dm, Td, Tc (TMG)
+    - RDDMax, RDDMaxTime (TMG derivative)
+
+    Input data: the per-subject measurement files in `constants.INITIAL_DATA_DIR`
+
+    """
+    save_figure=True
+    show_plot=True
+
+    file_basename = "54-ZI20211112121510"
+    pre_file = constants.INITIAL_DATA_DIR + "pre-exercise/" + file_basename + "-pre.csv"
+    post_file = constants.INITIAL_DATA_DIR + "post-exercise/" + file_basename + "-post.csv"
+    output_file = constants.ARTICLE_FIGURE_DIR + "tmg-example.jpg"
+
+    pre_data = np.loadtxt(pre_file, delimiter=',', skiprows=1)
+    post_data = np.loadtxt(post_file, delimiter=',', skiprows=1)
+    set_num = 2  # set from which to extract TMG signal
+    numpoints = 400
+
+    pre_tmg = pre_data[:numpoints, set_num]
+    post_tmg = post_data[:numpoints, set_num]
+    pre_rdd = np.gradient(pre_tmg, constants.TMG_DT)
+    post_rdd = np.gradient(post_tmg, constants.TMG_DT)
+
+    N = np.shape(pre_tmg)[0]         # number of rows in pre/post_data
+    time = np.linspace(0, N - 1, N)  # [ms] assuming 1 kHz sampling
+
+    # Only show TMG parameters for pre-exercise signal to avoid clutter
+    params = tmg_params.get_params_of_tmg_signal(pre_tmg)
+    dm = params[0]
+    td = params[1]
+    tc = params[2]
+    rdd_max = params[8]
+    rdd_max_time = params[11]
+    dm_index = np.argmax(pre_tmg)
+
+    # --------------------------------------------- #
+    # BEGIN PLOTTING
+    # --------------------------------------------- #
+    fig_width_inches = 7
+    fig, axes = plt.subplots(2, 1, figsize=(fig_width_inches, 0.8*fig_width_inches))
+    tmg_data_start_row = constants.TMG_ROWS_TO_SKIP_FOR_SPM
+    fig_dpi = 400
+    fig_format = "jpg"
+    
+    # For labels showing "Dm", "Tc", etc...
+    param_font_size = 11
+
+    # For arrows indicating TMG/RDD parameters
+    arrow_linewidth=1.0
+
+    # For boxes surrounding parameter names
+    param_bbox = dict(facecolor='#ffffff',
+            boxstyle="round, rounding_size=0.1, pad=0.2")
+
+    # Plot TMG measurement
+    # --------------------------------------------- #
+    ax = axes[0]
+    plotting.remove_spines(ax)
+
+    ax.set_xlabel("Time [ms]")
+    ax.set_ylabel("Displacement [mm]")
+
+    ax.plot(time, pre_tmg)
+
+    # Move y axis to t = 0
+    ax.set_xlim(xmin=0)
+
+    # Horizontal dashed line noting y = 0
+    ax.axhline(y=0, color='black', linestyle=':')  
+
+    # Vertical dashed line noting 0.1*Dm
+    ax.vlines(td, 0.1*dm, 0.96*dm, color='black', linestyle=':')  
+
+    # Arrow and text for Dm
+    ax.text(dm_index, 0.5*dm, "Dm",
+            ha="center", va="center",
+            fontsize=param_font_size,
+            zorder=10,
+            bbox=param_bbox)
+    ax.annotate("", xy=(dm_index, dm), xytext=(dm_index, 0),
+            arrowprops=dict(lw=arrow_linewidth, arrowstyle="<->, head_length=0.8, head_width=0.4"))
+
+    # Arrow and text for Td
+    ax.text(0.5*td, 0.20*dm, "Td",
+            ha="center", va="center",
+            fontsize=param_font_size,
+            bbox=param_bbox)
+    ax.annotate("", xy=(0, 0.1*dm), xytext=(td, 0.1*dm),
+            arrowprops=dict(lw=arrow_linewidth, arrowstyle="<->, head_length=0.3, head_width=0.5"))
+
+    # Arrow and text for Tc
+    ax.text(td + 0.5*tc, 0.99*dm, "Tc",
+            ha="center", va="center",
+            fontsize=param_font_size,
+            bbox=param_bbox)
+    ax.annotate("", xy=(td, 0.9*dm), xytext=(td + tc, 0.9*dm),
+            arrowprops=dict(lw=arrow_linewidth, arrowstyle="<->, head_length=0.3, head_width=0.5"))
+
+    # --------------------------------------------- #
+
+    # Plot TMG derivative
+    # --------------------------------------------- #
+    ax = axes[1]
+    plotting.remove_spines(ax)
+
+    ax.set_xlabel("Time [ms]")
+    ax.set_ylabel("Disp. per time [mm/ms]")
+
+    ax.plot(time, pre_rdd)
+
+    # Move y axis to t = 0
+    ax.set_xlim(xmin=0)
+
+    # Horizontal dashed line noting y = 0
+    ax.axhline(y=0, color='black', linestyle=':')  
+
+    # Vertical dashed line noting RDDMaxTime
+    ax.vlines(rdd_max_time, -0.15*rdd_max, 0, color='black', linestyle=':')  
+
+    # Arrow and text for RDDMax
+    ax.text(rdd_max_time, 0.5*rdd_max, "RDDMax",
+            ha="center", va="center",
+            fontsize=param_font_size,
+            zorder=10,
+            bbox=param_bbox)
+    ax.annotate("", xy=(rdd_max_time, rdd_max), xytext=(rdd_max_time, 0),
+            arrowprops=dict(lw=arrow_linewidth, arrowstyle="<->, head_length=0.8, head_width=0.4"))
+
+    # Arrow and text for RDDMaxTime
+    ax.text(0.5*rdd_max_time, -0.30*rdd_max, "RDDMax\nTime",
+            ha="center", va="center",
+            fontsize=param_font_size,
+            bbox=param_bbox)
+    ax.annotate("", xy=(0, -0.09*rdd_max), xytext=(rdd_max_time, -0.09*rdd_max),
+            arrowprops=dict(lw=arrow_linewidth, arrowstyle="<->, head_length=0.4, head_width=0.5"))
+
+    plt.tight_layout()
+    plt.subplots_adjust(hspace=0.12)
+
+    if save_figure:
+        plt.savefig(output_file, dpi=fig_dpi, bbox_inches='tight', pad_inches = 0)
+
+    if show_plot:
+        plt.show()
+
+
 def make_sample_spm_plot():
     """
     Generates a 2-axis Maplotlib plot showing the results of a
     representative SPM paired t-test using unnormalized TMG data from a
     single subject.
 
-    Input data: the normalized per-subject measurement files in `constants.NORMED_SPM_DATA_DIR`
+    Input data: the per-subject measurement files in `constants.SPM_DATA_DIR`
 
     """
     save_figure=True
@@ -629,6 +781,7 @@ if __name__ == "__main__":
     # make_spm_param_table()
     # make_tmg_param_table()
     # make_tmg_param_table(staggered=True)
-    make_sample_spm_plot()
+    make_sample_tmg_plot()
+    # make_sample_spm_plot()
     # make_setwise_spm_subplots()
 
