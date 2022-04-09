@@ -1,7 +1,7 @@
 # Root project directory
 ROOT_PROJECT_DIR = "/home/ej/Documents/projects/tmg-bmc/frontiers-2022/"
 
-ARTICLE_DIR = "/home/ej/Documents/projects/tmg-bmc/frontiers-2022/article/"
+ARTICLE_DIR = "/home/ej/Documents/projects/tmg-bmc/frontiers-2022/manuscript/"
 
 # Root directory with measurement data
 ROOT_DATA_DIR = ROOT_PROJECT_DIR + "data/"
