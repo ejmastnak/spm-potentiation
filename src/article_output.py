@@ -360,7 +360,7 @@ def make_spm_param_table():
         writer.write('\\end{tabular}')
 
 
-def make_spm_plot_for_article():
+def make_setwise_spm_subplots():
     """
     Generates a 4-axis Maplotlib plot showing SPM results for
     sets 1, 2, 3, and 4 for use in the Frontiers journal article.
@@ -513,4 +513,5 @@ if __name__ == "__main__":
     make_spm_param_table()
     make_tmg_param_table()
     make_tmg_param_table(staggered=True)
-    make_spm_plot_for_article()
+    make_setwise_spm_subplots()
+
