@@ -593,7 +593,7 @@ def make_sample_spm_plot():
     plotting.remove_spines(ax)
 
     ax.set_xlabel("Time [ms]")
-    ax.set_ylabel("SPM $t$-statistic", labelpad=-0.1)
+    ax.set_ylabel("SPM $t$-continuum", labelpad=-0.1)
 
     ax.set_ylim(-7, 12)
     y_ticks = [-5, 0, 5, 10]
@@ -742,7 +742,7 @@ def make_setwise_spm_subplots():
         # Only put x label on bottom axis to save vertical space
         if s == sets_per_measurement_file - 1:  
             ax.set_xlabel("Time [ms]")
-        ax.set_ylabel("SPM $t$-statistic", labelpad=-0.1)
+        ax.set_ylabel("SPM $t$-continuum", labelpad=-0.1)
 
         ax.set_ylim(-7, 12)
         y_ticks = [-5, 0, 5, 10]
