@@ -149,7 +149,7 @@ def perform_spm_tests_by_set():
 # ---------------------------------------------------------------------- #
 # Functions below this line are not meant to be called outside this script
 # ---------------------------------------------------------------------- #
-def _get_spm_ti(pre_data, post_data):
+def _get_spm_ti(pre_data, post_data, alpha=0.05):
     """
     Returns the spm.t and spm.ti objects resulting from an SMP 
     two-sample t-test between the inputted pre- and post-exercise data.
@@ -166,7 +166,7 @@ def _get_spm_ti(pre_data, post_data):
     """
     try:
         t  = spm1d.stats.ttest_paired(post_data.T, pre_data.T)
-        ti = t.inference(alpha=0.01, two_tailed=False, interp=True)
+        ti = t.inference(alpha=alpha, two_tailed=False, interp=True)
         return t, ti
     except Exception as e:
         print("Error performing SPM analysis: " + str(e))
