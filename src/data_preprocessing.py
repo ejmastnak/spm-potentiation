@@ -88,6 +88,30 @@ def process_raw_excel_files():
                     msmnts_per_pre_set, msmnt_per_post_set,
                     max_set=max_sets)
 
+    # Convert files with 8 pre and post measurements per measurement set,
+    # taking all measurements from each set
+    # --------------------------------------------- #
+    input_dir = constants.ROOT_DATA_DIR + "/excel-raw/8/"
+    output_dir = constants.ROOT_DATA_DIR + "csv-for-spm-full/"
+    pre_output_dir  = output_dir + "pre-exercise/"
+    post_output_dir = output_dir + "post-exercise/"
+
+    msmnts_per_pre_set = 8
+    msmnts_per_post_set = 8
+    max_sets  = 8
+
+    for xlsx_filename in frontiers_utils.natural_sort(os.listdir(input_dir)):
+        if ".xlsx" in xlsx_filename and "$" not in xlsx_filename:
+            if xlsx_filename == "61-AG20211210130200.xlsx":
+                continue
+            print(xlsx_filename)
+
+            xlsx_csv_conversion.split_by_pre_post_and_set(
+                    input_dir, xlsx_filename,
+                    pre_output_dir, post_output_dir,
+                    msmnts_per_pre_set, msmnts_per_post_set,
+                    max_set=max_sets)
+
 
 # SPM pre-processing
 def prepare_csv_files_for_spm():
