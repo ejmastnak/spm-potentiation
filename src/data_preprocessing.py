@@ -44,7 +44,6 @@ def process_raw_excel_files():
     Output: `/data/csv-processed/`
 
     """
-    input_dir  = constants.ROOT_DATA_DIR + "/excel-raw/"
     output_dir = constants.INITIAL_DATA_DIR
 
     pre_output_dir  = output_dir + "pre-exercise/"
@@ -53,9 +52,13 @@ def process_raw_excel_files():
     # Convert files with 1 pre and post measurement per measurement set
     # --------------------------------------------- #
     input_dir = constants.ROOT_DATA_DIR + "/excel-raw/1/"
-    msmnts_per_pre_set = 1   # number of pre-exercise measurements per set
-    msmnt_per_post_set = 1   # number of post-exercise measurements per set
-    max_sets  = 4   # ignore sets in Excel file larger than max_sets
+
+    # Number of pre/post exercise measurements per set
+    msmnts_per_pre_set = 1   
+    msmnt_per_post_set = 1
+
+    # Maximum number of sets to take measurements from
+    max_sets = 8
 
     for xlsx_filename in frontiers_utils.natural_sort(os.listdir(input_dir)):
         if ".xlsx" in xlsx_filename and "$" not in xlsx_filename:
@@ -67,11 +70,14 @@ def process_raw_excel_files():
                     max_set=max_sets)
 
     # Convert files with 8 pre and post measurements per measurement set,
+    # taking only first measurement from each set
     # --------------------------------------------- #
     input_dir = constants.ROOT_DATA_DIR + "/excel-raw/8/"
     msmnts_per_pre_set = 8
     msmnt_per_post_set = 8
-    max_sets  = 4
+
+    # Maximum number of sets to take measurements from
+    max_sets = 8
 
     for xlsx_filename in frontiers_utils.natural_sort(os.listdir(input_dir)):
         if ".xlsx" in xlsx_filename and "$" not in xlsx_filename:
@@ -194,5 +200,5 @@ def remove_spm_significance_from_filter_artefact(pre_df, post_df,
     return pre_df, post_df
 
 if __name__ == "__main__":
-    # process_raw_excel_files()
-    prepare_csv_files_for_spm()
+    process_raw_excel_files()
+    # prepare_csv_files_for_spm()
