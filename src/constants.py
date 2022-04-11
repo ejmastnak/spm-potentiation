@@ -3,6 +3,8 @@ ROOT_PROJECT_DIR = "/home/ej/Documents/projects/tmg-bmc/frontiers-2022/"
 
 ARTICLE_DIR = "/home/ej/Documents/projects/tmg-bmc/frontiers-2022/manuscript/"
 
+# Data
+# --------------------------------------------- #
 # Root directory with measurement data
 ROOT_DATA_DIR = ROOT_PROJECT_DIR + "data/"
 
@@ -32,7 +34,10 @@ NORMED_SPM_1MPS_DATA_DIR = ROOT_DATA_DIR + "csv-for-spm-1mps-normed/"
 
 # Normalized version of SPM_1MPS_DATA_DIR for cross-subject comparison
 NORMED_SPM_8MPS_DATA_DIR = ROOT_DATA_DIR + "csv-for-spm-8mps-normed/"
+# --------------------------------------------- #
 
+# Results
+# --------------------------------------------- #
 # Computed TMG parameters for each subject for 1MPS files
 TMG_PARAMS_BY_SUBJECT_1MPS_DIR = ROOT_OUTPUT_DIR + "tmg-params-by-subject-1mps/"
 
@@ -40,8 +45,11 @@ TMG_PARAMS_BY_SUBJECT_1MPS_DIR = ROOT_OUTPUT_DIR + "tmg-params-by-subject-1mps/"
 TMG_PARAMS_BY_SUBJECT_8MPS_DIR = ROOT_OUTPUT_DIR + "tmg-params-by-subject-8mps/"
 
 # Analysis of TMG parameters across all subjects for each set
-TMG_PARAM_STATS_BY_SET_DIR = ROOT_OUTPUT_DIR + "tmg-param-stats-by-set/"
-TMG_PARAM_STATS_RELTO_SET1_DIR = ROOT_OUTPUT_DIR + "tmg-param-stats-relto-set1/"
+TMG_STATS_ACROSS_SUBJECTS_DIR = ROOT_OUTPUT_DIR + "tmg-stats-across-subjects/"
+TMG_STATS_ACROSS_SUBJECTS_RELTO_BASELINE_DIR = ROOT_OUTPUT_DIR + "tmg-stats-across-subjects-relto-baseline/"
+
+# Analysis of TMG parameters in a given set/athlete for 8 MPS files
+TMG_STATS_BY_ATHLETE_8MPS_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-athlete-8mps/"
 
 # SPM parameters for each subject
 SPM_PARAMS_BY_SUBJECT_DIR = ROOT_OUTPUT_DIR + "spm-params-by-subject/"
