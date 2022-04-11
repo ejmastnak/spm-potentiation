@@ -1,6 +1,7 @@
 # Project files
 # --------------------------------------------- #
 meta/
+data/
 template/
 collab/
 src/misc/
