@@ -7,7 +7,7 @@ ARTICLE_DIR = "/home/ej/Documents/projects/tmg-bmc/frontiers-2022/manuscript/"
 ROOT_DATA_DIR = ROOT_PROJECT_DIR + "data/"
 
 # Root directory for computed output data
-ROOT_OUTPUT_DIR = ROOT_PROJECT_DIR + "output/"
+ROOT_OUTPUT_DIR = ROOT_PROJECT_DIR + "results/"
 
 # Directory with raw Excel files with 1 measurement per measurement set
 RAW_EXCEL_1MPS_DATA_DIR = ROOT_DATA_DIR + "excel-raw/1mps/"
