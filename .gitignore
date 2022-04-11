@@ -2,6 +2,7 @@
 # --------------------------------------------- #
 meta/
 data/
+results/
 template/
 collab/
 src/misc/
