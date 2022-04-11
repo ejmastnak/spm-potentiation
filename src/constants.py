@@ -33,8 +33,11 @@ NORMED_SPM_1MPS_DATA_DIR = ROOT_DATA_DIR + "csv-for-spm-1mps-normed/"
 # Normalized version of SPM_1MPS_DATA_DIR for cross-subject comparison
 NORMED_SPM_8MPS_DATA_DIR = ROOT_DATA_DIR + "csv-for-spm-8mps-normed/"
 
-# Computed TMG parameters for each subject
-TMG_PARAMS_BY_SUBJECT_DIR = ROOT_OUTPUT_DIR + "tmg-params-by-subject/"
+# Computed TMG parameters for each subject for 1MPS files
+TMG_PARAMS_BY_SUBJECT_1MPS_DIR = ROOT_OUTPUT_DIR + "tmg-params-by-subject-1mps/"
+
+# Computed TMG parameters for each subject for 8MPS files
+TMG_PARAMS_BY_SUBJECT_8MPS_DIR = ROOT_OUTPUT_DIR + "tmg-params-by-subject-8mps/"
 
 # Analysis of TMG parameters across all subjects for each set
 TMG_PARAM_STATS_BY_SET_DIR = ROOT_OUTPUT_DIR + "tmg-param-stats-by-set/"
