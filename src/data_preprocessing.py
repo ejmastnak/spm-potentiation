@@ -40,18 +40,13 @@ def process_raw_excel_files():
       - The measurement's number in the TMG Excel from original measurement session (see `raw-data.md`)
       Example: `ID42-S1-M2`
 
-    Input:  `/data/excel-raw/`
-    Output: `/data/csv-processed/`
-
     """
-    output_dir = constants.INITIAL_DATA_DIR
-
-    pre_output_dir  = output_dir + "pre-exercise/"
-    post_output_dir = output_dir + "post-exercise/"
 
     # Convert files with 1 pre and post measurement per measurement set
     # --------------------------------------------- #
-    input_dir = constants.ROOT_DATA_DIR + "/excel-raw/1/"
+    input_dir = constants.RAW_EXCEL_1MPS_DATA_DIR
+    pre_output_dir  = constants.RAW_CSV_1MPS_DATA_DIR + "pre-exercise/"
+    post_output_dir = constants.RAW_CSV_1MPS_DATA_DIR + "post-exercise/"
 
     # Number of pre/post exercise measurements per set
     msmnts_per_pre_set = 1   
@@ -72,7 +67,9 @@ def process_raw_excel_files():
     # Convert files with 8 pre and post measurements per measurement set,
     # taking only first measurement from each set
     # --------------------------------------------- #
-    input_dir = constants.ROOT_DATA_DIR + "/excel-raw/8/"
+    input_dir = constants.RAW_EXCEL_8MPS_DATA_DIR
+    pre_output_dir  = constants.RAW_CSV_1MPS_DATA_DIR + "pre-exercise/"
+    post_output_dir = constants.RAW_CSV_1MPS_DATA_DIR + "post-exercise/"
     msmnts_per_pre_set = 8
     msmnt_per_post_set = 8
 
@@ -91,10 +88,9 @@ def process_raw_excel_files():
     # Convert files with 8 pre and post measurements per measurement set,
     # taking all measurements from each set
     # --------------------------------------------- #
-    input_dir = constants.ROOT_DATA_DIR + "/excel-raw/8/"
-    output_dir = constants.ROOT_DATA_DIR + "csv-for-spm-full/"
-    pre_output_dir  = output_dir + "pre-exercise/"
-    post_output_dir = output_dir + "post-exercise/"
+    input_dir = constants.RAW_EXCEL_8MPS_DATA_DIR
+    pre_output_dir  = constants.RAW_CSV_8MPS_DATA_DIR + "pre-exercise/"
+    post_output_dir = constants.RAW_CSV_8MPS_DATA_DIR + "post-exercise/"
 
     msmnts_per_pre_set = 8
     msmnts_per_post_set = 8
@@ -102,10 +98,7 @@ def process_raw_excel_files():
 
     for xlsx_filename in frontiers_utils.natural_sort(os.listdir(input_dir)):
         if ".xlsx" in xlsx_filename and "$" not in xlsx_filename:
-            if xlsx_filename == "61-AG20211210130200.xlsx":
-                continue
             print(xlsx_filename)
-
             xlsx_csv_conversion.split_by_pre_post_and_set(
                     input_dir, xlsx_filename,
                     pre_output_dir, post_output_dir,
@@ -113,47 +106,107 @@ def process_raw_excel_files():
                     max_set=max_sets)
 
 
-# SPM pre-processing
-def prepare_csv_files_for_spm():
+def prepare_1mps_csv_files_for_spm():
     """
-    Processes data
-    Input: `/data/csv-processed/`
-    Output: `/data/csv-for-spm-normed/`
+    Input: All raw CSV measurement files in RAW_CSV_1MPS_DATA_DIR
 
-    File structure similar to `/data/csv-processed/`, i.e.
-    - One pre-ISQ and one post-ISQ CSV file per subject
-    - Each file contains four columns; these columns hold the first pre-ISQ or post-ISQ measurement from each of the subject's first four measurement sets.
-    Differences:
-    - Meaurements
+    Processing on all pre-ISQ/post-ISQ TMG measurement pairs:
+        1. Trim to first 100 ms
+        2. Mitigate false SPM significance from transient TMG filter artefact
+        3. Normalize to the displacement maximum value in the pair 
+
+    Output: Files in SPM_1MPS_DATA_DIR (steps 1 and 2) and
+    NORMED_SPM_1MPS_DATA_DIR (steps 1, 2, and 3) with file structure mapping
+    directly to that in RAW_CSV_1MPS_DATA_DIR, just with the aforementioned
+    processing steps performed on them
 
     """
-    skiprows = constants.TMG_ROWS_TO_SKIP_FOR_SPM
-    nrows = constants.TMG_ROWS_TO_USE_FOR_SPM
-
-    pre_input_dir = constants.INITIAL_DATA_DIR + "pre-exercise/"
-    post_input_dir = constants.INITIAL_DATA_DIR + "post-exercise/"
+    pre_input_dir = constants.RAW_CSV_1MPS_DATA_DIR + "pre-exercise/"
+    post_input_dir = constants.RAW_CSV_1MPS_DATA_DIR + "post-exercise/"
     pre_filenames = []
     post_filenames = []
 
+    # Build up file names (name only; without path) of CSV files to process
     for filename in frontiers_utils.natural_sort(os.listdir(pre_input_dir)):
         pre_filenames.append(filename)
     for filename in frontiers_utils.natural_sort(os.listdir(post_input_dir)):
         post_filenames.append(filename)
 
-    pre_output_dir = constants.SPM_DATA_DIR + "pre-exercise/"
-    post_output_dir = constants.SPM_DATA_DIR + "post-exercise/"
-    pre_normed_output_dir = constants.NORMED_SPM_DATA_DIR + "pre-exercise/"
-    post_normed_output_dir = constants.NORMED_SPM_DATA_DIR + "post-exercise/"
+    pre_output_dir = constants.SPM_1MPS_DATA_DIR + "pre-exercise/"
+    pre_normed_output_dir = constants.NORMED_SPM_1MPS_DATA_DIR + "pre-exercise/"
+    post_output_dir = constants.SPM_1MPS_DATA_DIR + "post-exercise/"
+    post_normed_output_dir = constants.NORMED_SPM_1MPS_DATA_DIR + "post-exercise/"
+
+    _prepare_csv_files_for_spm(pre_input_dir, post_input_dir,
+        pre_filenames, post_filenames,
+        pre_output_dir, post_output_dir,
+        pre_normed_output_dir, post_normed_output_dir)
+
+
+def prepare_8mps_csv_files_for_spm():
+    """
+    Input: All raw CSV measurement files in RAW_CSV_8MPS_DATA_DIR
+    Processing: analog of `prepare_8mps_csv_files_for_spm`
+    Output: analog of `prepare_8mps_csv_files_for_spm`, just generalized 
+    one directory level deeper to accomodate the extra directory level in
+    `RAW_EXCEL_8MPS_DATA_DIR`.
+
+    """
+    pre_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "pre-exercise/"
+    post_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "post-exercise/"
+
+    # Loop through each athlete directory
+    for athlete_subdir in frontiers_utils.natural_sort(os.listdir(pre_input_dir)):
+
+        pre_filenames = []
+        post_filenames = []
+
+        # Build up file names (name only; without path) of CSV files to process
+        for filename in frontiers_utils.natural_sort(os.listdir(pre_input_dir + athlete_subdir)):
+            pre_filenames.append(filename)
+        for filename in frontiers_utils.natural_sort(os.listdir(post_input_dir + athlete_subdir)):
+            post_filenames.append(filename)
+
+        # Create output directories
+        pre_output_dir = frontiers_utils.make_output_dir(constants.SPM_8MPS_DATA_DIR + "pre-exercise/" + athlete_subdir + "/")
+        pre_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_8MPS_DATA_DIR + "pre-exercise/" + athlete_subdir + "/")
+
+        post_output_dir = frontiers_utils.make_output_dir(constants.SPM_8MPS_DATA_DIR + "post-exercise/" + athlete_subdir + "/")
+        post_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_8MPS_DATA_DIR + "post-exercise/" + athlete_subdir + "/")
+
+        _prepare_csv_files_for_spm(pre_input_dir + athlete_subdir + "/",
+                post_input_dir + athlete_subdir + "/",
+                pre_filenames, post_filenames,
+                pre_output_dir, post_output_dir,
+                pre_normed_output_dir, post_normed_output_dir)
+
+
+def _prepare_csv_files_for_spm(pre_input_dir, post_input_dir,
+        pre_filenames, post_filenames,
+        pre_output_dir, post_output_dir,
+        pre_normed_output_dir, post_normed_output_dir):
+    """
+    Performs the following processing steps on all pre-ISQ/post-ISQ TMG measurement pairs in the inputted `pre_input_dir`/`post_input_dir`
+        1. Trim to first 100 ms
+        2. Mitigate false SPM significance from transient TMG filter artefact
+        3. Normalize to the displacement maximum value in the pair 
+
+    Writes the result of steps 1 and 2 to `*_output_dir` and the result 
+    of steps 1, 2, and 3 to `*_normed_output_dir`.
+
+    """
+    max_rows_for_spm = constants.TMG_ROWS_TO_USE_FOR_SPM
+    skiprows = constants.TMG_ROWS_TO_SKIP_FOR_SPM
 
     for i in range(len(pre_filenames)):
         pre_df = pd.read_csv(pre_input_dir + pre_filenames[i],
-                sep=',', header=0, nrows=nrows)
+                sep=',', header=0, nrows=max_rows_for_spm)
         post_df = pd.read_csv(post_input_dir + post_filenames[i],
-                sep=',', header=0, nrows=nrows)
+                sep=',', header=0, nrows=max_rows_for_spm)
         pre_column_headers = pre_df.columns.values.tolist()
         post_column_headers = post_df.columns.values.tolist()
 
-        pre_df, post_df = remove_spm_significance_from_filter_artefact(pre_df, post_df)
+        pre_df, post_df = _remove_spm_significance_from_filter_artefact(pre_df, post_df)
 
         # Drop first row and save files to CSV
         pre_df.iloc[skiprows:].to_csv(pre_output_dir + pre_filenames[i], index=False)
@@ -161,7 +214,6 @@ def prepare_csv_files_for_spm():
 
         # Normalize files and save again
         # --------------------------------------------- #
-
         # Convert to Numpy for easier processing
         pre_np = pre_df.to_numpy()
         post_np = post_df.to_numpy()
@@ -180,7 +232,7 @@ def prepare_csv_files_for_spm():
         post_df.iloc[skiprows:].to_csv(post_normed_output_dir + post_filenames[i], header=post_column_headers, index=False)
 
 
-def remove_spm_significance_from_filter_artefact(pre_df, post_df, 
+def _remove_spm_significance_from_filter_artefact(pre_df, post_df, 
         first_n_rows_to_average=constants.FILTER_ARTEFACT_ROWS_TO_AVERAGE):
     """
     Context: Initial IIR filtering applied to TMG signals creates a small
@@ -223,6 +275,8 @@ def remove_spm_significance_from_filter_artefact(pre_df, post_df,
 
     return pre_df, post_df
 
+
 if __name__ == "__main__":
     process_raw_excel_files()
-    # prepare_csv_files_for_spm()
+    prepare_1mps_csv_files_for_spm()
+    prepare_8mps_csv_files_for_spm()

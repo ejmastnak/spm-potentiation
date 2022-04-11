@@ -9,14 +9,29 @@ ROOT_DATA_DIR = ROOT_PROJECT_DIR + "data/"
 # Root directory for computed output data
 ROOT_OUTPUT_DIR = ROOT_PROJECT_DIR + "output/"
 
-# Intial step in pipeline of processing data
-INITIAL_DATA_DIR = ROOT_DATA_DIR + "csv-for-initial-analysis/"
+# Directory with raw Excel files with 1 measurement per measurement set
+RAW_EXCEL_1MPS_DATA_DIR = ROOT_DATA_DIR + "excel-raw/1mps/"
 
-# Further processed version of INITIAL_DATA_DIR for use with SPM
-SPM_DATA_DIR = ROOT_DATA_DIR + "csv-for-spm/"
+# Directory with raw Excel files with 8 measurements per measurement set
+RAW_EXCEL_8MPS_DATA_DIR = ROOT_DATA_DIR + "excel-raw/8mps/"
 
-# Normalized version of SPM_DATA_DIR for cross-subject comparison
-NORMED_SPM_DATA_DIR = ROOT_DATA_DIR + "csv-for-spm-normed/"
+# Directory with raw CSV files with 1 measurement per measurement set
+RAW_CSV_1MPS_DATA_DIR = ROOT_DATA_DIR + "csv-raw-1mps/"
+
+# Directory with raw CSV files with 8 measurements per measurement set
+RAW_CSV_8MPS_DATA_DIR = ROOT_DATA_DIR + "csv-raw-8mps/"
+
+# Further processed version of RAW_CSV_1MPS_DATA_DIR for use with SPM
+SPM_1MPS_DATA_DIR = ROOT_DATA_DIR + "csv-for-spm-1mps/"
+
+# Further processed version of RAW_CSV_8MPS_DATA_DIR for use with SPM
+SPM_8MPS_DATA_DIR = ROOT_DATA_DIR + "csv-for-spm-8mps/"
+
+# Normalized version of SPM_1MPS_DATA_DIR for cross-subject comparison
+NORMED_SPM_1MPS_DATA_DIR = ROOT_DATA_DIR + "csv-for-spm-1mps-normed/"
+
+# Normalized version of SPM_1MPS_DATA_DIR for cross-subject comparison
+NORMED_SPM_8MPS_DATA_DIR = ROOT_DATA_DIR + "csv-for-spm-8mps-normed/"
 
 # Computed TMG parameters for each subject
 TMG_PARAMS_BY_SUBJECT_DIR = ROOT_OUTPUT_DIR + "tmg-params-by-subject/"
@@ -53,7 +68,7 @@ TMG_ROWS_TO_SKIP_FOR_SPM = 1
 # Number of rows in a TMG signal to use for SPM analysis.
 # Motivation: the full 1000 rows are not needed; most "interesting"
 # information occurs in the first 100 ms or so.
-TMG_ROWS_TO_USE_FOR_SPM = 150
+TMG_ROWS_TO_USE_FOR_SPM = 100
 
 # Used in `data_preprocessing.py` to prevent SPM from registering a false
 # significance region as a result of signal artefacts from filtering TMG signals.
