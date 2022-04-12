@@ -124,7 +124,8 @@ def tmg_stats_by_subj_by_set_8mps():
     for subj in range(len(pre_subject_subdirs)):
         pre_input_dir = pre_base_input_dir + pre_subject_subdirs[subj] + "/"
         post_input_dir = post_base_input_dir + post_subject_subdirs[subj] + "/"
-        output_dir = frontiers_utils.make_output_dir(output_base_dir + pre_subject_subdirs[subj])
+        output_dir = frontiers_utils.make_output_dir(output_base_dir + pre_subject_subdirs[subj],
+                use_existing=True) + "/"
 
         pre_filenames = frontiers_utils.natural_sort(os.listdir(pre_input_dir))
         post_filenames = frontiers_utils.natural_sort(os.listdir(post_input_dir))

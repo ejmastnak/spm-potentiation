@@ -35,7 +35,7 @@ def xlsx_to_pandas_df(xlsx_file, num_rows=constants.TMG_MAX_ROWS):
             skiprows=constants.TMG_DATA_START_ROW).drop(columns=[0])
     
 
-def make_output_dir(base_dir):
+def make_output_dir(base_dir, use_existing=False):
     """
     Attempts to make a directory with the inputted base directory name.
     If a directory with the inputted base name already exists, the function
@@ -47,6 +47,11 @@ def make_output_dir(base_dir):
     base_dir : str
         Desired base directory name
         Example: "~/test/tmg/converted"
+    use_existing : bool
+        Behavior if True: If a directory with name `base_dir` already
+        exists, use the existing `base_dir` name (instead of creating new
+        directories by appending a counter). This would be used to
+        intentionally overwrite files inside the existing `base_dir`.
     
     Returns
     -------
@@ -59,9 +64,15 @@ def make_output_dir(base_dir):
     
     """
     try:  # try created directory with base name only
-        os.mkdir(base_dir + "/")
-        return base_dir + "/"
+        os.mkdir(base_dir)
+        return base_dir
     except OSError as error:  # if a directoy with the base name exists
+        if use_existing:
+            # Double-check directory with name `base_dir` indeed exists, (in
+            # case OSError was raised for some other reason).
+            if os.path.isdir(base_dir):
+                return base_dir
+
         success = False
         counter = 0
         while not success:
@@ -69,9 +80,9 @@ def make_output_dir(base_dir):
             if counter > 99:
                 print("Aborting. Maximum output directory count exceeded.")
                 return
-            success = try_next_output_dir(base_dir + "_" + str(counter) + "/")
+            success = try_next_output_dir(base_dir + "_" + str(counter))
 
-        return base_dir + "_" + str(counter) + "/"
+        return base_dir + "_" + str(counter)
 
 
 def try_next_output_dir(base_dir_name):
