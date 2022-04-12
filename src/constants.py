@@ -11,6 +11,8 @@ ROOT_DATA_DIR = ROOT_PROJECT_DIR + "data/"
 # Root directory for computed output data
 ROOT_OUTPUT_DIR = ROOT_PROJECT_DIR + "results/"
 
+# Raw data
+# --------------------------------------------- #
 # Directory with raw Excel files with 1 measurement per measurement set
 RAW_EXCEL_1MPS_DATA_DIR = ROOT_DATA_DIR + "excel-raw/1mps/"
 
@@ -22,7 +24,10 @@ RAW_CSV_1MPS_DATA_DIR = ROOT_DATA_DIR + "csv-raw-1mps/"
 
 # Directory with raw CSV files with 8 measurements per measurement set
 RAW_CSV_8MPS_DATA_DIR = ROOT_DATA_DIR + "csv-raw-8mps/"
+# --------------------------------------------- #
 
+# Data for SPM
+# --------------------------------------------- #
 # Further processed version of RAW_CSV_1MPS_DATA_DIR for use with SPM
 SPM_1MPS_DATA_DIR = ROOT_DATA_DIR + "csv-for-spm-1mps/"
 
@@ -36,20 +41,24 @@ NORMED_SPM_1MPS_DATA_DIR = ROOT_DATA_DIR + "csv-for-spm-1mps-normed/"
 NORMED_SPM_8MPS_DATA_DIR = ROOT_DATA_DIR + "csv-for-spm-8mps-normed/"
 # --------------------------------------------- #
 
-# Results
+# TMG parameters
 # --------------------------------------------- #
 # Computed TMG parameters for each subject for 1MPS files
-TMG_PARAMS_BY_SUBJECT_1MPS_DIR = ROOT_OUTPUT_DIR + "tmg-params-by-subject-1mps/"
+TMG_PARAMS_BY_SUBJ_1MPS_DIR = ROOT_OUTPUT_DIR + "tmg-params-by-subj-1mps/"
 
 # Computed TMG parameters for each subject for 8MPS files
-TMG_PARAMS_BY_SUBJECT_8MPS_DIR = ROOT_OUTPUT_DIR + "tmg-params-by-subject-8mps/"
+TMG_PARAMS_BY_SUBJ_8MPS_DIR = ROOT_OUTPUT_DIR + "tmg-params-by-subj-8mps/"
 
-# Analysis of TMG parameters across all subjects for each set
-TMG_STATS_ACROSS_SUBJECTS_DIR = ROOT_OUTPUT_DIR + "tmg-stats-across-subjects/"
-TMG_STATS_ACROSS_SUBJECTS_RELTO_BASELINE_DIR = ROOT_OUTPUT_DIR + "tmg-stats-across-subjects-relto-baseline/"
+# Analysis of TMG parameters by set across all subjects
+TMG_STATS_BY_SET_ACROSS_SUBJ_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-set-across-subjects/"
+TMG_STATS_BY_SET_ACROSS_SUBJ_RELTO_BASELINE_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-set-across-subjects-relto-baseline/"
 
-# Analysis of TMG parameters in a given set/athlete for 8 MPS files
-TMG_STATS_BY_ATHLETE_8MPS_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-athlete-8mps/"
+# Analysis of TMG parameters by subject and by set for 8 MPS files
+TMG_STATS_BY_SUBJ_BY_SET_8MPS_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-subj-by-set-8mps"
+
+# Analysis of TMG parameters by subject across sets for 1 MPS files
+TMG_STATS_BY_SUBJ_ACROSS_SETS_1MPS_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-subj-across-sets-1mps"
+# --------------------------------------------- #
 
 # SPM parameters for each subject
 SPM_PARAMS_BY_SUBJECT_DIR = ROOT_OUTPUT_DIR + "spm-params-by-subject/"
