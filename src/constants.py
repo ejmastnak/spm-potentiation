@@ -53,24 +53,36 @@ TMG_PARAMS_BY_SUBJ_8MPS_DIR = ROOT_OUTPUT_DIR + "tmg-params-by-subj-8mps/"
 TMG_STATS_BY_SET_ACROSS_SUBJ_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-set-across-subj/"
 TMG_STATS_BY_SET_ACROSS_SUBJ_RELTO_BASELINE_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-set-across-subj-relto-baseline/"
 
-# Analysis of TMG parameters by subject and by set for 8 MPS files
-TMG_STATS_BY_SUBJ_BY_SET_8MPS_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-subj-by-set-8mps/"
-
 # Analysis of TMG parameters by subject across sets for 1 MPS files
 TMG_STATS_BY_SUBJ_ACROSS_SETS_1MPS_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-subj-across-sets-1mps/"
+
+# Analysis of TMG parameters by subject and by set for 8 MPS files
+TMG_STATS_BY_SUBJ_BY_SET_8MPS_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-subj-by-set-8mps/"
 # --------------------------------------------- #
 
-# SPM parameters for each subject
-SPM_PARAMS_BY_SUBJECT_DIR = ROOT_OUTPUT_DIR + "spm-params-by-subject/"
+# SPM parameters
+# --------------------------------------------- #
+# SPM parameters by set across all subjects
+SPM_PARAMS_BY_SET_ACROSS_SUBJ_DIR = ROOT_OUTPUT_DIR + "spm-params-by-set-across-subj/"
 
-# SPM t-statistic plots for each subject
-SPM_PLOTS_BY_SUBJECT_DIR = ROOT_OUTPUT_DIR + "spm-plots-by-subject/"
+# SPM parameters by subject across sets for 1 MPS files
+SPM_PARAMS_BY_SUBJ_ACROSS_SETS_1MPS_DIR = ROOT_OUTPUT_DIR + "spm-params-by-subj-across-sets-1mps/"
 
-# SPM parameters for each set
-SPM_PARAMS_BY_SET_DIR = ROOT_OUTPUT_DIR + "spm-params-by-set/"
+# SPM parameters by subject and by set for 8 MPS files
+SPM_PARAMS_BY_SUBJ_BY_SET_8MPS_DIR = ROOT_OUTPUT_DIR + "spm-params-by-subj-by-set-8mps/"
+# --------------------------------------------- #
 
-# SPM t-statistic plots for each set
-SPM_PLOTS_BY_SET_DIR = ROOT_OUTPUT_DIR + "spm-plots-by-set/"
+# SPM Plots
+# --------------------------------------------- #
+# SPM plots by set across all subjects
+SPM_PLOTS_BY_SET_ACROSS_SUBJ_DIR = ROOT_OUTPUT_DIR + "spm-plots-by-set-across-subj/"
+
+# SPM plots by subject across sets for 1 MPS files
+SPM_PLOTS_BY_SUBJ_ACROSS_SETS_1MPS_DIR = ROOT_OUTPUT_DIR + "spm-plots-by-subj-across-sets-1mps/"
+
+# SPM plots by subject and by set for 8 MPS files
+SPM_PLOTS_BY_SUBJ_BY_SET_8MPS_DIR = ROOT_OUTPUT_DIR + "spm-plots-by-subj-by-set-8mps/"
+# --------------------------------------------- #
 
 # Figures appearing the LaTeX article
 ARTICLE_FIGURE_DIR = ARTICLE_DIR + "figures/"
