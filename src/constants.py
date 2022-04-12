@@ -50,14 +50,14 @@ TMG_PARAMS_BY_SUBJ_1MPS_DIR = ROOT_OUTPUT_DIR + "tmg-params-by-subj-1mps/"
 TMG_PARAMS_BY_SUBJ_8MPS_DIR = ROOT_OUTPUT_DIR + "tmg-params-by-subj-8mps/"
 
 # Analysis of TMG parameters by set across all subjects
-TMG_STATS_BY_SET_ACROSS_SUBJ_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-set-across-subjects/"
-TMG_STATS_BY_SET_ACROSS_SUBJ_RELTO_BASELINE_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-set-across-subjects-relto-baseline/"
+TMG_STATS_BY_SET_ACROSS_SUBJ_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-set-across-subj/"
+TMG_STATS_BY_SET_ACROSS_SUBJ_RELTO_BASELINE_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-set-across-subj-relto-baseline/"
 
 # Analysis of TMG parameters by subject and by set for 8 MPS files
-TMG_STATS_BY_SUBJ_BY_SET_8MPS_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-subj-by-set-8mps"
+TMG_STATS_BY_SUBJ_BY_SET_8MPS_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-subj-by-set-8mps/"
 
 # Analysis of TMG parameters by subject across sets for 1 MPS files
-TMG_STATS_BY_SUBJ_ACROSS_SETS_1MPS_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-subj-across-sets-1mps"
+TMG_STATS_BY_SUBJ_ACROSS_SETS_1MPS_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-subj-across-sets-1mps/"
 # --------------------------------------------- #
 
 # SPM parameters for each subject
