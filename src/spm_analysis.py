@@ -45,6 +45,7 @@ def perform_spm_tests_by_set_across_subj():
 
     fig_dpi = 300
     fig_format = "jpg"
+    spm_alpha = 0.01
 
     # 3D Numpy tensor to hold all pre-exercise measurements in database
     pre_tensor = np.zeros([rows_per_measurement_file,
@@ -77,8 +78,9 @@ def perform_spm_tests_by_set_across_subj():
         post_data = post_tensor[:, s, :]
 
         _perform_spm_analysis(pre_data, post_data,
-                param_output_file, plot_output_file, 
-                fig_dpi=fig_dpi, fig_format=fig_format, alpha=0.01)
+                param_output_file, plot_output_file,
+                data_y_axis_label="Normalized displacement",
+                fig_dpi=fig_dpi, fig_format=fig_format, alpha=spm_alpha)
 
 
 def spm_tests_by_subj_across_sets_1mps():
@@ -119,6 +121,7 @@ def spm_tests_by_subj_across_sets_1mps():
 
     fig_dpi = 300
     fig_format = "jpg"
+    spm_alpha = 0.01
 
     for i in range(len(pre_filenames)):
         param_output_file = param_output_dir + pre_filenames[i].replace("-pre.csv", "-spm-params.csv")
@@ -129,20 +132,10 @@ def spm_tests_by_subj_across_sets_1mps():
         post_data = np.loadtxt(post_input_dir + post_filenames[i],
                 delimiter=',', skiprows=1)  # skip header row
 
-        t, ti = _get_spm_t_ti_paired_ttest(pre_data, post_data)
-        
-        # Compute SPM parameters and save as CSV
-        param_df = _get_ti_parameters_as_df(ti,
-                time_offset=constants.TMG_ROWS_TO_SKIP_FOR_SPM)
-        param_df.to_csv(param_output_file)
-
-        # Plot
-        plotting.plot_spm_ttest(t, ti, pre_data, post_data,
-                constants.TMG_ROWS_TO_SKIP_FOR_SPM,
-                plot_output_file,
-                fig_format=fig_format, fig_dpi=fig_dpi,
-                tmg_y_axis_label="Displacement [mm]",
-                show_plot=False, save_figures=True)
+        _perform_spm_analysis(pre_data, post_data,
+                param_output_file, plot_output_file, 
+                data_y_axis_label="Displacement",
+                fig_dpi=fig_dpi, fig_format=fig_format, alpha=spm_alpha)
 
 
 def spm_tests_by_subj_by_set_8mps():
@@ -169,7 +162,47 @@ def spm_tests_by_subj_by_set_8mps():
         and significance clusters emphasized.
 
     """ 
-    print()
+    pre_base_input_dir = constants.SPM_8MPS_DATA_DIR + "pre-exercise/"
+    post_base_input_dir = constants.SPM_8MPS_DATA_DIR + "post-exercise/"
+    param_base_output_dir = constants.SPM_PARAMS_BY_SUBJ_BY_SET_8MPS_DIR
+    plot_base_output_dir = constants.SPM_PLOTS_BY_SUBJ_BY_SET_8MPS_DIR
+
+    pre_subject_subdirs = frontiers_utils.natural_sort(os.listdir(pre_base_input_dir))
+    post_subject_subdirs = frontiers_utils.natural_sort(os.listdir(post_base_input_dir))
+
+    fig_dpi = 300
+    fig_format = "jpg"
+    spm_alpha = 0.01
+
+    # Loop through all subjects
+    for subj in range(len(pre_subject_subdirs)):
+        pre_input_dir = pre_base_input_dir + pre_subject_subdirs[subj] + "/"
+        post_input_dir = post_base_input_dir + post_subject_subdirs[subj] + "/"
+        param_output_dir = frontiers_utils.make_output_dir(param_base_output_dir + pre_subject_subdirs[subj],
+                use_existing=True) + "/"
+        plot_output_dir = frontiers_utils.make_output_dir(plot_base_output_dir + pre_subject_subdirs[subj],
+                use_existing=True) + "/"
+
+        pre_filenames = frontiers_utils.natural_sort(os.listdir(pre_input_dir))
+        post_filenames = frontiers_utils.natural_sort(os.listdir(post_input_dir))
+
+        # For a given subject, loop through all measurement sets
+        for s in range(len(pre_filenames)):
+            pre_filename = pre_input_dir + pre_filenames[s]
+            post_filename = post_input_dir + post_filenames[s]
+            param_output_file = param_output_dir + "set-{}.csv".format(s + 1)
+            plot_output_file = plot_output_dir + "set-{}.csv".format(s + 1)
+
+            pre_data = np.loadtxt(pre_filename,
+                    delimiter=',', skiprows=1)  # skip header row
+            post_data = np.loadtxt(post_filename,
+                    delimiter=',', skiprows=1)  # skip header row
+
+            _perform_spm_analysis(pre_data, post_data,
+                    param_output_file, plot_output_file,
+                    data_y_axis_label="Displacement",
+                    fig_dpi=fig_dpi, fig_format=fig_format, alpha=spm_alpha)
+
 
 # --------------------------------------------------------------------- #
 # Functions below this line are not meant to be called outside this script
@@ -177,7 +210,8 @@ def spm_tests_by_subj_by_set_8mps():
 
 def _perform_spm_analysis(pre_data, post_data,
         param_output_file, plot_output_file,
-        fig_dpi=300, fig_format="jpg", alpha=0.01):
+        fig_dpi=300, fig_format="jpg", 
+        data_y_axis_label="Displacement", alpha=0.01):
     """
     Performs a paired SPM ttest comparing `pre_data` to `post_data`.
     Saves parameters summarizing the test results to `param_output_file` and
@@ -195,7 +229,7 @@ def _perform_spm_analysis(pre_data, post_data,
             constants.TMG_ROWS_TO_SKIP_FOR_SPM,
             plot_output_file,
             fig_format=fig_format, fig_dpi=fig_dpi,
-            tmg_y_axis_label="Normalized displacement",
+            tmg_y_axis_label=data_y_axis_label,
             show_plot=False, save_figures=True)
 
 
@@ -327,5 +361,6 @@ def _get_params_of_spm_cluster(cluster, alpha, threshold,
             A_above_x]
 
 if __name__ == "__main__":
-    perform_spm_tests_by_set_across_subj()
-    # perform_spm_tests_by_set()
+    # perform_spm_tests_by_set_across_subj()
+    # perform_spm_tests_by_set() ## TODO: test me
+    spm_tests_by_subj_by_set_8mps()
