@@ -74,41 +74,15 @@ def tmg_stats_by_set_across_subj_1mps(first_set_as_baseline=False):
 
     # Compute statistics across all subjects for each set
     for s in range(max_sets):
+
+        post_params = post_param_tensor[:, :, s].T
         if first_set_as_baseline:
-            pre_avg = np.average(pre_param_tensor[:, :, 0], axis=0)
+            pre_params = pre_param_tensor[:, :, 0].T
+            output_file = output_dir + "setB1-P{}-tmg-stats.csv".format(s + 1)
         else:
-            pre_avg = np.average(pre_param_tensor[:, :, s], axis=0)
-        post_avg = np.average(post_param_tensor[:, :, s], axis=0)
-
-        # Uses ddof=1 for sample standard deviation
-        if first_set_as_baseline:
-            pre_sd = np.std(pre_param_tensor[:, :, 0], axis=0, ddof=1)
-        else:
-            pre_sd = np.std(pre_param_tensor[:, :, s], axis=0, ddof=1)
-        post_sd = np.std(post_param_tensor[:, :, s], axis=0, ddof=1)
-
-      # Takes a paired (related) ttest
-        if first_set_as_baseline:
-            t_statistic, p_value = ttest_rel(pre_param_tensor[:, :, 0],
-                    post_param_tensor[:, :, s], axis=0)
-        else:
-            t_statistic, p_value = ttest_rel(pre_param_tensor[:, :, s],
-                    post_param_tensor[:, :, s], axis=0)
-
-        # Convert Numpy arrays of stat results to a Pandas DataFrame, 
-        # which is inefficient in principle but convenient 
-        # when writing rows names to CSV files.
-        df_stats = pd.DataFrame(np.column_stack([pre_avg, post_avg,
-            pre_sd, post_sd,
-            t_statistic, p_value]),
-            index=param_names, columns=stats_names)
-
-        if first_set_as_baseline:
-            stats_output_file = output_dir + "setB1-P{}-tmg-stats.csv".format(s + 1)
-        else:
-            stats_output_file = output_dir + "set{}-tmg-stats.csv".format(s + 1)
-
-        df_stats.to_csv(stats_output_file)
+            pre_params = pre_param_tensor[:, :, s].T
+            output_file = output_dir + "set{}-tmg-stats.csv".format(s + 1)
+        _compute_stats_for_tmg_params(pre_params, post_params, output_file)
 
 
 def tmg_stats_by_subj_by_set_8mps():
@@ -240,7 +214,7 @@ def _compute_stats_for_tmg_params(pre_params, post_params, output_file):
     
 
 if __name__ == "__main__":
-    # tmg_stats_by_set_across_subj_1mps()
-    # tmg_stats_by_set_across_subj_1mps(first_set_as_baseline=True)
-    # tmg_stats_by_subj_by_set_8mps()
+    tmg_stats_by_set_across_subj_1mps()
+    tmg_stats_by_set_across_subj_1mps(first_set_as_baseline=True)
+    tmg_stats_by_subj_by_set_8mps()
     tmg_stats_by_subj_across_sets_1mps()
