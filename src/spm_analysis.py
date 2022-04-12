@@ -9,92 +9,33 @@ import pandas as pd
 import spm1d
 import constants, frontiers_utils, plotting
 
-# SPM paired t-test by subject
-def perform_spm_tests_by_subjects():
+def perform_spm_tests_by_set_across_subj():
     """
-    For each subject:
-    - Performs an SPM paired t-test comparing preprocessed pre-ISQ and post-ISQ
-      TMG signals across all sets and saves the resulting SPM plots.
-    - Queries from `spm1d` or directly computes discrete parameters 
-      summarizing the above-described SPM paired t-test.
+    Input data: the normalized per-subject measurement files in `constants.NORMED_SPM_DATA_DIR`
 
-    Input data: the per-subject measurement files in `constants.SPM_DATA_DIR`
-    Output data: 
-        - Per-set CSV files in `/output/spm-params-by-set/`
-          summarizing the results of the above-described statisical analysis.
-        - Per-set JPG files storing a two-axis (one row, two column)
-          graph the set's above-described SPM t-test and showing:
-          - Axis 0: Mean normalized pre-ISQ and post-ISQ TMG signal across 
-            all subjects, with standard deviation clouds, with respect to time.
-          - Axis 1: SPM t-continuum with respect to time with threshold 
-            and significance clusters emphasized.
-
-    """ 
-    pre_input_dir = constants.SPM_DATA_DIR + "pre-exercise/"
-    post_input_dir = constants.SPM_DATA_DIR + "post-exercise/"
-    pre_filenames = []
-    post_filenames = []
-
-    for filename in frontiers_utils.natural_sort(os.listdir(pre_input_dir)):
-        pre_filenames.append(filename)
-    for filename in frontiers_utils.natural_sort(os.listdir(post_input_dir)):
-        post_filenames.append(filename)
-
-    param_output_dir = constants.SPM_PARAMS_BY_SUBJECT_DIR
-    plot_output_dir = constants.SPM_PLOTS_BY_SUBJECT_DIR
-    fig_dpi = 300
-    fig_format = "jpg"
-
-    for i in range(len(pre_filenames)):
-        param_output_file = param_output_dir + pre_filenames[i].replace("-pre.csv", "-spm-params.csv")
-        plot_output_file = plot_output_dir + pre_filenames[i].replace("-pre.csv", "-spm-plot.jpg")
-
-        pre_data = np.loadtxt(pre_input_dir + pre_filenames[i],
-                delimiter=',', skiprows=1)  # skip header row
-        post_data = np.loadtxt(post_input_dir + post_filenames[i],
-                delimiter=',', skiprows=1)  # skip header row
-
-        t, ti = _get_spm_ti(pre_data, post_data)
-        
-        # Compute SPM parameters and save as CSV
-        param_df = _get_ti_parameters_as_df(ti,
-                time_offset=constants.TMG_ROWS_TO_SKIP_FOR_SPM)
-        param_df.to_csv(param_output_file)
-
-        # Plot
-        plotting.plot_spm_ttest(t, ti, pre_data, post_data,
-                constants.TMG_ROWS_TO_SKIP_FOR_SPM,
-                plot_output_file,
-                fig_format=fig_format, fig_dpi=fig_dpi,
-                tmg_y_axis_label="Displacement [mm]",
-                show_plot=False, save_figures=True)
-
-# SPM paired t-test by set
-def perform_spm_tests_by_set():
-    """
     For each measurement set:
     - Performs an SPM paired t-test comparing preprocessed pre-ISQ and post-ISQ
       TMG signals across all subjects and saves the resulting SPM plots.
-    - Queries from `spm1d` or directly computes discrete parameters 
+    - Either queries from `spm1d` or directly computes discrete parameters
       summarizing the above-described SPM paired t-test.
 
-    Input data: the normalized per-subject measurement files in `constants.NORMED_SPM_DATA_DIR`
     Output data: 
-        - Per-set CSV files in `/output/spm-params-by-set/`
-          summarizing the results of the above-described statisical analysis.
-        - Per-set JPG files storing a two-axis (one row, two column)
-          graph the set's above-described SPM t-test and showing:
-          - Axis 0: Mean normalized pre-ISQ and post-ISQ TMG signal across 
-            all subjects, with standard deviation clouds, with respect to time.
-          - Axis 1: SPM t-continuum with respect to time with threshold 
-            and significance clusters emphasized.
+    - Per-set CSV files in `SPM_PARAMS_BY_SET_ACROSS_SUBJ_DIR` summarizing
+      the results of the above-described statisical analysis.
+    - Per-set JPG files in `SPM_PLOTS_BY_SET_ACROSS_SUBJ_DIR` storing a
+      two-axis (one row, two column) graph the set's above-described SPM
+      t-test and showing:
+      - Axis 0: Mean normalized pre-ISQ and post-ISQ TMG signal across 
+        all subjects, with standard deviation clouds, with respect to time.
+      - Axis 1: SPM t-continuum with respect to time with threshold 
+        and significance clusters emphasized.
 
     """
-    pre_input_dir = constants.NORMED_SPM_DATA_DIR + "pre-exercise/"
-    post_input_dir = constants.NORMED_SPM_DATA_DIR + "post-exercise/"
+    pre_input_dir = constants.NORMED_SPM_1MPS_DATA_DIR + "pre-exercise/"
+    post_input_dir = constants.NORMED_SPM_1MPS_DATA_DIR + "post-exercise/"
+    param_output_dir = constants.SPM_PARAMS_BY_SET_ACROSS_SUBJ_DIR
+    plot_output_dir = constants.SPM_PLOTS_BY_SET_ACROSS_SUBJ_DIR
 
-    param_output_dir = constants.SPM_PARAMS_BY_SET_DIR
-    plot_output_dir = constants.SPM_PLOTS_BY_SET_DIR
     fig_dpi = 300
     fig_format = "jpg"
 
@@ -145,6 +86,96 @@ def perform_spm_tests_by_set():
                 tmg_y_axis_label="Normalized displacement",
                 show_plot=False, save_figures=True)
 
+
+def spm_tests_by_subj_across_sets_1mps():
+    """
+    Input data: the per-subject measurement files in
+    `constants.SPM_1MPS_DATA_DIR`
+
+    For each subject:
+    - Performs an SPM paired t-test comparing preprocessed pre-ISQ and
+      post-ISQ TMG signals across all sets and saves the resulting SPM
+      plots.
+    - Either queries from `spm1d` or directly computes discrete parameters
+      summarizing the above-described SPM paired t-test.
+
+    Output data: 
+    - Per-subject CSV files in `SPM_PARAMS_BY_SUBJ_ACROSS_SETS_1MPS_DIR`
+      summarizing the results of the above-described statisical analysis.
+    - Per-subject JPG files in `SPM_PLOTS_BY_SUBJ_ACROSS_SETS_1MPS_DIR`storing
+      a two-axis (one row, two column) graph the set's above-described SPM
+      t-test and showing:
+      - Axis 0: Mean normalized pre-ISQ and post-ISQ TMG signal across 
+        all sets, with standard deviation clouds, with respect to time.
+      - Axis 1: SPM t-continuum with respect to time with threshold 
+        and significance clusters emphasized.
+
+    """ 
+    pre_input_dir = constants.SPM_1MPS_DATA_DIR + "pre-exercise/"
+    post_input_dir = constants.SPM_1MPS_DATA_DIR + "post-exercise/"
+    param_output_dir = constants.SPM_PARAMS_BY_SUBJ_ACROSS_SETS_1MPS_DIR
+    plot_output_dir = constants.SPM_PLOTS_BY_SUBJ_ACROSS_SETS_1MPS_DIR
+
+    pre_filenames = []
+    post_filenames = []
+    for filename in frontiers_utils.natural_sort(os.listdir(pre_input_dir)):
+        pre_filenames.append(filename)
+    for filename in frontiers_utils.natural_sort(os.listdir(post_input_dir)):
+        post_filenames.append(filename)
+
+    fig_dpi = 300
+    fig_format = "jpg"
+
+    for i in range(len(pre_filenames)):
+        param_output_file = param_output_dir + pre_filenames[i].replace("-pre.csv", "-spm-params.csv")
+        plot_output_file = plot_output_dir + pre_filenames[i].replace("-pre.csv", "-spm-plot.jpg")
+
+        pre_data = np.loadtxt(pre_input_dir + pre_filenames[i],
+                delimiter=',', skiprows=1)  # skip header row
+        post_data = np.loadtxt(post_input_dir + post_filenames[i],
+                delimiter=',', skiprows=1)  # skip header row
+
+        t, ti = _get_spm_ti(pre_data, post_data)
+        
+        # Compute SPM parameters and save as CSV
+        param_df = _get_ti_parameters_as_df(ti,
+                time_offset=constants.TMG_ROWS_TO_SKIP_FOR_SPM)
+        param_df.to_csv(param_output_file)
+
+        # Plot
+        plotting.plot_spm_ttest(t, ti, pre_data, post_data,
+                constants.TMG_ROWS_TO_SKIP_FOR_SPM,
+                plot_output_file,
+                fig_format=fig_format, fig_dpi=fig_dpi,
+                tmg_y_axis_label="Displacement [mm]",
+                show_plot=False, save_figures=True)
+
+
+def spm_tests_by_subj_by_set_8mps():
+    """
+    Input data: the per-subject measurement files in
+    `constants.SPM_8MPS_DATA_DIR`
+
+    For each subject and each set for the given subjcet:
+    - Performs an SPM paired t-test comparing preprocessed pre-ISQ and
+      post-ISQ TMG signals from the given set and saves the resulting SPM
+      plots.
+    - Either queries from `spm1d` or directly computes discrete parameters
+      summarizing the above-described SPM paired t-test.
+
+    Output data: 
+    - Per-subject CSV files in `SPM_PARAMS_BY_SUBJ_BY_SET_8MPS_DIR`
+      summarizing the results of the above-described statisical analysis.
+    - Per-subject JPG files in `SPM_PLOTS_BY_SUBJ_BY_SET_8MPS_DIR`storing
+      a two-axis (one row, two column) graph the set's above-described SPM
+      t-test and showing:
+      - Axis 0: Mean normalized pre-ISQ and post-ISQ TMG signal for each 
+        set, with standard deviation clouds, with respect to time.
+      - Axis 1: SPM t-continuum with respect to time with threshold 
+        and significance clusters emphasized.
+
+    """ 
+    print()
 
 # ---------------------------------------------------------------------- #
 # Functions below this line are not meant to be called outside this script
