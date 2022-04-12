@@ -36,31 +36,36 @@ def perform_spm_tests_by_set_across_subj():
     param_output_dir = constants.SPM_PARAMS_BY_SET_ACROSS_SUBJ_DIR
     plot_output_dir = constants.SPM_PLOTS_BY_SET_ACROSS_SUBJ_DIR
 
+    pre_filenames = frontiers_utils.natural_sort(os.listdir(pre_input_dir))
+    post_filenames = frontiers_utils.natural_sort(os.listdir(post_input_dir))
+
+    num_subjects = len(pre_filenames)
+    sets_per_measurement_file = 8
+    rows_per_measurement_file = constants.TMG_ROWS_TO_USE_FOR_SPM - constants.TMG_ROWS_TO_SKIP_FOR_SPM
+
     fig_dpi = 300
     fig_format = "jpg"
-
-    sets_per_measurement_file = 4
-    rows_per_measurement_file = constants.TMG_ROWS_TO_USE_FOR_SPM - constants.TMG_ROWS_TO_SKIP_FOR_SPM
-    subjects_in_database = 55
 
     # 3D Numpy tensor to hold all pre-exercise measurements in database
     pre_tensor = np.zeros([rows_per_measurement_file,
         sets_per_measurement_file,
-        subjects_in_database])
+        num_subjects])
 
     # 3D Numpy tensor to hold all post-exercise measurements in database
     post_tensor = np.zeros([rows_per_measurement_file,
         sets_per_measurement_file,
-        subjects_in_database])
+        num_subjects])
 
     # Load pre-exercise measurements into memory
-    for i, filename in enumerate(frontiers_utils.natural_sort(os.listdir(pre_input_dir))):
-        data = np.loadtxt(pre_input_dir + filename, delimiter=',', skiprows=1)
+    for i, filename in enumerate(pre_filenames):
+        data = np.loadtxt(pre_input_dir + filename, delimiter=',',
+                skiprows=1, max_rows=rows_per_measurement_file)
         pre_tensor[:, :, i] = data
 
     # Load post-exercise measurements into memory
-    for i, filename in enumerate(frontiers_utils.natural_sort(os.listdir(post_input_dir))):
-        data = np.loadtxt(post_input_dir + filename, delimiter=',', skiprows=1)
+    for i, filename in enumerate(post_filenames):
+        data = np.loadtxt(post_input_dir + filename, delimiter=',',
+                skiprows=1, max_rows=rows_per_measurement_file)
         post_tensor[:, :, i] = data
 
     # Perform SPM analysis for each set
@@ -71,20 +76,9 @@ def perform_spm_tests_by_set_across_subj():
         pre_data = pre_tensor[:, s, :]
         post_data = post_tensor[:, s, :]
 
-        t, ti = _get_spm_ti(pre_data, post_data)
-        
-        # Compute SPM parameters and save as CSV
-        param_df = _get_ti_parameters_as_df(ti,
-                time_offset=constants.TMG_ROWS_TO_SKIP_FOR_SPM)
-        param_df.to_csv(param_output_file)
-
-        # Plot
-        plotting.plot_spm_ttest(t, ti, pre_data, post_data,
-                constants.TMG_ROWS_TO_SKIP_FOR_SPM,
-                plot_output_file,
-                fig_format=fig_format, fig_dpi=fig_dpi,
-                tmg_y_axis_label="Normalized displacement",
-                show_plot=False, save_figures=True)
+        _perform_spm_analysis(pre_data, post_data,
+                param_output_file, plot_output_file, 
+                fig_dpi=fig_dpi, fig_format=fig_format, alpha=0.01)
 
 
 def spm_tests_by_subj_across_sets_1mps():
@@ -135,7 +129,7 @@ def spm_tests_by_subj_across_sets_1mps():
         post_data = np.loadtxt(post_input_dir + post_filenames[i],
                 delimiter=',', skiprows=1)  # skip header row
 
-        t, ti = _get_spm_ti(pre_data, post_data)
+        t, ti = _get_spm_t_ti_paired_ttest(pre_data, post_data)
         
         # Compute SPM parameters and save as CSV
         param_df = _get_ti_parameters_as_df(ti,
@@ -177,13 +171,38 @@ def spm_tests_by_subj_by_set_8mps():
     """ 
     print()
 
-# ---------------------------------------------------------------------- #
+# --------------------------------------------------------------------- #
 # Functions below this line are not meant to be called outside this script
-# ---------------------------------------------------------------------- #
-def _get_spm_ti(pre_data, post_data, alpha=0.05):
+# --------------------------------------------------------------------- #
+
+def _perform_spm_analysis(pre_data, post_data,
+        param_output_file, plot_output_file,
+        fig_dpi=300, fig_format="jpg", alpha=0.01):
     """
-    Returns the spm.t and spm.ti objects resulting from an SMP 
-    two-sample t-test between the inputted pre- and post-exercise data.
+    Performs a paired SPM ttest comparing `pre_data` to `post_data`.
+    Saves parameters summarizing the test results to `param_output_file` and
+    saves a plot showing the test results to `plot_output_file`.
+    """
+    t, ti = _get_spm_t_ti_paired_ttest(pre_data, post_data, alpha=alpha)
+    
+    # Compute SPM parameters and save as CSV
+    param_df = _get_ti_parameters_as_df(ti,
+            time_offset=constants.TMG_ROWS_TO_SKIP_FOR_SPM)
+    param_df.to_csv(param_output_file)
+
+    # Plot
+    plotting.plot_spm_ttest(t, ti, pre_data, post_data,
+            constants.TMG_ROWS_TO_SKIP_FOR_SPM,
+            plot_output_file,
+            fig_format=fig_format, fig_dpi=fig_dpi,
+            tmg_y_axis_label="Normalized displacement",
+            show_plot=False, save_figures=True)
+
+
+def _get_spm_t_ti_paired_ttest(pre_data, post_data, alpha=0.05):
+    """
+    Returns the spm.t and spm.ti objects resulting from an SPM paired t-test
+    between the inputted pre- and post-exercise data.
 
     Parameters
     ----------
@@ -308,5 +327,5 @@ def _get_params_of_spm_cluster(cluster, alpha, threshold,
             A_above_x]
 
 if __name__ == "__main__":
-    # perform_spm_tests_by_subjects()
-    perform_spm_tests_by_set()
+    perform_spm_tests_by_set_across_subj()
+    # perform_spm_tests_by_set()
