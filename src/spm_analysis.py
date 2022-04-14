@@ -72,7 +72,7 @@ def perform_spm_tests_by_set_across_subj():
     # Perform SPM analysis for each set
     for s in range(sets_per_measurement_file):
         param_output_file = param_output_dir + "set{}-params.csv".format(s + 1)
-        plot_output_file = plot_output_dir + "set{}-plot.jpg".format(s + 1)
+        plot_output_file = plot_output_dir + "set{}-plot.{}".format(s + 1, fig_format)
 
         pre_data = pre_tensor[:, s, :]
         post_data = post_tensor[:, s, :]
@@ -125,7 +125,7 @@ def spm_tests_by_subj_across_sets_1mps():
 
     for i in range(len(pre_filenames)):
         param_output_file = param_output_dir + pre_filenames[i].replace("-pre.csv", "-spm-params.csv")
-        plot_output_file = plot_output_dir + pre_filenames[i].replace("-pre.csv", "-spm-plot.jpg")
+        plot_output_file = plot_output_dir + pre_filenames[i].replace("-pre.csv", "-spm-plot.{}".fig_format)
 
         pre_data = np.loadtxt(pre_input_dir + pre_filenames[i],
                 delimiter=',', skiprows=1)  # skip header row
@@ -191,7 +191,7 @@ def spm_tests_by_subj_by_set_8mps():
             pre_filename = pre_input_dir + pre_filenames[s]
             post_filename = post_input_dir + post_filenames[s]
             param_output_file = param_output_dir + "set-{}.csv".format(s + 1)
-            plot_output_file = plot_output_dir + "set-{}.csv".format(s + 1)
+            plot_output_file = plot_output_dir + "set-{}.{}".format(s + 1, fig_format)
 
             pre_data = np.loadtxt(pre_filename,
                     delimiter=',', skiprows=1)  # skip header row
@@ -361,6 +361,6 @@ def _get_params_of_spm_cluster(cluster, alpha, threshold,
             A_above_x]
 
 if __name__ == "__main__":
-    # perform_spm_tests_by_set_across_subj()
-    # perform_spm_tests_by_set() ## TODO: test me
+    perform_spm_tests_by_set_across_subj()
+    perform_spm_tests_by_set()
     spm_tests_by_subj_by_set_8mps()
