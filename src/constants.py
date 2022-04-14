@@ -124,12 +124,6 @@ TMG_PARAM_NAMES = ["Dm:", "Td:", "Tc:", "Ts:", "Tr:", "P1:", "P2:", "P3:",
         "RDD Max:", "RDD Min:", "RDD Peak to Peak:",
         "RDD Max Time:", "RDD Min Time:", "Max to Min Time:"]
 
-# Alternative hypotheses to use with scipy.stats.ttest_rel
-# "less" means potentiated value is less than baseline (e.g. Tc)
-# "greater" means potentiated value is more than baseline (e.g. Dm)
-# "two-sided" allows difference in either direction
-TMG_PARAM_ALT_HYPOTHESES = ["greater", "less", "less", "less", "less", "two-sided", "two-sided", "two-sided", "greater", "less", "greater", "two-sided", "two-sided", "two-sided"]
-
 # Names of statistical quantities used to analyze TMG parameters
 TMG_STAT_NAMES = ['base-avg', 'pot-avg', 'base-sample-std', 'pot-sample-std', 't-statistic', 't-test-p-value']
 

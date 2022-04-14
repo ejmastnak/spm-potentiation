@@ -204,16 +204,7 @@ def _compute_stats_for_tmg_params(pre_params, post_params, output_file):
     pre_sd = np.std(pre_params, axis=1, ddof=1)
     post_sd = np.std(post_params, axis=1, ddof=1)
 
-    # This step cannot be vectorized because ttest_rel does not accept an array
-    # for the optional alternative hypothesis argument
-    t_statistic = np.zeros(len(param_names))
-    p_value = np.zeros(len(param_names))
-    for i in range(len(param_names)): # loop through each parameter
-        pre_param_row = pre_params[i, :]
-        post_param_row = post_params[i, :]
-        t, p = ttest_rel(post_param_row, pre_param_row, alternative=alt_hypotheses[i])
-        t_statistic[i] = t
-        p_value[i] = p
+    t_statistic, p_value = ttest_rel(pre_params, post_params, axis=1)
 
     # Convert Numpy arrays of stat results to a Pandas DataFrame, 
     # which is inefficient in principle but convenient 
