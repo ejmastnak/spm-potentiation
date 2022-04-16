@@ -200,6 +200,9 @@ def _compute_stats_for_tmg_params(pre_params, post_params, output_file):
     # Compare pre-ISQ and post-ISQ parameters
     pre_avg = np.average(pre_params, axis=1)
     post_avg = np.average(post_params, axis=1)
+
+    percent_change = 100 * (post_avg - pre_avg) / pre_avg
+
     pre_sd = np.std(pre_params, axis=1, ddof=1)
     post_sd = np.std(post_params, axis=1, ddof=1)
 
@@ -209,6 +212,7 @@ def _compute_stats_for_tmg_params(pre_params, post_params, output_file):
     # which is inefficient in principle but convenient 
     # when writing rows names to CSV files.
     df_stats = pd.DataFrame(np.column_stack([pre_avg, post_avg,
+        percent_change,
         pre_sd, post_sd,
         t_statistic, p_value]),
         index=param_names, columns=stats_names)

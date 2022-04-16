@@ -125,7 +125,7 @@ TMG_PARAM_NAMES = ["Dm:", "Td:", "Tc:", "Ts:", "Tr:", "P1:", "P2:", "P3:",
         "RDD Max Time:", "RDD Min Time:", "Max to Min Time:"]
 
 # Names of statistical quantities used to analyze TMG parameters
-TMG_STAT_NAMES = ['base-avg', 'pot-avg', 'base-sample-std', 'pot-sample-std', 't-statistic', 't-test-p-value']
+TMG_STAT_NAMES = ['pre-avg', 'post-avg', '% change', 'base-sample-std', 'pot-sample-std', 't-statistic', 't-test-p-value']
 
 
 # BEGIN DUMP FROM TMG PROJECT

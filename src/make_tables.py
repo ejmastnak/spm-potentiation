@@ -103,11 +103,11 @@ def _make_tmg_param_table(input_file, output_file, comment=None, table_title=Non
 
     printable_param_names = ["\\Dm [\\si{\\milli \\meter}]", "\\Td [\\si{\\milli \\second}]", "\\Tc [\\si{\\milli \\second}]", "\\RDDMax [\\si{\\milli \\meter \\per \\milli \\second}]", "\\RDDMaxTime [\\si{\\milli \\second}]"]
     formats = [
-            [".2f", ".2f", ".2f", ".2f", ".1f", ".0e"],  # Dm
-            [".1f", ".1f", ".1f", ".1f", ".1f", ".0e"],  # Td
-            [".1f", ".1f", ".1f", ".1f", ".1f", ".0e"],  # Tc
-            [".2f", ".2f", ".2f", ".2f", ".1f", ".0e"],  # RDDMax
-            [".1f", ".1f", ".1f", ".1f", ".1f", ".0e"],  # RDDMaxTime
+            [".2f", ".2f", "+.0f", ".2f", ".2f", ".1f", ".0e"],  # Dm
+            [".1f", ".1f", "+.0f", ".1f", ".1f", ".1f", ".0e"],  # Td
+            [".1f", ".1f", "+.0f", ".1f", ".1f", ".1f", ".0e"],  # Tc
+            [".2f", ".2f", "+.0f", ".2f", ".2f", ".1f", ".0e"],  # RDDMax
+            [".1f", ".1f", "+.0f", ".1f", ".1f", ".1f", ".0e"],  # RDDMaxTime
             ]
 
     with open(output_file, 'w') as writer:
@@ -117,9 +117,9 @@ def _make_tmg_param_table(input_file, output_file, comment=None, table_title=Non
         if comment is not None:  
             writer.write('% {}\n'.format(comment))
 
-        writer.write('\\begin{tabular}{|l|c|c|c|c|c|c|}')
+        writer.write('\\begin{tabular}{|l|c|c|c|c|c|c|c|}')
         writer.write('\n    ')
-        writer.write('\\hline {\\rule{0pt}{2.0ex}} \\hspace{-7pt}')
+        writer.write('\\hline {\\rule{0pt}{2.2ex}} \\hspace{-7pt}')
         writer.write('\n    ')
 
         # Used to add a brief title indicating the subject and set(s) from
@@ -127,17 +127,19 @@ def _make_tmg_param_table(input_file, output_file, comment=None, table_title=Non
         if table_title is not None:  
             writer.write('\\textbf{{{}}}'.format(table_title))
 
-        writer.write(' & $ \\mu_{\\text{pre}} $ & $ \\mu_{\\text{post}} $ & $ \\sigma_{\\text{pre}} $ & $ \\sigma_{\\text{post}} $ & $ \\lvert t \\rvert $ & $ p $ \\\\[0.3ex]')
+        writer.write(' & $ \\mu_{\\text{pre}} $ & $ \\mu_{\\text{post}} $ & change & $ \\sigma_{\\text{pre}} $ & $ \\sigma_{\\text{post}} $ & $ \\lvert t \\rvert $ & $ p $ \\\\[0.3ex]')
         writer.write('\n    ')
-        writer.write('\\hline {\\rule{0pt}{2.0ex}} \\hspace{-7pt}')
+        writer.write('\\hline {\\rule{0pt}{2.5ex}} \\hspace{-7pt}')
         writer.write('\n    ')
 
         for i, p in enumerate(param_indices):  # loop through all TMG parameters
             writer.write(printable_param_names[i])
             for j, stat in enumerate(tmg_stats[p, :]):  # loop through all parameter stats
-                if j == 4:  # take absolute value of t-statistic
+                if j == 2:  # add percent sign to percent difference
+                    writer.write(" & $ {0:{1}} \% $ ".format(stat, formats[i][j]))
+                elif j == 5:  # take absolute value of t-statistic
                     writer.write(" & $ {0:{1}} $ ".format(np.abs(stat), formats[i][j]))
-                elif j == 5:  # write p value in scientific notation
+                elif j == 6:  # write p value in scientific notation
                     writer.write(" & $ \SI{{{0:{1}}}}{{}} $ ".format(stat, formats[i][j]))
                 else:
                     writer.write(" & $ {0:{1}} $ ".format(stat, formats[i][j]))
@@ -359,7 +361,7 @@ def make_tmg_param_table_by_set_across_subj_old(use_set1_as_baseline=False):
         writer.write('\\multirow{3}{*}{\\parbox{2cm}{\\centering \\textbf{\\RDDMaxTime}\\\\ {\\footnotesize Time of max.\\\\[-0.8ex] derivative}}} & Pre-ISQ Mean $ [\\si{\\milli \\second}] $')
         writer.write(rddmax_time_pre_str + "\\\\")
         writer.write('\n    ')
-        writer.write(' & Post-ISQ Mean $ [\\si{\\milli \\second}] $')
+        writer.write(' & Post-ISQ Mean $ \\si{\\milli \\second} $')
         writer.write(rddmax_time_post_str + "\\\\")
         writer.write('\n    ')
         writer.write(' & Percent change')
