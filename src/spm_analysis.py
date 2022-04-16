@@ -11,7 +11,7 @@ import constants, frontiers_utils, plotting
 
 def perform_spm_tests_by_set_across_subj():
     """
-    Input data: the normalized per-subject measurement files in `constants.NORMED_SPM_DATA_DIR`
+    Input data: the per-subject measurement files in `constants.SPM_DATA_DIR`
 
     For each measurement set:
     - Performs an SPM paired t-test comparing preprocessed pre-ISQ and post-ISQ
@@ -25,14 +25,14 @@ def perform_spm_tests_by_set_across_subj():
     - Per-set JPG files in `SPM_PLOTS_BY_SET_ACROSS_SUBJ_DIR` storing a
       two-axis (one row, two column) graph the set's above-described SPM
       t-test and showing:
-      - Axis 0: Mean normalized pre-ISQ and post-ISQ TMG signal across 
+      - Axis 0: Mean pre-ISQ and post-ISQ TMG signal across 
         all subjects, with standard deviation clouds, with respect to time.
       - Axis 1: SPM t-continuum with respect to time with threshold 
         and significance clusters emphasized.
 
     """
-    pre_input_dir = constants.NORMED_SPM_1MPS_DATA_DIR + "pre-exercise/"
-    post_input_dir = constants.NORMED_SPM_1MPS_DATA_DIR + "post-exercise/"
+    pre_input_dir = constants.SPM_1MPS_DATA_DIR + "pre-exercise/"
+    post_input_dir = constants.SPM_1MPS_DATA_DIR + "post-exercise/"
     param_output_dir = constants.SPM_PARAMS_BY_SET_ACROSS_SUBJ_DIR
     plot_output_dir = constants.SPM_PLOTS_BY_SET_ACROSS_SUBJ_DIR
 
@@ -71,15 +71,15 @@ def perform_spm_tests_by_set_across_subj():
 
     # Perform SPM analysis for each set
     for s in range(sets_per_measurement_file):
-        param_output_file = param_output_dir + "set{}-params.csv".format(s + 1)
-        plot_output_file = plot_output_dir + "set{}-plot.{}".format(s + 1, fig_format)
+        param_output_file = param_output_dir + "set-{}-params.csv".format(s + 1)
+        plot_output_file = plot_output_dir + "set-{}-plot.{}".format(s + 1, fig_format)
 
         pre_data = pre_tensor[:, s, :]
         post_data = post_tensor[:, s, :]
 
         _perform_spm_analysis(pre_data, post_data,
                 param_output_file, plot_output_file,
-                data_y_axis_label="Normalized displacement",
+                data_y_axis_label="Displacement",
                 fig_dpi=fig_dpi, fig_format=fig_format, alpha=spm_alpha)
 
 
@@ -101,7 +101,7 @@ def spm_tests_by_subj_across_sets_1mps():
     - Per-subject JPG files in `SPM_PLOTS_BY_SUBJ_ACROSS_SETS_1MPS_DIR`storing
       a two-axis (one row, two column) graph the set's above-described SPM
       t-test and showing:
-      - Axis 0: Mean normalized pre-ISQ and post-ISQ TMG signal across 
+      - Axis 0: Mean pre-ISQ and post-ISQ TMG signal across 
         all sets, with standard deviation clouds, with respect to time.
       - Axis 1: SPM t-continuum with respect to time with threshold 
         and significance clusters emphasized.
@@ -362,5 +362,5 @@ def _get_params_of_spm_cluster(cluster, alpha, threshold,
 
 if __name__ == "__main__":
     perform_spm_tests_by_set_across_subj()
-    perform_spm_tests_by_set()
+    spm_tests_by_subj_across_sets_1mps()
     spm_tests_by_subj_by_set_8mps()
