@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-import tmg_biomechanics.tmg_params_pypi as tmg_params_pypi
+import tmg_biomechanics.tmg_params as tmg_params_pypi
 import plotting, constants, frontiers_utils, spm_analysis
 """
 A set of functions used to create the Matplotlib figures that appear in the
@@ -160,121 +160,70 @@ def make_sample_tmg_plot():
         plt.show()
 
 
-def make_sample_spm_plot():
+def make_sample_spm_plot_by_subj_across_sets_1mps():
     """
-    Generates a 2-axis Maplotlib plot showing the results of a
-    representative SPM paired t-test using unnormalized TMG data from a
-    single subject.
+    Generates a 2-axis Maplotlib plot showing the results of a SPM paired
+    t-test comparing pre-ISQ and post-ISQ TMG signals across measurement sets
+    using the first measurement from each of one subject' eight measurement
+    sets.
 
-    Input data: the per-subject measurement files in `constants.SPM_DATA_DIR`
+    """
+    file_basename = "54-ZI20211112121510"
+    pre_file = constants.SPM_1MPS_DATA_DIR + "pre-exercise/" + file_basename + "-pre.csv"
+    post_file = constants.SPM_1MPS_DATA_DIR + "post-exercise/" + file_basename + "-post.csv"
+
+    fig_format = "jpg"
+    output_file = constants.ARTICLE_FIGURE_DIR + "spm-plot-by-subj-across-sets.{}".format(fig_format)
+
+    _make_sample_spm_plot(pre_file, post_file, output_file, fig_format=fig_format)
+
+
+def make_sample_spm_plot_by_subj_by_set_8mps():
+    """
+    Generates a 2-axis Maplotlib plot showing the results of a SPM paired
+    t-test comparing pre-ISQ and post-ISQ TMG signals from one measurement set
+    from one test subject. 
+
+    """
+    subject_basename = "54-ZI20211112121510"
+    set_num = 1
+    pre_file = constants.SPM_8MPS_DATA_DIR + "pre-exercise/" + subject_basename + "/" + subject_basename + "-pre-set-{}.csv".format(set_num)
+    post_file = constants.SPM_8MPS_DATA_DIR + "post-exercise/" + subject_basename + "/" + subject_basename + "-post-set-{}.csv".format(set_num)
+
+    fig_format = "jpg"
+    output_file = constants.ARTICLE_FIGURE_DIR + "spm-plot-by-subj-by-set.{}".format(fig_format)
+
+    _make_sample_spm_plot(pre_file, post_file, output_file, fig_format=fig_format)
+
+
+def _make_sample_spm_plot(pre_file, post_file, output_file, fig_format="jpg"):
+    """
+    Generates a 2-axis Maplotlib plot showing the results of a representative
+    SPM paired t-test comparing pre-ISQ and post-ISQ TMG signals
 
     """
     save_figure=True
-    show_plot=True
+    show_plot=False
 
-    file_basename = "54-ZI20211112121510"
-    pre_file = constants.SPM_DATA_DIR + "pre-exercise/" + file_basename + "-pre.csv"
-    post_file = constants.SPM_DATA_DIR + "post-exercise/" + file_basename + "-post.csv"
-    output_file = constants.ARTICLE_FIGURE_DIR + "spm-example.jpg"
+    fig_format = "jpg"
+    fig_dpi = 400
 
     pre_data = np.loadtxt(pre_file, delimiter=',', skiprows=1)
     post_data = np.loadtxt(post_file, delimiter=',', skiprows=1)
 
-    # --------------------------------------------- #
-    # BEGIN PLOTTING
-    # --------------------------------------------- #
-    width_inches = 7
-    fig, axes = plt.subplots(1, 2, figsize=(width_inches, 0.5*width_inches))
-    tmg_data_start_row = constants.TMG_ROWS_TO_SKIP_FOR_SPM
+    t, ti = spm_analysis._get_spm_t_ti_paired_ttest(pre_data, post_data)
 
-    fig_dpi = 350
-    fig_format = "jpg"
+    # Compute SPM parameters
+    param_df = spm_analysis._get_ti_parameters_as_df(ti,
+            time_offset=constants.TMG_ROWS_TO_SKIP_FOR_SPM)
 
-    pre_color    = constants.PRE_COLOR
-    post_color   = constants.POST_COLOR
-    pre_alpha    = constants.PRE_ALPHA
-    post_alpha   = constants.POST_ALPHA
-    tline_color  = constants.T_LINE_COLOR
-    tfill_color  = constants.T_FILL_COLOR
-    tfill_color2 = constants.T_FILL_COLOR2
-    linewidth = 1.5
-
-    # Loop through each set of normalized measurements
-    t, ti = spm_analysis._get_spm_t_ti_paired_ttest(pre_data, post_data, alpha=0.05)
-    # print(type(t))
-
-    # Begin plotting
-    # --------------------------------------------- #
-    N = np.shape(post_data)[0]       # number of rows in pre/post_data
-    time = np.linspace(0, N - 1, N)  # [ms] assuming 1 kHz sampling
-
-    post_mean = np.mean(post_data, axis=1)
-    pre_mean = np.mean(pre_data, axis=1)
-    post_sd = np.std(post_data, ddof=1, axis=1)
-    pre_sd = np.std(pre_data, ddof=1, axis=1)
-
-    # Plot TMG measurement
-    # --------------------------------------------- #
-    ax = axes[0]
-    plotting.remove_spines(ax)
-
-    ax.set_xlabel("Time [ms]")
-    ax.set_ylabel("Displacement [mm]")
-
-    # Mean value of time-series measurements
-    ax.plot(time, pre_mean, color=pre_color, linewidth=linewidth, 
-            label="Pre-ISQ mean", zorder=4)
-    ax.plot(time, post_mean, color=post_color, linewidth=linewidth,
-            label="Post-ISQ mean", zorder=3)
-
-    # Standard deviation clouds
-    ax.fill_between(time, post_mean - post_sd, post_mean + post_sd, 
-            color=post_color, alpha=post_alpha, zorder=2)
-    ax.fill_between(time, pre_mean - pre_sd, pre_mean + pre_sd,
-            color=pre_color, alpha=pre_alpha, zorder=1)
-
-    ax.legend(framealpha=1.0, loc="lower right")
-    # --------------------------------------------- #
-
-    # Plot SPM results
-    # --------------------------------------------- #
-    ax = axes[1]
-    plotting.remove_spines(ax)
-
-    ax.set_xlabel("Time [ms]")
-    ax.set_ylabel("SPM $t$-continuum", labelpad=-0.1)
-
-    ax.set_ylim(-7, 12)
-    y_ticks = [-5, 0, 5, 10]
-    y_tick_lables = ["-5", "0", "5", "10"]
-    ax.set_yticks(y_ticks)
-    ax.set_yticklabels(y_tick_lables)
-
-    # Plot SPM t-statistic
-    ax.plot(time, t.z, color=tline_color)  # plot t-curve
-
-    # Plot dashed line at y = 0
-    ax.axhline(y=0, color='black', linestyle=':')  
-
-    # Plot dashed line at SPM significance threshold
-    ax.axhline(y=ti.zstar, color='#000000', linestyle='--')
-
-    # Text box showing alpha, threshold value, and p value
-    ax.text(73, ti.zstar + 1.0, plotting.get_annotation_text(ti),
-            va='bottom', ha='left', 
-            bbox=dict(facecolor='#FFFFFF', edgecolor='#222222', boxstyle='round,pad=0.3'))
-
-    # Shade between curve and threshold
-    ax.fill_between(time, t.z, ti.zstar, where=t.z >= ti.zstar,
-            interpolate=True, color=tfill_color)
-
-    plt.tight_layout()
-
-    if save_figure:
-        plt.savefig(output_file, dpi=fig_dpi, bbox_inches='tight', pad_inches = 0)
-
-    if show_plot:
-        plt.show()
+    # Plot
+    plotting.plot_spm_ttest(t, ti, pre_data, post_data,
+            constants.TMG_ROWS_TO_SKIP_FOR_SPM,
+            output_file,
+            fig_format=fig_format, fig_dpi=fig_dpi,
+            ti_params_df = param_df,
+            show_plot=show_plot, save_figures=save_figure)
 
 
 def make_setwise_spm_subplots():
@@ -428,6 +377,7 @@ def make_setwise_spm_subplots():
 
 if __name__ == "__main__":
     make_sample_tmg_plot()
-    make_sample_spm_plot()
+    make_sample_spm_plot_by_subj_across_sets_1mps()
+    make_sample_spm_plot_by_subj_by_set_8mps()
     make_setwise_spm_subplots()
 

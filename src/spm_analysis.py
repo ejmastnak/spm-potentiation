@@ -234,7 +234,7 @@ def _perform_spm_analysis(pre_data, post_data,
             show_plot=False, save_figures=True)
 
 
-def _get_spm_t_ti_paired_ttest(pre_data, post_data, alpha=0.05):
+def _get_spm_t_ti_paired_ttest(pre_data, post_data, alpha=0.01):
     """
     Returns the spm.t and spm.ti objects resulting from an SPM paired t-test
     between the inputted pre- and post-exercise data.
