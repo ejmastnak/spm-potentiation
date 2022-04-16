@@ -9,7 +9,7 @@ import spm_analysis, constants
 def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
         figure_output_path, fig_format="png", fig_dpi=300,
         tmg_y_axis_label="Displacement", x_axis_label="Time [ms]",
-        ti_params_df=None,
+        title=None, ti_params_df=None,
         show_plot=True, save_figures=False):
     """
     Plots the pre and post-exercise data's mean and standard deviation clouds on axis 0.
@@ -46,6 +46,8 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
     x_axis_label : str
         Label, passed to Matplotlib's `ax.set_xlabel`, for the x axis
         of both the plot showing TMG signals and the SPM t-statistic plot.
+    title : str
+        Optional title
     ti_params_df : DataFrame
         An optional Pandas DataFrame frame computed in `spm_analysis.py`
         holding parameters describing the ti object.
@@ -116,6 +118,9 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
     # Shade between curve and threshold
     ax.fill_between(time, t.z, ti.zstar, where=t.z >= ti.zstar,
             interpolate=True, color=constants.T_FILL_COLOR)
+
+    if title is not None:
+        plt.suptitle(title, y=0.93, fontsize=16)
 
     plt.tight_layout()
 
