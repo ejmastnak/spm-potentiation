@@ -125,7 +125,7 @@ def spm_tests_by_subj_across_sets_1mps():
 
     for i in range(len(pre_filenames)):
         param_output_file = param_output_dir + pre_filenames[i].replace("-pre.csv", "-spm-params.csv")
-        plot_output_file = plot_output_dir + pre_filenames[i].replace("-pre.csv", "-spm-plot.{}".fig_format)
+        plot_output_file = plot_output_dir + pre_filenames[i].replace("-pre.csv", "-spm-plot.{}".format(fig_format))
 
         pre_data = np.loadtxt(pre_input_dir + pre_filenames[i],
                 delimiter=',', skiprows=1)  # skip header row
@@ -362,6 +362,6 @@ def _get_params_of_spm_cluster(cluster, alpha, threshold,
             A_above_x]
 
 if __name__ == "__main__":
-    perform_spm_tests_by_set_across_subj()
-    # spm_tests_by_subj_across_sets_1mps()
+    # perform_spm_tests_by_set_across_subj()
+    spm_tests_by_subj_across_sets_1mps()
     # spm_tests_by_subj_by_set_8mps()

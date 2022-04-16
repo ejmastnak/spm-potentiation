@@ -64,7 +64,8 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
     post_sd = np.std(post_data, ddof=1, axis=1)
     pre_sd = np.std(pre_data, ddof=1, axis=1)
 
-    fig, axes = plt.subplots(1, 2)
+    width_inches = 7
+    fig, axes = plt.subplots(1, 2, figsize=(width_inches, 0.5*width_inches))
 
     # Plot time-series measurements (generally TMG data)
     # --------------------------------------------- #
@@ -75,9 +76,9 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
 
     # Mean value of time-series measurements
     ax.plot(time, pre_mean, color=constants.PRE_COLOR, linewidth=2.5, 
-            label="Pre-exercise mean", zorder=4)
+            label="Pre-ISQ", zorder=4)
     ax.plot(time, post_mean, color=constants.POST_COLOR, linewidth=2.5,
-            label="Post-exercise mean", zorder=3)
+            label="Post-ISQ", zorder=3)
 
     # Standard deviation clouds
     ax.fill_between(time, post_mean - post_sd, post_mean + post_sd, 
@@ -86,7 +87,7 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
             color=constants.PRE_COLOR, alpha=constants.PRE_ALPHA, zorder=1)
 
     ax.axhline(y=0, color='black', linestyle=':')  # dashed line at y = 0
-    ax.legend(framealpha=1.0)
+    ax.legend(framealpha=1.0, loc="lower right")
     # --------------------------------------------- #
 
     # Plot SPM results
@@ -106,8 +107,10 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
     ax.axhline(y=ti.zstar, color='#000000', linestyle='--')
 
     # Text box showing alpha, threshold value, and p value
-    ax.text(73, ti.zstar + 0.4, get_annotation_text(ti, ti_params_df=ti_params_df),
-            va='bottom', ha='left', 
+    ax.text(0.70, 0.97, 
+            get_annotation_text(ti, ti_params_df=ti_params_df),
+            va='top', ha='left',
+            transform=ax.transAxes,
             bbox=dict(facecolor='#FFFFFF', edgecolor='#222222', boxstyle='round,pad=0.3'))
 
     # Shade between curve and threshold
@@ -117,7 +120,8 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
     plt.tight_layout()
 
     if save_figures:
-        plt.savefig(figure_output_path, format=fig_format, dpi=fig_dpi)
+        plt.savefig(figure_output_path, format=fig_format, dpi=fig_dpi, 
+                bbox_inches='tight', pad_inches = 0)
 
     if show_plot:  # either show plot...
         plt.show()
@@ -150,7 +154,7 @@ def get_annotation_text(ti, ti_params_df=None):
     """
     # If no parameter DataFrame was passed or if no supra-threshold clusters
     # occurred, write only t-star and alpha.
-    if ti_params_df is None or ti.clusters is None:
+    if ti_params_df is None or ti.clusters is None or len(ti.clusters) == 0:
         return "$\\alpha = {:.2f}$\n$t^* = {:.2f}$".format(ti.zstar, ti.alpha)
 
     # If at least one supra-threshold cluster occured
