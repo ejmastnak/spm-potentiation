@@ -73,7 +73,7 @@ $^{3}$University of Ljubljana, Faculty of Mechanical Engineering, Ljubljana, Slo
 \begin{abstract}
 \section{}
 This study proposes and demonstrates in practice the use of statistical parametric mapping for reliably detecting and quantifying post-activation twitch potentiation in superficial skeletal muscles.
-The study applies SPM to tensiomyographic measurements of the rectus femoris muscle's contractile response during electrically-induced twitch contraction following a conditioning exercise. SPM was found to reliably and quantitatively differentiate between the muscle's pre-conditioning and post-conditioning response, indicating the presence of post-activation potentiation.
+The study applies SPM to tensiomyographic measurements of the rectus femoris muscle's contractile response during electrically-induced twitch contraction following an incline squat conditioning exercise. SPM was found to reliably and quantitatively differentiate between the muscle's pre-conditioning and post-conditioning response, indicating the presence of post-activation potentiation.
 More so, because SPM preserves the time-domain information contained in the original muscle response, SPM shows exactly \textit{when} the potentiation-like state occurred over the course of the muscle twitch.
 
 \tiny
@@ -125,7 +125,7 @@ Fatigue induces a decrease in amplitude and velocity of twitch contraction, whil
 Currently, it is standard to quantify the level of twitch potentiation using discrete twitch contraction parameters computed retrospectively from measurements of muscle displacement, force production, or electrical activity with respect to time.
 Examples of these parameters include maximal amplitude of muscle contraction, time taken to reach peak contraction, maximal twitch rate of force development [29][30][31], and peak M-wave amplitude [3].
 In each case, computing these parameters reduces the originally-measured muscle response, which is generally a one-dimensional time series (e.g. muscle displacement with respect to time), to a single number, i.e. a zero-dimensional scalar value.
-Based on the values of these parameters, one then retrospectively infers if the muscle response from which they were computed corresponded to a potentiated state.
+One can then compare pre-conditioning and post-conditioning parameter values to retrospectively infer the presence (or lack) of post-activation potentiation.
 
 A promising new approach to quantifying TP would analyze 
 muscle response and detect and quantify potentiation directly in the time domain in which the muscle response was originally measured, without the dimensionality reduction imposed by computing discrete twitch contraction parameters.
@@ -134,10 +134,10 @@ One way of performing such an analysis is the method of statistical parametric m
 Borrowing the definition of Flandin and Friston \cite{flandin}, 
 ``Statistical parametric mapping is the application of random field theory to make inferences about the topological features of statistical processes that are continuous functions of space or time''.
 SPM has so far found its greatest application in neuroimaging for detecting regionally-specific brain activations \cite{friston}.
-We use SPM similarly in the present study---applied to one-dimensional functions of time (i.e. twitch amplitude with respect to time) instead of three-dimensional functions of space (i.e. brain scans)---to detect regionally-specific variations between pre-conditioning and post-conditioning muscle responses directly in the time domain.
-Statistically significant variations between pre-conditioning and post-conditioning muscle responses are then interpreted as post-activation potentiation.
+We use SPM similarly in the present study---applied to one-dimensional functions of time (i.e. twitch amplitude with respect to time) instead of three-dimensional functions of space (i.e. brain scans)---to detect regionally-specific differences between pre-conditioning and post-conditioning muscle responses directly in the time domain.
+Statistically significant differences between pre-conditioning and post-conditioning muscle responses are then interpreted as post-activation potentiation.
 Most promisingly, because SPM preserves the time-domain information contained in the original muscle response, SPM gives an indication of \textit{when} the potentiation-like state occurred over the course of the muscle twitch.
-Of course SPM and conventional twitch contraction parameters are far from mutually exclusive as a means of detecting and quantifying potentiation---in fact the two may be used simultaneously, as the present study illustrates.
+Of course SPM and conventional twitch contraction parameters can be used together as a means of detection potentiation---there is no need for the to methods to be mutually exclusive.
 
 Quantifying twitch potentiation, then, requires two things: a means of measuring a muscle's contractile response following a conditioning exercise and a technique for analyzing the measured muscle response that can determine the presence (or lack) of potentiation.
 Tensiomyography (TMG) is a standard method for selectively measuring contractile response and assessing twitch contraction parameters in superficial skeletal muscles [36][37][38][39][40][41][42].
@@ -154,7 +154,7 @@ if yes, to identify and quantify the associated time-domain changes of twitch po
 
 \section{Materials and Methods}
 \subsection{Participants}
-The present study analyzed 55 subjects (age \SI{28.17 \pm 10.9}{\year}; height \SI{178.15 \pm 10.43}{\centi \meter}; weight \SI{71.84 \pm 12.82}{\kilogram}; 28 male and 27 female; 38 elite athletes and 17 recreational).
+The present study analyzed 54 subjects (age \SI{28.17 \pm 10.9}{\year}; height \SI{178.15 \pm 10.43}{\centi \meter}; weight \SI{71.84 \pm 12.82}{\kilogram}; 28 male and 26 female; 37 elite athletes and 17 recreational).
 % TODO describe the simple random random sampling strategy?
 To be approved for participation, subjects were required to be injury-free at the beginning of the testing protocol.
 The intention and experimental procedure was described to all subjects, and written informed consent was obtained.
@@ -180,14 +180,23 @@ The electrodes remained fixed on the skin for the duration of the measurement an
 The sensor tip's position on the rectus femoris muscle was marked for reference at the beginning of the measurement protocol, and the same tip position was used for all measurements.
 A single-twitch electrical stimulus (a DC pulse of \SI{1}{\milli \second} duration) induced an isometric muscle contraction,
 and the muscle response was recorded and analyzed using a standardized algorithm for the TMG S1 system.
-A typical TMG signal, along with the standard twitch contraction parameters computed from it, is shown later in Figure~\ref{fig:tmg_example}.
+A typical TMG signal, along with the standard twitch contraction parameters computed from it, is shown in Figure~\ref{fig:tmg_example}.
+
+\begin{figure}
+	\centering
+    \includegraphics[width=0.85\textwidth]{tmg-example.jpg}
+    \caption{A representative TMG signal (top) and its derivative with respect to time (bottom), together with the discrete twitch contraction parameters used to summarize these signals.
+    The TMG signal measures the muscle belly's displacement over the course of an electrically-induced twitch contraction;
+    RDD stands for rate of displacement development, in analogy with RFD for rate of force development.}
+    \label{fig:tmg_example}
+\end{figure}
 
 The electrical stimulation intensity applied to the rectus femoris muscle was increased using the standard TMG protocol [36][37][38].
 After each twitch electrical stimulus, the electrical current was increased until the muscle reached supramaximal response;
 the electrical current level for supramaximal muscle response was then used for electrical stimulation in all subsequent measurements.
 
 \subsubsection{Conditioning Exercise}
-The study used a weighted incline squat (ISQ) as the conditioning exercise for triggering the potentiated muscle state. 
+The study used a weighted incline squat (ISQ) as the conditioning exercise intended to activate a potentiated muscle state. 
 The volunteers performed the ISQ on a platform with a slope angle of $ \ang{30} $, holding an additional load of between $ \SI[parse-numbers = false, mode = match]{2 \times 0}{\kilogram} $ and $ \SI[parse-numbers = false, mode = match]{2 \times 20}{\kilogram} $ in each hand (Figure~\ref{fig:isq});
 the load was chosen based on a ten-repetition maximum test performed the day before.
 The knee angle ranged from $ \ang{0} $ to $ \ang{90} $, while the torso-femur angle remained constant at $ \ang{0} $ throughout the movement.
@@ -201,7 +210,7 @@ The squat was performed with precise timing for all volunteers: \SI{1}{\second} 
     \label{fig:isq}
 \end{figure}
 
-\subsubsection{Measurement Protocol}
+\subsubsection{Measurement Protocol} \label{sss:measurement_protocol}
 The study used the following conditioning exercise and TMG measurement protocol:
 \begin{enumerate}
 
@@ -215,35 +224,15 @@ The study used the following conditioning exercise and TMG measurement protocol:
 
 \end{enumerate}
 This four-step procedure is shown in Figure~\ref{fig:protocol} and was repeated eight times by each subject.
-Two variations were used:
-\begin{itemize}
-
-    \item For subjects 1-16, eight pre-ISQ and eight post-ISQ TMG measurements were taken in rapid succession (less than \SI{1}{\second} between successive measurements) in each of the eight measurement sets, for a total of 64 pre-ISQ and 64 post-ISQ TMG measurements per subject.
-
-    \item For subjects 17-54, one pre-ISQ and one post-ISQ TMG measurement was taken in each of the eight measurement sets, for a total of 8 pre-ISQ and 8 post-ISQ TMG measurements.
-
-\end{itemize}
-
-\begin{table}[htb!]
-    \centering
-    \caption{The number of TMG measurements taken per set depending on the subject.}
-    \vspace{1ex}
-    \begin{tabular}{|c|c|c|c|}
-        \hline {\rule{0pt}{2.0ex}} \hspace{-7pt}
-        Subjects & Pre-ISQ per set & Post-ISQ per set \\
-        \hline {\rule{0pt}{2.0ex}} \hspace{-7pt}
-        1-16 & 8 & 8 \\
-        17-54 & 1 & 1 \\
-        \hline
-    \end{tabular}
-    \label{tab:measurements}
-\end{table}
+For subjects 1-16, eight pre-ISQ and eight post-ISQ TMG measurements were taken in rapid succession (less than \SI{1}{\second} between successive measurements) in each of the eight measurement sets, for a total of 64 pre-ISQ and 64 post-ISQ TMG measurements per subject.
+For subjects 17-54, one pre-ISQ and one post-ISQ TMG measurement was taken in each measurement set, for a total of 8 pre-ISQ and 8 post-ISQ TMG measurements per subject.
+The rationale for taking multiple measurements is to generate large enough sample sizes for sufficient statistical power in hypothesis tests comparing pre-ISQ and post-ISQ muscle properties.
 
 \begin{figure}
 	\centering
     \includegraphics[width=\textwidth]{protocol-set.png}
     \caption{One set of the conditioning exercise and measurement protocol used in the study.
-    This measurement set was repeated eight times over the course of the study.
+    One such measurement set was repeated eight times by each participant over the course of the testing protocol.
     Eight pre-ISQ and eight post-ISQ TMG measurements were taken per set for subjects 1-16, while one pre-ISQ and one post-ISQ TMG measurement was taken per set for subjects 17-54.}
     \label{fig:protocol}
 \end{figure}
@@ -257,7 +246,7 @@ The peak value of the net knee joint moment was estimated at the lowest body pos
 and normalized to the volunteer’s body mass to reduce the effect of inter-subject variance [5][6].
 The normalized peak values of the knee joint moment were used to compare the loading of the knee extensor muscles during the ISQ between the volunteers.
 
-\subsection{Analysis of Muscle Contractile Response}
+\subsection{Analysis of Muscle Contractile Response} \label{ss:analysis}
 
 \subsubsection{Software}
 Data analysis and standard statistical tests were performed in the Python 3 programming language (\url{https://www.python.org/}) using the Numpy and SciPy libraries (\url{https://numpy.org/}, \url{https://scipy.org/});
@@ -266,21 +255,28 @@ Statistical parametric mapping analysis was performed in Python 3 using the SPM1
 
 \subsubsection{Discrete Twitch Contraction Parameters} \label{sss:discrete_twitch_params}
 The RF's contractile response was measured with TMG.
-The TMG signal corresponds physically to muscle belly displacement with respect to time over the course of the muscle twitch.
+The TMG signal encodes muscle belly displacement with respect to time over the course of the muscle twitch.
 The signal is sampled for \SI{1}{\second} at a sample rate of \SI{1}{\kilo \hertz}, for a total of 1000 data points.
-A typical TMG signal and its time derivative are show in in Figure~\ref{fig:tmg_example}.
+A typical TMG signal and its time derivative are shown in Figure~\ref{fig:tmg_example}.
+The TMG derivative was computed with a finite difference scheme using the Numpy library's \texttt{gradient} function with a time-spacing of \SI{1}{\milli \second} between data points;
+the \texttt{gradient} funciton uses second-order finite differences at central points and a first-order one-sided forward (backward) finite difference at the left (right) endpoint.
 The following five discrete twitch contraction parameters were computed from every measured TMG signal.
 \begin{enumerate}
 
     \item \Dm: maximum displacement of the muscle belly during contraction;
+    % (typical values fall in the range \SIrange{6}{12}{\milli \meter});
 
     \item \Td (delay time): time taken for muscle belly displacement to reach 10 percent of its maximum value;
+    % (typical values fall in the range \SIrange{20}{26}{\milli \second});
 
-    \item \Tc (contraction time): time taken for muscle belly displacement to change from 10 to 90 percent of its maximum value (analogous to the rise time parameter commonly used in electronics);
+    \item \Tc (contraction time): time taken for muscle belly displacement to change from 10 to 90 percent of its maximum value;
+    % (typical values fall in the range \SIrange{22}{34}{\milli \second});
 
     \item \RDDMax (maximum rate of displacement development): the maximum rate of change of muscle belly displacement with respect to time, i.e. the maximum value of the TMG signal's time derivative;
+    % (typical values fall in the range \SIrange{0.25}{0.40}{\milli \meter \per \milli \second});
 
     \item \RDDMaxTime: the time at which the TMG signal's time derivative attains its maximum value, i.e. the time at which \RDDMax occurs.
+    % (typical values fall in the range \SIrange{30}{45}{\milli \second});
 
 \end{enumerate}
 Each of these parameters is marked in Figure~\ref{fig:tmg_example}.
@@ -296,33 +292,25 @@ For each of the five twitch contraction parameters, we assume the null hypothesi
 (interpreted more loosely, that any difference in pre- and post-conditioning values is due to chance alone and there is no meaningful difference in pre- and post-conditioning contraction properties)
 and then test this hypothesis with a paired Student's $ t $-test.
 
-Statistical testing imposes an important challenge: any binary hypothesis test must act on a large-enough sample size to have meaningful statistical power (i.e. probability of correctly rejecting the null hypothesis).
-In the context of this study, this means any Student's $ t $-test comparing pre- and post-ISQ parameter values must act on a sample of \textit{many} pre- and post-ISQ pairs (while comparing only one pre-ISQ and one post-ISQ value would be statistically meaningless).
-There is no exact answer on what sample size is ``large enough''; we use at least eight (pre-ISQ, post-ISQ) pairs in this study, while five pairs might serve as a tentative lower bound.
-Assembling these pairs in a physically meaningful way can pose a challenge;
-we considered the following three variations for each of the five twitch contraction parameters mentioned in Section~\ref{sss:discrete_twitch_params}:
+Statistical testing imposes an important challenge:
+any binary hypothesis test must act on a large-enough sample size to have meaningful statistical power (i.e. probability of correctly rejecting the null hypothesis).
+In the context of this study, this means any Student's $ t $-test comparing pre- and post-ISQ parameter values must act on a sample of \textit{many} pre- and post-ISQ pairs; comparing only one pre-ISQ and one post-ISQ value would be statistically meaningless.
+There is no exact answer on what sample size is ``large enough''; we use at least eight (pre-ISQ, post-ISQ) pairs for all hypothesis tests in this study, while five pairs might serve as a tentative lower bound.
+We considered the following three ways of constructing testable (pre-ISQ, post-ISQ) pairs for each of the five twitch contraction parameters mentioned in Section~\ref{sss:discrete_twitch_params}:
 \begin{enumerate}
 
-    \item For subjects 1-16 (for whom 8 pre-ISQ and 8 post-ISQ TMG measurements were taken in each measurement set, see Table~\ref{tab:measurements}), we compare all 8 pre-ISQ parameter values from a given measurement set against all 8 post-ISQ parameter values from the same set.
-    This comparison tests for potentiation after a single conditioning exercise set in a given subject.
+    \item For subjects 1-16, for whom 8 pre-ISQ and 8 post-ISQ TMG measurements were taken in each measurement set, we compare all 8 pre-ISQ parameter values from a given measurement set against all 8 post-ISQ parameter values from the same set.
+    This test would be used in practice to test for potentiation in a given subject after a single conditioning exercise set, and is probably the most useful for practical analysis of PAP.
 
-    \item For subjects 17-54 (for whom 1 pre-ISQ and 1 post-ISQ TMG measurement was taken per measurement set, see Table~\ref{tab:measurements}), we compare the 8 pre-ISQ parameter values (one from each of the 8 measurement sets) to the corresponding post-ISQ parameter values.
-    This comparison captures a single subject's muscle response over the entire 8-set measurement protocol, but cannot determine post-activation potentiation after a single exercise.
+    \item For subjects 17-54, for whom 1 pre-ISQ and 1 post-ISQ TMG measurement was taken per measurement set, we compare the 8 pre-ISQ parameter values (one from each of the 8 measurement sets) to the corresponding 8 post-ISQ parameter values.
+    This test captures a subject's muscle response over the entire 8-set measurement protocol, and gives an indication of the extent to which the subject consistently produced a potentiation-like state in each exercise set over the course of the entire testing protocol.
 
-    \item For all subjects and for each measurement set we compare the 54 pre-ISQ parameter values to the 54 post-ISQ parameter values (using the first of eight measurements per set for subjects 1-16 and the only measurement per set for subjects 17-54).
-    This comparison tests for a potentiation-like trend over all subjects as a whole, but is not useful for testing for potentiation in any given subject.
+    \item For all 54 subjects together and for each measurement set, we compare all subjects' pre-ISQ parameter value to the corresponding post-ISQ parameter value (using the first of eight measurements per set for subjects 1-16 and the only measurement per set for subjects 17-54), for a total of 54 pre-ISQ and 54 post-ISQ values for each contraction parameter.
+    This test configuration is not intended for practical use, but rather as a proof of concept in the context of this study that both classical hypothesis testing of twitch contraction parameters and SPM can detect a PAP-like trend across all subjects.
 
 \end{enumerate}
-Results appear in \TODO{reference}.
 
-\begin{figure}
-	\centering
-    \includegraphics[width=\textwidth]{tmg-example.jpg}
-    \caption{A representative TMG signal (top) and its derivative with respect to time (bottom), together with the discrete twitch contraction parameters used to summarize these signals.}
-    \label{fig:tmg_example}
-\end{figure}
-
-\subsubsection{SPM Analysis}
+\subsubsection{SPM Analysis} \label{sss:spm_analysis}
 Broadly speaking, classical statistical tests on zero-dimensional datasets quantify the probability that randomly-distributed scalar data would produce a test statistic exceeding a critical threshold value.
 SPM-based statistical testing is a conceptually identical generalization to datasets consisting of continuous, and in our case one-dimensional,%
 \footnote{In this study the signals are one-dimensional TMG signals encoding muscle belly displacement with respect to time, but SPM generalizes straightforwardly to arbitrary-dimensional random fields.}
@@ -330,130 +318,167 @@ SPM-based statistical testing is a conceptually identical generalization to data
 SPM testing quantifies the probability that smooth, 1D random fields would produce a test statistic continuum whose maximum exceeds a threshold test statistic value.
 
 The study used one-dimensional paired SPM $ t $-tests to evaluate the effect of the ISQ conditioning exercise on the rectus femoris's twitch contraction properties in the time domain.
-Pre-conditioning TMG signals were compared against post-conditioning TMG signals and statistically significant differences between the two were interpreted as indicating a potentiated post-conditioning response.
-The first \SI{100}{\milli \second} of the RF twitch contraction response was used as the region of interest for SPM analysis, since this region entirely captures the muscle's contraction phase.
+Pre-conditioning TMG signals were compared against post-conditioning TMG signals and statistically significant differences between the two were interpreted as indicating a potentiated post-conditioning muscle response.
+The first \SI{100}{\milli \second} of the RF twitch contraction response was used as the region of interest for SPM analysis, since these first \SI{100}{\milli \second} entirely capture the muscle's contraction phase.
 
-SPM testing of TMG signals follows a procedure analogous to the classical Student's $ t $-tests applied to the scalar twitch contraction parameters in Section~\ref{sss:discrete_twitch_param_stats}, only with the scalar parameters and associated scalar $ t $-statistic generalized to one-dimensional signals.
-The analysis goes as follows.
-\begin{enumerate}
+SPM testing of TMG signals follows a procedure analogous to the classical Student's $ t $-tests applied to the scalar twitch contraction parameters in Section~\ref{sss:discrete_twitch_param_stats}, only with the scalar parameters and associated scalar $ t $-statistic generalized to one-dimensional TMG signals.
+We first assume the null hypothesis that differences in a collection of pre- and post-conditioning TMG signals are due to chance alone.
+More formally, letting $ \mu_{\mathrm{pre}}(t) $ and $ \mu_{\mathrm{post}}(t) $ denote the mean pre- and post-conditioning TMG amplitudes at time $ t $, respectively, the null hypothesis is
+\begin{equation}
+    \mu_{\text{pre}}(t) - \mu_{\text{post}} (t) = 0 \text{ for all } t, \label{eq:spm_null_hypothesis}
+\end{equation}
+while the alternate hypothesis is $ \mu_{\text{post}}(t) > \mu_{\text{pre}}(t) $, i.e. a larger mean twitch amplitude in post-conditioning TMG signals.
 
-    \item We first assume the null hypothesis that differences in a collection of pre- and post-conditioning TMG signals are due to chance alone.
-    More formally, letting $ \mu_{\mathrm{pre}}(t) $ and $ \mu_{\mathrm{post}}(t) $ denote the mean pre- and post-conditioning TMG amplitudes at time $ t $, respectively, the null hypothesis is
-    \begin{equation*}
-        \mu_{\text{pre}}(t) - \mu_{\text{post}} (t) = 0 \text{ for all } t,
-    \end{equation*}
-    while the alternate hypothesis is $ \mu_{\text{post}}(t) > \mu_{\text{pre}}(t) $, i.e. a larger mean twitch amplitude in post-conditioning TMG signals.
+% TODO computing the t-continuum value is shown in Appendix
+We then apply the \texttt{stats.ttest\_paired} function provided by the SPM1d library to the set of pre- and post-conditioning TMG signals to construct a one-dimensional \textit{statistical parametric map}.
+This map, also called the \textit{SPM $ t $-continuum}, serves to quantify the difference in the pre- and post-conditioning TMG signals at each point in time.
+(Much like the classical, scalar $ t $-statistic associated with scalar twitch contraction parameters quantifies the difference between the pre- and post-conditioning parameter values.)
+Example SPM $ t $-continua are shown in Figures~\ref{fig:spm_example_result_by_subj_by_set} and~\ref{fig:spm_example_result_by_subj_across_sets} in the Results section.
 
-    \item We then use the set of pre- and post-conditioning signals with the \texttt{stats.ttest\_paired} function provided by the SPM1d library to construct a one-dimensional \textit{statistical parameteric map}.
-    This map, also called the \textit{SPM $ t $-continuum}, serves to quantify the difference in the pre- and post-conditioning TMG signals at each point in time.
-    (Much like the classical, scalar $ t $-statistic associated with scalar twitch contraction parameters quantifies the difference between the pre- and post-conditioning parameter values.)
-
-    \item Finally, we perform a one-tailed\footnote{We make a one-tailed (and not two-tailed) inference under the a priori hypothesis that post-conditioning TMG signals will be larger-amplitude than pre-conditioning signals.} SPM inference on the SPM $ t $-continuum at the significance level $ \alpha = 0.01 $ using the \texttt{inference} function provided by the SPM1d library's \texttt{SPM\_T} class.
- 
-\end{enumerate}
-The final inference step produces a threshold $ t $-statistic value $ t^{*} $, which is the threshold at which the maximum value of an SPM $ t $-continuum generated by smooth, Gaussian random continuua (as opposed to, say, TMG signals) would exceed $ t^{*} $ with probability $ \alpha $.
-From the perspective of classical hypothesis testing, we reject the null hypothesis at the significance level $ \alpha $ if the SPM $ t $-continuum generated from the pre- and post-conditioning TMG signals exceeds $ t^{*} $.
-
+Finally, we perform a one-tailed\footnote{We make a one-tailed (and not two-tailed) inference under the a priori hypothesis that post-conditioning TMG signals will be larger-amplitude than pre-conditioning signals.} SPM inference on the SPM $ t $-continuum at the significance level $ \alpha = 0.01 $ using the \texttt{inference} function provided by the SPM1d library's \texttt{SPM\_T} class.
+The final inference step produces a threshold $ t $-statistic value $ t^{*} $, which is the threshold at which the maximum value of an SPM $ t $-continuum generated by smooth, Gaussian random continua (as opposed to, say, TMG signals) would exceed $ t^{*} $ with probability $ \alpha $.
+From the perspective of classical hypothesis testing, we reject the null hypothesis in Equation~\ref{eq:spm_null_hypothesis} at the significance level $ \alpha $ if the SPM $ t $-continuum generated from the pre- and post-conditioning TMG signals exceeds $ t^{*} $.
 The final inference step also produces a probability value $ p $ associated with each supra-threshold region of the SPM $ t $-continuum.
 This $ p $ value represents the probability that smooth, Gaussian random continuua would produce a supra-threshold region as wide or wider (relative to the width of the entire SPM $ t $-continuum) than the supra-threshold region observed in the SPM $ t $-continuum computed from the measured TMG signals.
-For orientation, a representative set of pre- and post-conditioning TMG signals, the SPM $ t $-continuum computed from them, and the associated threshold value $ t^{*} $ appear in Figure~\ref{fig:spm_example}.
 
-\begin{figure}
-	\centering
-    \includegraphics[width=\textwidth]{spm-example.jpg}
-    \caption{A representative set of pre- and post-conditioning TMG signals (left) and the resulting SPM $ t $-continuum and threshold value $ t^{*} $.
-    Note the larger amplitude and shorter time to peak contraction in the post-ISQ signal.}
-    \label{fig:spm_example}
-\end{figure}
+% \begin{figure}
+% 	\centering
+%     \includegraphics[width=\textwidth]{spm-example.jpg}
+%     \caption{A representative set of pre- and post-conditioning TMG signals (left) and the resulting SPM $ t $-continuum and threshold value $ t^{*} $.
+%     Note the larger amplitude and shorter time to peak contraction in the post-ISQ signal.}
+%     \label{fig:spm_example}
+% \end{figure}
 
-We performed SPM testing with the same three configurations described in Section~\ref{sss:discrete_twitch_param_stats} for classical hypothesis testing of discrete twitch contraction parameters.
+We performed SPM testing with the same three test configurations described in Section~\ref{sss:discrete_twitch_param_stats} for classical hypothesis testing of discrete twitch contraction parameters.
 \begin{enumerate}
 
     \item For subjects 1-16, we compare all 8 pre-ISQ TMG signals from a given measurement set against all 8 post-ISQ TMG signals from the same set.
 
-    \item For subjects 17-54, we compare one pre-ISQ TMG signals from each of the eight measurement sets (for a total of eight pre-ISQ signals) to the corresponding eight post-ISQ TMG signals.
+    \item For subjects 17-54, we compare one pre-ISQ TMG signal from each of the eight measurement sets (for a total of eight pre-ISQ signals) to the corresponding eight post-ISQ TMG signals.
 
     \item For all subjects and for each measurement set, we compare one pre-ISQ TMG signal and one post-ISQ TMG signal from each subject (using the first of the eight measurements per set for subjects 1-16 and the only measurement per set for subjects 17-54), for a total of 54 (pre-ISQ, post-ISQ) TMG signal pairs.
 
 \end{enumerate}
 Results appear in \TODO{reference}.
 
-\subsubsection{Summary parameters of SPM}
-To complement the SPM $ t $-continuum generated from each SPM paired $ t $-test (see Figure~\ref{fig:spm_example} for an example), we collected and/or calculated the following discrete parameters to make the SPM result easier to compare at a glance.
-\begin{itemize}
+% \subsubsection{Summary parameters of SPM} \label{sss:discrete_spm_params}
+% To complement the SPM $ t $-continuum generated from each SPM paired $ t $-test (see Figure~\ref{fig:spm_example} for an example), we also provide the following discrete parameters to make the SPM result easier to compare at a glance.
+% \begin{itemize}
 
-    \item \SPMStart: time at which the supra-threshold cluster begins
-    \item \SPMEnd: time at which the supra-threshold cluster ends
-    \item \SPMCentroidTime: the time of the supra-threshold cluster's centroid in the time, $ t $-continuum plane.
-    \item \SPMCentroidT: the $ t $-continuum value of the supra-threshold cluster's centroid in the time, $ t $-continuum plane.
-    \item \SPMMax: the maximum value of the SPM $ t $-continuum.
-    \item \SPMArea: The area of the supra-threshold cluster.
+%     \item \SPMStart: time at which the supra-threshold cluster begins
+%     \item \SPMEnd: time at which the supra-threshold cluster ends
+%     \item \SPMCentroidTime: the time of the supra-threshold cluster's centroid in the time, $ t $-continuum plane.
+%     \item \SPMCentroidT: the $ t $-continuum value of the supra-threshold cluster's centroid in the time, $ t $-continuum plane.
+%     \item \SPMMax: the maximum value of the SPM $ t $-continuum.
+%     \item \SPMArea: The area of the supra-threshold cluster.
 
-\end{itemize}
-All parameters besides \SPMArea are directly provided by the SPM1d library, while \SPMArea was computed using the trapezoid method for numerical integration using the SPM $ t $-continuum and threshold value $ t^{*} $.
+% \end{itemize}
+% All parameters besides \SPMArea are directly provided by the SPM1d library, while \SPMArea was computed using the trapezoid method for numerical integration using the SPM $ t $-continuum and threshold value $ t^{*} $.
 
 \section{Results}
-\subsection{Discrete twitch contraction parameters}
+% As an estimate of muscle load, the calculated mean value of peak knee torque during the ISQ was \SI{126.5 \pm 17.6}{\newton \meter}.
 
-Show mean and SD of TMG graph.
-Show table of parameter values.
+Generally speaking, the results of the potentiation-detecting analysis described in Section~\ref{ss:analysis} consist of:
+\begin{itemize}
 
-\subsubsection{Sample: in a set for a given subject}
+    \item the values of the discrete twitch contraction parameters \Dm, \Td, \Tc, \RDDMax, and \RDDMaxTime (defined in Section~\ref{sss:discrete_twitch_params}) computed from each pre-ISQ and post-ISQ TMG signal;
 
-\subsubsection{Sample: across sets for a given subject}
+    \item a statistical comparison of the pre-ISQ and post-ISQ twitch contraction parameter values, as described in Section~\ref{sss:discrete_twitch_param_stats}, and
 
-\subsubsection{Across subjects for a given set}
-In all four measurement sets, the difference in the volunteers' pre-ISQ and post-ISQ twitch contraction parameters 
-(\Td, \Tc, \Dm, \RDDMax, and \RDDMaxTime)
-was statistically significant, with a $ p $ value $ p < 0.0001 $ when tested with a dependent Student's $ t $-test for paired samples at a significance level $ \alpha = 0.05 $.
-The study used two related schemes to compare pre- and post-ISQ twitch contraction parameters:
-\begin{enumerate}
+    \item the results of an SPM paired $ t $-test comparing a set of pre-ISQ and post-ISQ TMG signals, as described in Section~\ref{sss:spm_analysis}.
 
-    \item In the first method, pre- and post-ISQ twitch contraction parameters are compared set by set;
-    the parameter values appear in Table~\ref{tab:tmg_params}.
+\end{itemize}
+Given the large number of subjects and measurement sets, it is not feasible to present full test results for all subjects and test configurations.
+As a compromise, we present one representative test result for each test configuration, and offer full test results and the source code used to compute them in an online repository.
+\TODO{reference}.
 
-    \item In the second method, post-ISQ twitch parameters in each set are compared to the pre-ISQ parameters in the \textit{first} set;
-    the parameter values appear in Table~\ref{tab:tmg_params_staggered}.
-    % TODO: reasoning why this method is used.
+\subsection{Potentiation in a given subject after one conditioning set}
 
-\end{enumerate}
+\begin{figure}
+	\centering
+    \includegraphics[width=0.6\textwidth]{example_result_by_subj_by_set.jpg}
+    \caption{A representative comparison of 8 pre- and 8 post-conditioning TMG signals from Subject \TODO{num}'s set 1.
+    Mean TMG signals and their standard deviation clouds appear on the left---note the large amplitude and faster time to peak contraction in the post-ISQ signals, indicating post-activation potentiation.
+    The SPM $ t $-continuum and threshold value $ t^{*} $ from an paired SPM $ t $-test of the pre- and post-ISQ signal pairs appears on the right;
+    the large supra-threshold SPM region and low $ p $ value indicate a very small probability that differences in the pre- and post-ISQ signals arose from chance alone.}
+    \label{fig:spm_example_result_by_subj_by_set}
+\end{figure}
 
-\begin{table}[htb!]
-    \centering
-    \caption{Set-by-set comparison of pre- and post-ISQ twitch contraction parameter values averaged across all subjects---note the consistent, potentiation-like increase in muscle amplitude and decrease in contraction time following ISQ.
-    The difference between pre- and post-ISQ values for all parameters was statistically with a $ p $ value $ p < 0.0001 $ when tested with a Student's $ t $-test for paired samples at a significance level $ \alpha = 0.05 $.
-    Parameters were introduced in Materials and Methods; for review:
-    \Dm is maximum displacement of TMG sensor from muscle belly;
-    \Td is time from start of TMG signal to 10\% of its maximum value \Dm;
-    \Tc is time from 10\% of \Dm to 90\% of \Dm;
-    \RDDMax is maximum value of the TMG signal's time derivative,
-    \RDDMaxTime is time at which \RDDMax occurs.
-    }
-    \vspace{1ex}
+We first show a representative test comparing 8 pre-ISQ and 8 post-ISQ TMG signals from a single measurement set for one subject---this test configuration would be used in practice to identify post-activation potentiation in a given subject after a single conditioning exercise set.
+A statistical comparison of pre-ISQ and post-ISQ discrete twitch contraction parameters appears in Table~\ref{tab:tmg_params_by_subj_by_set},
+and the complementary SPM comparison of the pre-ISQ and post-ISQ TMG signals is shown in Figure~\ref{fig:spm_example_result_by_subj_by_set}.
 
-    \renewcommand{\arraystretch}{1.2}
-    \input{tables/tmg_tabular.tex}
-    \label{tab:tmg_params}
-\end{table}
+The pre-ISQ and post-ISQ TMG signals in Figure~\ref{fig:spm_example_result_by_subj_by_set} are clearly distinct even at a glance---the set of post-ISQ signals is larger in amplitude and reaches peak contraction faster than the corresponding set of pre-ISQ signals.
+The associated SPM $ t $-test produces a large supra-threshold region and indicates a very low probability that the difference in the pre-ISQ and post-ISQ signals is due to chance alone.
+The discrete twitch contraction parameters in Table~\ref{tab:tmg_params_by_subj_by_set} further endorse the observed potentiation-like trend of larger twitch amplitude and faster contraction following the ISQ conditioning exercise.
 
 \begin{table}[htb!]
     \centering
-    \caption{Post-ISQ twitch contraction parameter values from sets 1, 2, 3, and 4 compared to the pre-ISQ values from set 1,
-    so mean pre-ISQ values are shown only for set 1.
-    All parameters have the same meanings as in Table~\ref{tab:tmg_params}.
-    As in Table~\ref{tab:tmg_params}, note the consistent, potentiation-like increase in muscle amplitude and decrease in contraction time.
-    }
+    \caption{A statistical comparison of pre- and post-ISQ TMG parameters from subject \TODO{number}'s measurement set 1.
+    The twitch contraction parameters in each row were defined in Section~\ref{sss:discrete_twitch_params}.
+    The columns $ \mu_{\mathrm{pre}} $ and $ \mu_{\mathrm{post}} $ show the mean value of each parameter across all eight measurements in the set, and $ \sigma_{\mathrm{pre}} $ and $ \sigma_{\mathrm{post}} $ show the corresponding standard deviations.
+    The $ \lvert t \rvert $ column shows the $ t $-statistic from a paired, two-tailed Student's $ t $-test comparing the (pre-ISQ, post-ISQ) pairs for each parameter, and the $ p $ column shows the associated $ p $ value.}
+    \vspace{1ex}
+    \renewcommand{\arraystretch}{1.2}
+    \input{tables/tmg_stats_by_subj_by_set.tex}
+    \label{tab:tmg_params_by_subj_by_set}
+\end{table}
+
+\subsection{Potentiation in a given subject across all conditioning sets}
+Next, we show the results of comparing one pre-ISQ TMG signal from each of subject \TODO{num}'s eight measurement sets (for a total of eight pre-ISQ signals) to the corresponding eight post-ISQ TMG signals.
+This test configuration evaluates the extent to which the subject consistently produced a potentiation-like post-conditioning state in each measurement set over the course of the entire testing protocol.
+A statistical comparison of pre-ISQ and post-ISQ discrete twitch contraction parameters appears in Table~\ref{tab:tmg_params_by_subj_across_sets},
+and the associated SPM comparison of pre-ISQ and post-ISQ TMG signals is shown in Figure~\ref{fig:spm_example_result_by_subj_by_set}.
+
+It is worth commenting on the larger TMG signal standard deviation clouds in Figure~\ref{fig:spm_example_result_by_subj_across_sets} relative to Figure~\ref{fig:spm_example_result_by_subj_by_set}.
+This is to be expected---Figure~\ref{fig:spm_example_result_by_subj_across_sets} compares signals across eight different sets while Figure~\ref{fig:spm_example_result_by_subj_by_set} compares eight signal pairs from a single set, and it is natural to expect signals from different exercise sets to have larger variance than signals from the same exercise set due to neuromuscular adaptations between sets.
+As a result of the relatively larger TMG signal variance in Figure~\ref{fig:spm_example_result_by_subj_across_sets}, the SPM paired $ t $-test produces a smaller supra-threshold cluster and somewhat higher $ p $ value than in Figure~\ref{fig:spm_example_result_by_subj_by_set}, but still comfortably rejects the null hypothesis that differences in pre-ISQ and post-ISQ signals arise from chance alone.
+
+\begin{table}[htb!]
+    \centering
+    \caption{A statistical comparison of pre-ISQ and post-ISQ TMG parameters across measurement sets using the first measurement from each of subject \TODO{num}'s eight measurement sets.
+    Note the generally larger standard deviations in parameter values relative to Table~\ref{tab:tmg_params_by_subj_by_set}, in which parameter values all come from one set (rather than eight),
+    mirroring the trend in Figures~\ref{fig:spm_example_result_by_subj_by_set} and~\ref{fig:spm_example_result_by_subj_across_sets}.}
+    \vspace{1ex}
+    \renewcommand{\arraystretch}{1.2}
+    \input{tables/tmg_stats_by_subj_across_sets.tex}
+    \label{tab:tmg_params_by_subj_across_sets}
+\end{table}
+
+\begin{figure}
+	\centering
+    \includegraphics[width=0.6\textwidth]{example_result_by_subj_across_sets.jpg}
+    \caption{A representative comparison of pre- and post-conditioning TMG signals across measurement sets using the first measurement from each of subject \TODO{num}'s eight measurement sets.
+    Mean TMG signals and their standard deviation clouds appear on the left, and the associated SPM $ t $-continuum and threshold value $ t^{*} $ on the right---see Figure~\ref{fig:spm_example_result_by_subj_by_set} for details.
+    Note the larger standard deviation clouds and smaller supra-threshold region than in Figure~\ref{fig:spm_example_result_by_subj_by_set}, as a result of (expected) neuromuscular adaptations between measurement sets.}
+    \label{fig:spm_example_result_by_subj_across_sets}
+\end{figure}
+
+\subsection{Potentiation across subjects for a given set}
+Finally, we show the results of comparing pre- and post-ISQ TMG signals across all subjects, using one pre-ISQ and one post-ISQ TMG signal per subject per set, for a total of 54 (pre-ISQ, post-ISQ) signal pairs.
+A comparison of TMG parameter values across all subjects for sets 1-4 appears in Table~\ref{tab:tmg_params_across_subj_by_set}, and each set exhibits the potentiation-like trend of larger contraction amplitude and faster contraction times, even when parameter values are averaged across all subjects.
+
+A complementary SPM comparison of (pre-ISQ, post-ISQ) TMG signals across all subjects appears in Figure~\ref{fig:spm_example_across_subj_by_set}.
+As might be expected for a comparison across all subjects, the variance in the TMG signals is quite large.
+Nonetheless, in each set the SPM paired $ t $-test comfortably detects a potentiation-like across subjects.
+
+\begin{table}[htb!]
+    \centering
+    \caption{Set-by-set comparison of pre- and post-ISQ twitch contraction parameter values across all subjects---note the consistent, potentiation-like increase in muscle amplitude and decrease in contraction time following ISQ.
+    See Section~\ref{sss:discrete_twitch_params} for the definition of each parameter.}
     \vspace{1ex}
 
     \renewcommand{\arraystretch}{1.2}
-    \input{tables/tmg_tabular_staggered.tex}
-    \label{tab:tmg_params_staggered}
+    \begin{tabular}{c}
+        \input{tables/tmg_stats_across_subj_by_set_1.tex} \hfill \\
+        \input{tables/tmg_stats_across_subj_by_set_2.tex} \hfill \\
+        \input{tables/tmg_stats_across_subj_by_set_3.tex} \hfill \\
+        \input{tables/tmg_stats_across_subj_by_set_4.tex} \hfill \\
+    \end{tabular}
+
+    \label{tab:tmg_params_across_subj_by_set}
 \end{table}
 
-SPM anaysis of TMG measurements using a two-sample SPM $ t $-test showed a statistically significant difference in pre-ISQ and post-ISQ muscle twitch in all four sets, in each case with a p-value $ p < 0.0001 $ at a significance level $ \alpha = 0.05 $.
-The first \SI{100}{\milli \second} of the TMG signal were used as the region of interest for all SPM analyses, because this is the region in which both the maximal amplitude of twitch contraction and the phase of twitch amplitude decrease occur.
-The results of each set's SPM $ t $-tests are plotted in Figure~\ref{fig:spm_plot}, while discrete parameters summarizing each set's SPM test appear in Table~\ref{tab:spm_params}.
-% The value of the SPM $ t $-statistic significance threshold $ t^{*} $ remained approximately constant across all four measurement sets, ranging between $ t^{*} = 2.76 $ and $ t^{*} = 2.79 $.
 
 \begin{figure}
 	\centering
@@ -462,31 +487,12 @@ The results of each set's SPM $ t $-tests are plotted in Figure~\ref{fig:spm_plo
     The left column shows mean normalized pre-ISQ (black solid line) and post-ISQ (red solid line) TMG measurements, together with their standard deviation clouds, across all subjects for each measurement set.
     The right column shows the results of the SPM $ t $-test for each set;
     the dashed line denotes the threshold $ t^{*} $ at which each set's pre- and post-ISQ TMG signals differ significantly, while the maroon cloud emphasizes the region of significance.}
-    \label{fig:spm_plot}
+    \label{fig:spm_example_across_subj_by_set}
 \end{figure}
-
-\begin{table}[htb!]
-    \centering
-    \caption{
-        Discrete parameters summarizing the results of the two-sample SPM $ t $-tests show in Figure~\ref{fig:spm_plot}.
-        Parameters were introduced in Materials and Methods; for review:
-        ``Start time'' is the time at which the SPM $ t $-statistic attains the significance threshold value $ t^{*} $;
-        ``End time'' is the time at which the SPM $ t $-statistic falls below the significance threshold value $ t^{*} $;
-        ``Centroid time'' and ``Centroid $ t $-value'' give the (time, $ t $) coordinate of the SPM significance region's centroid (the region shown in maroon in Figure~\ref{fig:spm_plot});
-        ``SPM maximum'' is maximum value attained by the SPM $ t $-statistic;
-        ``Area above threshold'' is area of the SPM significance region.
-    }
-    \vspace{1ex}
-
-    \renewcommand{\arraystretch}{1.1}
-    \input{tables/spm_tabular.tex}
-    \label{tab:spm_params}
-\end{table}
-
-As an estimate of muscle load, the calculated mean value of peak knee torque during the ISQ was \SI{126.5 \pm 17.6}{\newton \meter}.
 
 \section{Discussion}
 
+% https://www.frontiersin.org/about/policies-and-publication-ethics
 \section*{Conflict of Interest Statement}
 The authors declare that the research was conducted in the absence of any commercial or financial relationships that could be construed as a potential conflict of interest.
 
@@ -499,7 +505,7 @@ Details of all funding sources should be provided, including grant numbers if ap
 Please ensure to add all necessary funding information, as after publication this is no longer possible.
 
 \section*{Acknowledgments}
-This is a short text to acknowledge the contributions of specific colleagues, institutions, or agencies that aided the efforts of the authors.
+The authors thank ABC for help with XYZ.
 
 \section*{Supplemental Data}
  \href{http://home.frontiersin.org/about/author-guidelines#SupplementaryMaterial}{Supplementary Material} should be uploaded separately on submission, if there are Supplementary Figures, please include the caption in the same file as the figure. LaTeX Supplementary Material templates can be found in the Frontiers LaTeX folder.
