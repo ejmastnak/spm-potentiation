@@ -226,59 +226,64 @@ def _make_sample_spm_plot(pre_file, post_file, output_file, fig_format="jpg"):
             show_plot=show_plot, save_figures=save_figure)
 
 
-def make_setwise_spm_subplots():
+def make_sample_spm_plot_by_set_across_subj():
     """
-    Generates a 4-axis Maplotlib plot showing SPM results for
-    sets 1, 2, 3, and 4 for use in the Frontiers journal article.
+    Generates a multi-axis Maplotlib plot showing the results of SPM paired
+    t-tests comparing pre-ISQ and post-ISQ TMG signals across all subject from
+    sets 1, 2, 3, and 4.
 
-    Essentially the same figures as produced by 
-    `spm_analysis.perform_spm_tests_by_set`, just placed in a single figure
-    to meet the Frontiers requirement that subfigures be in a single figure.
-
-    Input data: the normalized per-subject measurement files in `constants.NORMED_SPM_DATA_DIR`
+    Essentially the same figures as produced when performing SPM analysis
+    across subjects by set, just placed in a single figure to meet the
+    Frontiers requirement that subfigures be in a single figure.
 
     """
     save_figure=True, 
     show_plot=False
 
-    pre_input_dir = constants.NORMED_SPM_DATA_DIR + "pre-exercise/"
-    post_input_dir = constants.NORMED_SPM_DATA_DIR + "post-exercise/"
-    output_file = constants.ARTICLE_FIGURE_DIR + "spm-subplot.jpg"
+    fig_dpi = 400
+    fig_format = "jpg"
 
-    sets_per_measurement_file = 4
+    pre_input_dir = constants.SPM_1MPS_DATA_DIR + "pre-exercise/"
+    post_input_dir = constants.SPM_1MPS_DATA_DIR + "post-exercise/"
+    output_file = constants.ARTICLE_FIGURE_DIR + "spm-plot-by-set-across-subj.{}".format(fig_format)
+
+    pre_filenames = frontiers_utils.natural_sort(os.listdir(pre_input_dir))
+    post_filenames = frontiers_utils.natural_sort(os.listdir(post_input_dir))
+
+    max_sets = 4
+    usecols = tuple(range(max_sets))
     rows_per_measurement_file = constants.TMG_ROWS_TO_USE_FOR_SPM - constants.TMG_ROWS_TO_SKIP_FOR_SPM
-    subjects_in_database = 55
+    subjects_in_database = len(pre_filenames)
 
     # 3D Numpy tensor to hold all pre-exercise measurements in database
     pre_tensor = np.zeros([rows_per_measurement_file,
-        sets_per_measurement_file,
+        max_sets,
         subjects_in_database])
 
     # 3D Numpy tensor to hold all post-exercise measurements in database
     post_tensor = np.zeros([rows_per_measurement_file,
-        sets_per_measurement_file,
+        max_sets,
         subjects_in_database])
 
     # Load pre-exercise measurements into memory
-    for i, filename in enumerate(frontiers_utils.natural_sort(os.listdir(pre_input_dir))):
-        data = np.loadtxt(pre_input_dir + filename, delimiter=',', skiprows=1)
+    for i, filename in enumerate(pre_filenames):
+        data = np.loadtxt(pre_input_dir + filename, delimiter=',', skiprows=1,
+                usecols=usecols)
         pre_tensor[:, :, i] = data
 
     # Load post-exercise measurements into memory
-    for i, filename in enumerate(frontiers_utils.natural_sort(os.listdir(post_input_dir))):
-        data = np.loadtxt(post_input_dir + filename, delimiter=',', skiprows=1)
+    for i, filename in enumerate(post_filenames):
+        data = np.loadtxt(post_input_dir + filename, delimiter=',',
+                skiprows=1, usecols=usecols)
         post_tensor[:, :, i] = data
     
     # --------------------------------------------- #
     # BEGIN PLOTTING
     # --------------------------------------------- #
-    fig, axes = plt.subplots(sets_per_measurement_file, 2, figsize=(6.8, 8))
+    fig, axes = plt.subplots(max_sets, 2, figsize=(6.8, 8))
     tmg_data_start_row = constants.TMG_ROWS_TO_SKIP_FOR_SPM
 
     subfib_labels = ["(1)", "(2)", "(3)", "(4)"]
-
-    fig_dpi = 500
-    fig_format = "jpg"
 
     pre_color    = constants.PRE_COLOR
     post_color   = constants.POST_COLOR
@@ -291,7 +296,7 @@ def make_setwise_spm_subplots():
     linewidth = 1.5
 
     # Loop through each set of normalized measurements
-    for s in range(sets_per_measurement_file):
+    for s in range(max_sets):
         pre_data = pre_tensor[:, s, :]
         post_data = post_tensor[:, s, :]
         t, ti = spm_analysis._get_spm_t_ti_paired_ttest(pre_data, post_data)
@@ -312,15 +317,15 @@ def make_setwise_spm_subplots():
         plotting.remove_spines(ax)
 
         # Only put x label on bottom axis to save vertical space
-        if s == sets_per_measurement_file - 1:  
+        if s == max_sets - 1:  
             ax.set_xlabel("Time [ms]")
-        ax.set_ylabel("Normalized displacement")
+        ax.set_ylabel("Displacement [mm]")
 
         # Mean value of time-series measurements
         ax.plot(time, pre_mean, color=pre_color, linewidth=linewidth, 
-                label="Pre-ISQ mean", zorder=4)
+                label="Pre-ISQ", zorder=4)
         ax.plot(time, post_mean, color=post_color, linewidth=linewidth,
-                label="Post-ISQ mean", zorder=3)
+                label="Post-ISQ", zorder=3)
 
         # Standard deviation clouds
         ax.fill_between(time, post_mean - post_sd, post_mean + post_sd, 
@@ -328,8 +333,8 @@ def make_setwise_spm_subplots():
         ax.fill_between(time, pre_mean - pre_sd, pre_mean + pre_sd,
                 color=pre_color, alpha=pre_alpha, zorder=1)
 
-        ax.text(-0.30, 0.5, subfib_labels[s], transform=ax.transAxes, fontsize=12)
-        ax.legend(framealpha=1.0)
+        ax.text(-0.28, 0.5, subfib_labels[s], transform=ax.transAxes, fontsize=12)
+        ax.legend(framealpha=1.0, loc='lower right')
         # --------------------------------------------- #
 
         # Plot SPM results
@@ -338,13 +343,13 @@ def make_setwise_spm_subplots():
         plotting.remove_spines(ax)
 
         # Only put x label on bottom axis to save vertical space
-        if s == sets_per_measurement_file - 1:  
+        if s == max_sets - 1:  
             ax.set_xlabel("Time [ms]")
         ax.set_ylabel("SPM $t$-continuum", labelpad=-0.1)
 
-        ax.set_ylim(-7, 12)
-        y_ticks = [-5, 0, 5, 10]
-        y_tick_lables = ["-5", "0", "5", "10"]
+        ax.set_ylim(-12, 21)
+        y_ticks = [-10, 0, 10, 20]
+        y_tick_lables = ["-10", "0", "10", "20"]
         ax.set_yticks(y_ticks)
         ax.set_yticklabels(y_tick_lables)
 
@@ -357,10 +362,17 @@ def make_setwise_spm_subplots():
         # Plot dashed line at SPM significance threshold
         ax.axhline(y=ti.zstar, color='#000000', linestyle='--')
 
+        
+        param_df = spm_analysis._get_ti_parameters_as_df(ti,
+                time_offset=constants.TMG_ROWS_TO_SKIP_FOR_SPM)
+
         # Text box showing alpha, threshold value, and p value
-        ax.text(73, ti.zstar + 1.0, plotting.get_annotation_text(ti),
-                va='bottom', ha='left', 
+        ax.text(0.69, 0.97, 
+                plotting.get_annotation_text(ti, ti_params_df=param_df),
+                va='top', ha='left',
+                transform=ax.transAxes,
                 bbox=dict(facecolor='#FFFFFF', edgecolor='#222222', boxstyle='round,pad=0.3'))
+
 
         # Shade between curve and threshold
         ax.fill_between(time, t.z, ti.zstar, where=t.z >= ti.zstar,
@@ -369,15 +381,16 @@ def make_setwise_spm_subplots():
     plt.tight_layout()
 
     if save_figure:
-        plt.savefig(output_file, dpi=fig_dpi, bbox_inches='tight', pad_inches = 0)
+        plt.savefig(output_file, dpi=fig_dpi, format=fig_format,
+                bbox_inches='tight', pad_inches = 0)
 
     if show_plot:
         plt.show()
 
 
 if __name__ == "__main__":
-    make_sample_tmg_plot()
-    make_sample_spm_plot_by_subj_across_sets_1mps()
-    make_sample_spm_plot_by_subj_by_set_8mps()
-    make_setwise_spm_subplots()
+    # make_sample_tmg_plot()
+    # make_sample_spm_plot_by_subj_across_sets_1mps()
+    # make_sample_spm_plot_by_subj_by_set_8mps()
+    make_sample_spm_plot_by_set_across_subj()
 
