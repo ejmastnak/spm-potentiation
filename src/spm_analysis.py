@@ -218,7 +218,7 @@ def _perform_spm_analysis(pre_data, post_data,
     saves a plot showing the test results to `plot_output_file`.
     """
     t, ti = _get_spm_t_ti_paired_ttest(pre_data, post_data, alpha=alpha)
-    
+
     # Compute SPM parameters and save as CSV
     param_df = _get_ti_parameters_as_df(ti,
             time_offset=constants.TMG_ROWS_TO_SKIP_FOR_SPM)
@@ -230,6 +230,7 @@ def _perform_spm_analysis(pre_data, post_data,
             plot_output_file,
             fig_format=fig_format, fig_dpi=fig_dpi,
             tmg_y_axis_label=data_y_axis_label,
+            ti_params_df = param_df,
             show_plot=False, save_figures=True)
 
 
@@ -362,5 +363,5 @@ def _get_params_of_spm_cluster(cluster, alpha, threshold,
 
 if __name__ == "__main__":
     perform_spm_tests_by_set_across_subj()
-    spm_tests_by_subj_across_sets_1mps()
-    spm_tests_by_subj_by_set_8mps()
+    # spm_tests_by_subj_across_sets_1mps()
+    # spm_tests_by_subj_by_set_8mps()

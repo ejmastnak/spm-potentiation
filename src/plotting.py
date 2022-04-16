@@ -1,14 +1,15 @@
 from pathlib import Path
+from decimal import Decimal
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 import spm1d
 import spm_analysis, constants
 
-
 def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
         figure_output_path, fig_format="png", fig_dpi=300,
         tmg_y_axis_label="Displacement", x_axis_label="Time [ms]",
+        ti_params_df=None,
         show_plot=True, save_figures=False):
     """
     Plots the pre and post-exercise data's mean and standard deviation clouds on axis 0.
@@ -16,9 +17,9 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
 
     Parameters
     ----------
-    t : TODO
+    t : spm1d.stats._spm.SPM_T
         An SPM T object associated with a comparision of pre_data and post_data
-    ti : TODO
+    ti : spm1d.stats._spm.SPMi_T
         The SPM TI inference object associated with `t`.
     pre_data : ndarray
         2D numpy array containing pre-exercise measurement data.
@@ -45,6 +46,9 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
     x_axis_label : str
         Label, passed to Matplotlib's `ax.set_xlabel`, for the x axis
         of both the plot showing TMG signals and the SPM t-statistic plot.
+    ti_params_df : DataFrame
+        An optional Pandas DataFrame frame computed in `spm_analysis.py`
+        holding parameters describing the ti object.
     show_plot : bool
         Whether or not to show matplotlib plot.
         Generally set to False for automated processes.
@@ -102,7 +106,7 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
     ax.axhline(y=ti.zstar, color='#000000', linestyle='--')
 
     # Text box showing alpha, threshold value, and p value
-    ax.text(73, ti.zstar + 0.4, get_annotation_text(ti),
+    ax.text(73, ti.zstar + 0.4, get_annotation_text(ti, ti_params_df=ti_params_df),
             va='bottom', ha='left', 
             bbox=dict(facecolor='#FFFFFF', edgecolor='#222222', boxstyle='round,pad=0.3'))
 
@@ -121,30 +125,92 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
         plt.close(fig)
 
 
-def get_annotation_text(ti):
+def get_annotation_text(ti, ti_params_df=None):
     """
     Used to create a nice-looking annotation of the alpha, p, and t-threshold
     values for the plot of an SPM t-test.
     Accounting for formatting/new line characters, output looks something like...
     t^* = 4.42
     alpha = 0.05
-    p < 0.0001  # Assuming a single significance cluster
+    p < 0.0001
 
-    Keep in mind that alpha and tstar are assigned globally 
-    for the entire SPM ttest, while p-values are assigned on 
-    a per-cluster basis. Thus p-value is included only for a
-    ttest producing one significance cluster.
+    Keep in mind that alpha and tstar are assigned globally for the entire SPM
+    ti object, while p-values are assigned on a per-cluster basis. 
+    For ti objects with multiple supra-threshold significance clusters,
+    descriptive parameters are printed only the cluster with the smallest
+    p-value. This is not perfectly general, but works well for TMG signals.
 
+    Parameters
+    ----------
+    ti : spm1d.stats._spm.SPMi_T
+        An SPM TI inference object
+    ti_params_df : DataFrame
+        An optional Pandas DataFrame frame computed in `spm_analysis.py`
+        holding parameters describing the ti object.
     """
-    if len(ti.clusters) == 1:
-        p = ti.clusters[0].P
-        if p < 0.0001:
-            return "$t^* = {:.2f}$\n$\\alpha = {:.2f}$\n$p < 0.0001$".format(ti.zstar, ti.alpha)
-        else:
-            return "$t^* = {:.2f}$\n$\\alpha = {:.2f}$\n$p = {:.4f}$".format(ti.zstar, ti.alpha, p)
-    else:
-        return "$t^* = {:.2f}$\n$\\alpha = {:.2f}$".format(ti.zstar, ti.alpha)
+    # If no parameter DataFrame was passed or if no supra-threshold clusters
+    # occurred, write only t-star and alpha.
+    if ti_params_df is None or ti.clusters is None:
+        return "$\\alpha = {:.2f}$\n$t^* = {:.2f}$".format(ti.zstar, ti.alpha)
 
+    # If at least one supra-threshold cluster occured
+    ti_params = ti_params_df.to_numpy()
+
+    # Declare indices of various parameters in `constants.SPM_PARAM_NAMES`
+    p_index = 2
+    start_time_index = 3
+    end_time_index = 4
+    t_max_index = 7
+    area_index = 8
+
+    # Find index of cluster with smallest p-value
+    c_min = np.argmin(ti_params[p_index, :])
+
+    # Parameters for cluster with smallest p-value
+    p          = ti_params[p_index, c_min]
+    start_time = ti_params[start_time_index, c_min]
+    end_time   = ti_params[end_time_index, c_min]
+    t_max      = ti_params[t_max_index, c_min]
+    area       = ti_params[area_index, c_min]
+
+    # This if/else block ensures p-value is written in nicely-readable
+    # scientific notation.
+    # See https://stackoverflow.com/a/45359185
+    if p == 0.0:
+        p_string =  "$p = 2 \\cdot 10^{{-16}}$\n"
+
+        return str.format((
+              "$\\alpha = {alpha:.2f}$\n"
+            + "$p = 2 \\cdot 10^{{-16}}$\n"
+            + "$T_1 = {t_start:.1f} \, \\mathrm{{ms}}$\n"
+            + "$T_2 = {t_end:.1f} \, \\mathrm{{ms}}$\n"
+            + "$t^* = {threshold:.2f}$\n"
+            + "$t$-$\\mathrm{{max}} = {maximum:.1f}$\n"
+            + "$\\mathrm{{Area}} = {area:.0f}$"
+            ),
+            alpha=ti.alpha, threshold=ti.zstar,
+            t_start = start_time, t_end = end_time,
+            maximum = t_max, area = area)
+
+    else: # extract exponent and mantissa for scientific notation
+        (sign, digits, exponent) = Decimal(p).as_tuple()
+        exp = len(digits) + exponent - 1
+        man = Decimal(p).scaleb(-exp).normalize()
+
+        return str.format((
+              "$\\alpha = {alpha:.2f}$\n"
+            + "$p = {man:.0f} \\cdot 10^{{{exp:.0f}}}$\n"
+            + "$T_1 = {t_start:.1f} \, \\mathrm{{ms}}$\n"
+            + "$T_2 = {t_end:.1f} \, \\mathrm{{ms}}$\n"
+            + "$t^* = {threshold:.2f}$\n"
+            + "$t$-$\\mathrm{{max}} = {maximum:.1f}$\n"
+            + "$\\mathrm{{Area}} = {area:.0f}$"
+            ),
+            alpha=ti.alpha, threshold=ti.zstar,
+            man=man, exp=exp,
+            t_start = start_time, t_end = end_time,
+            maximum = t_max, area = area)
+        
 
 def remove_spines(ax):
     """ Simple auxiliary function to remove upper and right spines from the passed axis"""
