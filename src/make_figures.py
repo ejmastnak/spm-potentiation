@@ -23,8 +23,8 @@ def make_sample_tmg_plot():
     show_plot=True
 
     file_basename = "54-ZI20211112121510"
-    pre_file = constants.INITIAL_DATA_DIR + "pre-exercise/" + file_basename + "-pre.csv"
-    post_file = constants.INITIAL_DATA_DIR + "post-exercise/" + file_basename + "-post.csv"
+    pre_file = constants.RAW_CSV_1MPS_DATA_DIR + "pre-exercise/" + file_basename + "-pre.csv"
+    post_file = constants.RAW_CSV_1MPS_DATA_DIR + "post-exercise/" + file_basename + "-post.csv"
     output_file = constants.ARTICLE_FIGURE_DIR + "tmg-example.jpg"
 
     pre_data = np.loadtxt(pre_file, delimiter=',', skiprows=1)
@@ -61,6 +61,13 @@ def make_sample_tmg_plot():
     # For labels showing "Dm", "Tc", etc...
     param_font_size = 11
 
+    # For titles "TMG Signal" and "TMG Derivative"
+    title_font_size = 16
+
+    # Coordinates in transAxes coordinate system for titles
+    title_x = 0.65
+    title_y = 0.85
+
     # For arrows indicating TMG/RDD parameters
     arrow_linewidth=1.0
 
@@ -87,6 +94,11 @@ def make_sample_tmg_plot():
     # Vertical dashed line noting 0.1*Dm
     ax.vlines(td, 0.1*dm, 0.96*dm, color='black', linestyle=':')  
 
+    long_arrow_head_length = 0.8
+    long_arrow_head_width = 0.4
+    short_arrow_head_length = 0.4
+    short_arrow_head_width = 0.4
+
     # Arrow and text for Dm
     ax.text(dm_index, 0.5*dm, "Dm",
             ha="center", va="center",
@@ -94,7 +106,7 @@ def make_sample_tmg_plot():
             zorder=10,
             bbox=param_bbox)
     ax.annotate("", xy=(dm_index, dm), xytext=(dm_index, 0),
-            arrowprops=dict(lw=arrow_linewidth, arrowstyle="<->, head_length=0.8, head_width=0.4"))
+            arrowprops=dict(lw=arrow_linewidth, arrowstyle="<->, head_length={}, head_width={}".format(long_arrow_head_length, long_arrow_head_width)))
 
     # Arrow and text for Td
     ax.text(0.5*td, 0.20*dm, "Td",
@@ -102,7 +114,7 @@ def make_sample_tmg_plot():
             fontsize=param_font_size,
             bbox=param_bbox)
     ax.annotate("", xy=(0, 0.1*dm), xytext=(td, 0.1*dm),
-            arrowprops=dict(lw=arrow_linewidth, arrowstyle="<->, head_length=0.3, head_width=0.5"))
+            arrowprops=dict(lw=arrow_linewidth, arrowstyle="<->, head_length={}, head_width={}".format(short_arrow_head_length, short_arrow_head_width)))
 
     # Arrow and text for Tc
     ax.text(td + 0.5*tc, 0.99*dm, "Tc",
@@ -110,7 +122,15 @@ def make_sample_tmg_plot():
             fontsize=param_font_size,
             bbox=param_bbox)
     ax.annotate("", xy=(td, 0.9*dm), xytext=(td + tc, 0.9*dm),
-            arrowprops=dict(lw=arrow_linewidth, arrowstyle="<->, head_length=0.3, head_width=0.5"))
+            arrowprops=dict(lw=arrow_linewidth, arrowstyle="<->, head_length={}, head_width={}".format(short_arrow_head_length, short_arrow_head_width)))
+
+    # Text showing "TMG Signal"
+    ax.text(title_x, title_y, "TMG Signal",
+            ha="center", va="center",
+            fontsize=title_font_size,
+            transform=ax.transAxes,
+            bbox=param_bbox)
+
 
     # --------------------------------------------- #
 
@@ -140,7 +160,7 @@ def make_sample_tmg_plot():
             zorder=10,
             bbox=param_bbox)
     ax.annotate("", xy=(rdd_max_time, rdd_max), xytext=(rdd_max_time, 0),
-            arrowprops=dict(lw=arrow_linewidth, arrowstyle="<->, head_length=0.8, head_width=0.4"))
+            arrowprops=dict(lw=arrow_linewidth, arrowstyle="<->, head_length={}, head_width={}".format(long_arrow_head_length, long_arrow_head_width)))
 
     # Arrow and text for RDDMaxTime
     ax.text(0.5*rdd_max_time, -0.30*rdd_max, "RDDMax\nTime",
@@ -148,7 +168,14 @@ def make_sample_tmg_plot():
             fontsize=param_font_size,
             bbox=param_bbox)
     ax.annotate("", xy=(0, -0.09*rdd_max), xytext=(rdd_max_time, -0.09*rdd_max),
-            arrowprops=dict(lw=arrow_linewidth, arrowstyle="<->, head_length=0.4, head_width=0.5"))
+            arrowprops=dict(lw=arrow_linewidth, arrowstyle="<->, head_length={}, head_width={}".format(short_arrow_head_length, short_arrow_head_width)))
+
+    # Text showing "TMG Derivative"
+    ax.text(title_x, title_y, "TMG Signal Derivative",
+            ha="center", va="center",
+            fontsize=title_font_size,
+            transform=ax.transAxes,
+            bbox=param_bbox)
 
     plt.tight_layout()
     plt.subplots_adjust(hspace=0.12)
@@ -389,8 +416,8 @@ def make_sample_spm_plot_by_set_across_subj():
 
 
 if __name__ == "__main__":
-    # make_sample_tmg_plot()
+    make_sample_tmg_plot()
     # make_sample_spm_plot_by_subj_across_sets_1mps()
     # make_sample_spm_plot_by_subj_by_set_8mps()
-    make_sample_spm_plot_by_set_across_subj()
+    # make_sample_spm_plot_by_set_across_subj()
 
