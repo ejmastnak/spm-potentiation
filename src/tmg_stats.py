@@ -78,10 +78,10 @@ def tmg_stats_by_set_across_subj_1mps(first_set_as_baseline=False):
         post_params = post_param_tensor[:, :, s].T
         if first_set_as_baseline:
             pre_params = pre_param_tensor[:, :, 0].T
-            output_file = output_dir + "setB1-P{}-tmg-stats.csv".format(s + 1)
+            output_file = output_dir + "set-B1-P{}-tmg-stats.csv".format(s + 1)
         else:
             pre_params = pre_param_tensor[:, :, s].T
-            output_file = output_dir + "set{}-tmg-stats.csv".format(s + 1)
+            output_file = output_dir + "set-{}-tmg-stats.csv".format(s + 1)
         _compute_stats_for_tmg_params(pre_params, post_params, output_file)
 
 
@@ -134,7 +134,7 @@ def tmg_stats_by_subj_by_set_8mps():
         for s in range(max_sets):
             pre_filename = pre_filenames[s]
             post_filename = post_filenames[s]
-            output_file = output_dir + "set-{}.csv".format(s + 1)
+            output_file = output_dir + "set-{}-tmg-stats.csv".format(s + 1)
 
             pre_params = np.loadtxt(pre_input_dir + pre_filename, skiprows=1, delimiter=',', usecols=usecols)
             post_params = np.loadtxt(post_input_dir + post_filename, skiprows=1, delimiter=',', usecols=usecols)
@@ -195,7 +195,6 @@ def _compute_stats_for_tmg_params(pre_params, post_params, output_file):
 
     """
     param_names = constants.TMG_PARAM_NAMES
-    alt_hypotheses = constants.TMG_PARAM_ALT_HYPOTHESES
     stats_names = constants.TMG_STAT_NAMES
 
     # Compare pre-ISQ and post-ISQ parameters
@@ -204,7 +203,7 @@ def _compute_stats_for_tmg_params(pre_params, post_params, output_file):
     pre_sd = np.std(pre_params, axis=1, ddof=1)
     post_sd = np.std(post_params, axis=1, ddof=1)
 
-    t_statistic, p_value = ttest_rel(pre_params, post_params, axis=1)
+    t_statistic, p_value = ttest_rel(post_params, pre_params, axis=1)
 
     # Convert Numpy arrays of stat results to a Pandas DataFrame, 
     # which is inefficient in principle but convenient 
