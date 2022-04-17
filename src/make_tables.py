@@ -162,7 +162,7 @@ def _make_tmg_param_table(input_file, output_file, comment=None, table_title=Non
 def make_tmg_param_table_by_set_across_subj_old(use_set1_as_baseline=False):
     """
     Creates a single LaTeX table that, for each measurement set, compares pre-
-    and post-exercise values of each TMG parameter averaged across all subjects.
+    and post-conditioning values of each TMG parameter averaged across all subjects.
 
     Columns: Set number (1, 2, 3, and 4)
     Rows: The following TMG param values:
@@ -187,8 +187,8 @@ def make_tmg_param_table_by_set_across_subj_old(use_set1_as_baseline=False):
     input_dir = constants.TMG_STATS_BY_SET_ACROSS_SUBJ_DIR
     param_names = constants.TMG_PARAM_NAMES
     skiprows = 1     # skips Parameter name heading on first row
-    pre_cols = (1)   # pre-exercise mean
-    post_cols = (2)  # post-exercise mean
+    pre_cols = (1)   # pre-conditioning mean
+    post_cols = (2)  # post-conditioning mean
     max_set = 4
 
     pre_params = np.zeros([len(param_names), max_set])
@@ -200,7 +200,7 @@ def make_tmg_param_table_by_set_across_subj_old(use_set1_as_baseline=False):
                     usecols=pre_cols,
                     skiprows=skiprows)
         if use_set1_as_baseline:
-            # Use set 1 for all pre-exercise params
+            # Use set 1 for all pre-conditioning params
             one_set_pre_params = np.loadtxt(input_dir + "set{}-tmg-stats.csv".format(1),
                     delimiter=",",
                     usecols=pre_cols,
@@ -384,7 +384,7 @@ def make_tmg_param_table_by_set_across_subj_old(use_set1_as_baseline=False):
 def make_spm_param_table_by_set_across_subj():
     """
     Creates a single LaTeX table that, for each measurement set,
-    compares pre- and post-exercise values of each SPM parameter.
+    compares pre- and post-conditioning values of each SPM parameter.
 
     Columns: Set number (1, 2, 3, and 4)
     Rows: The following SPM param values:

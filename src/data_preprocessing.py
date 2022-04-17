@@ -18,7 +18,7 @@ After the processing performed by this script, the project's dataset
 has the following structure 
 - 55 subjects
 - 4 sets per subject
-- 1 pre-exercise and 1 post-exercise measurement per set
+- 1 pre-conditioning and 1 post-conditioning measurement per set
 - 1000 data points per measurement (1 second of data a 1 kHz sampling)
 
 For a longer description of the processed dataset, see the file
@@ -45,8 +45,8 @@ def process_raw_excel_files():
     # Convert files with 1 pre and post measurement per measurement set
     # --------------------------------------------- #
     input_dir = constants.RAW_EXCEL_1MPS_DATA_DIR
-    pre_output_dir  = constants.RAW_CSV_1MPS_DATA_DIR + "pre-exercise/"
-    post_output_dir = constants.RAW_CSV_1MPS_DATA_DIR + "post-exercise/"
+    pre_output_dir  = constants.RAW_CSV_1MPS_DATA_DIR + "pre-conditioning/"
+    post_output_dir = constants.RAW_CSV_1MPS_DATA_DIR + "post-conditioning/"
 
     # Number of pre/post exercise measurements per set
     msmnts_per_pre_set = 1   
@@ -68,8 +68,8 @@ def process_raw_excel_files():
     # taking only first measurement from each set
     # --------------------------------------------- #
     input_dir = constants.RAW_EXCEL_8MPS_DATA_DIR
-    pre_output_dir  = constants.RAW_CSV_1MPS_DATA_DIR + "pre-exercise/"
-    post_output_dir = constants.RAW_CSV_1MPS_DATA_DIR + "post-exercise/"
+    pre_output_dir  = constants.RAW_CSV_1MPS_DATA_DIR + "pre-conditioning/"
+    post_output_dir = constants.RAW_CSV_1MPS_DATA_DIR + "post-conditioning/"
     msmnts_per_pre_set = 8
     msmnt_per_post_set = 8
 
@@ -89,8 +89,8 @@ def process_raw_excel_files():
     # taking all measurements from each set
     # --------------------------------------------- #
     input_dir = constants.RAW_EXCEL_8MPS_DATA_DIR
-    pre_output_dir  = constants.RAW_CSV_8MPS_DATA_DIR + "pre-exercise/"
-    post_output_dir = constants.RAW_CSV_8MPS_DATA_DIR + "post-exercise/"
+    pre_output_dir  = constants.RAW_CSV_8MPS_DATA_DIR + "pre-conditioning/"
+    post_output_dir = constants.RAW_CSV_8MPS_DATA_DIR + "post-conditioning/"
 
     msmnts_per_pre_set = 8
     msmnts_per_post_set = 8
@@ -121,8 +121,8 @@ def prepare_1mps_csv_files_for_spm():
     processing steps performed on them
 
     """
-    pre_input_dir = constants.RAW_CSV_1MPS_DATA_DIR + "pre-exercise/"
-    post_input_dir = constants.RAW_CSV_1MPS_DATA_DIR + "post-exercise/"
+    pre_input_dir = constants.RAW_CSV_1MPS_DATA_DIR + "pre-conditioning/"
+    post_input_dir = constants.RAW_CSV_1MPS_DATA_DIR + "post-conditioning/"
     pre_filenames = []
     post_filenames = []
 
@@ -134,10 +134,10 @@ def prepare_1mps_csv_files_for_spm():
     for filename in frontiers_utils.natural_sort(os.listdir(post_input_dir)):
         post_filenames.append(filename)
 
-    pre_output_dir = constants.SPM_1MPS_DATA_DIR + "pre-exercise/"
-    pre_normed_output_dir = constants.NORMED_SPM_1MPS_DATA_DIR + "pre-exercise/"
-    post_output_dir = constants.SPM_1MPS_DATA_DIR + "post-exercise/"
-    post_normed_output_dir = constants.NORMED_SPM_1MPS_DATA_DIR + "post-exercise/"
+    pre_output_dir = constants.SPM_1MPS_DATA_DIR + "pre-conditioning/"
+    pre_normed_output_dir = constants.NORMED_SPM_1MPS_DATA_DIR + "pre-conditioning/"
+    post_output_dir = constants.SPM_1MPS_DATA_DIR + "post-conditioning/"
+    post_normed_output_dir = constants.NORMED_SPM_1MPS_DATA_DIR + "post-conditioning/"
 
     _prepare_csv_files_for_spm(pre_input_dir, post_input_dir,
         pre_filenames, post_filenames,
@@ -155,8 +155,8 @@ def prepare_8mps_csv_files_for_spm():
     `RAW_EXCEL_8MPS_DATA_DIR`.
 
     """
-    pre_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "pre-exercise/"
-    post_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "post-exercise/"
+    pre_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "pre-conditioning/"
+    post_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "post-conditioning/"
     include_normalized = True
 
     # Loop through each athlete directory
@@ -172,14 +172,14 @@ def prepare_8mps_csv_files_for_spm():
             post_filenames.append(filename)
 
         # Create output directories
-        pre_output_dir = frontiers_utils.make_output_dir(constants.SPM_8MPS_DATA_DIR + "pre-exercise/" + athlete_subdir,
+        pre_output_dir = frontiers_utils.make_output_dir(constants.SPM_8MPS_DATA_DIR + "pre-conditioning/" + athlete_subdir,
                 use_existing=True) + "/"
-        pre_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_8MPS_DATA_DIR + "pre-exercise/" + athlete_subdir,
+        pre_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_8MPS_DATA_DIR + "pre-conditioning/" + athlete_subdir,
                 use_existing=True) + "/"
 
-        post_output_dir = frontiers_utils.make_output_dir(constants.SPM_8MPS_DATA_DIR + "post-exercise/" + athlete_subdir,
+        post_output_dir = frontiers_utils.make_output_dir(constants.SPM_8MPS_DATA_DIR + "post-conditioning/" + athlete_subdir,
                 use_existing=True) + "/"
-        post_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_8MPS_DATA_DIR + "post-exercise/" + athlete_subdir,
+        post_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_8MPS_DATA_DIR + "post-conditioning/" + athlete_subdir,
                 use_existing=True) + "/"
 
         _prepare_csv_files_for_spm(pre_input_dir + athlete_subdir + "/",
@@ -253,8 +253,8 @@ def _remove_spm_significance_from_filter_artefact(pre_df, post_df,
              This artefact can lead to non-physical regions of significance
              in the first few ms of an SPM t-test between TMG signals.
     This function removes this SPM significance very simply, namely by 
-    subtracting from the post-exercise data the average of the difference 
-    between pre- and post-exercise data over the first few ms of 
+    subtracting from the post-conditioning data the average of the difference 
+    between pre- and post-conditioning data over the first few ms of 
     the TMG curve; see implementation details in the code below.
     This is safe to do without appreciable affecting the later 
     (i.e. t > ~5 ms) portion of a TMG signal because signal values in the 

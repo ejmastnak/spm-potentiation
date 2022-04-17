@@ -31,8 +31,8 @@ def perform_spm_tests_by_set_across_subj():
         and significance clusters emphasized.
 
     """
-    pre_input_dir = constants.SPM_1MPS_DATA_DIR + "pre-exercise/"
-    post_input_dir = constants.SPM_1MPS_DATA_DIR + "post-exercise/"
+    pre_input_dir = constants.SPM_1MPS_DATA_DIR + "pre-conditioning/"
+    post_input_dir = constants.SPM_1MPS_DATA_DIR + "post-conditioning/"
     param_output_dir = constants.SPM_PARAMS_BY_SET_ACROSS_SUBJ_DIR
     plot_output_dir = constants.SPM_PLOTS_BY_SET_ACROSS_SUBJ_DIR
 
@@ -47,23 +47,23 @@ def perform_spm_tests_by_set_across_subj():
     fig_format = "jpg"
     spm_alpha = 0.01
 
-    # 3D Numpy tensor to hold all pre-exercise measurements in database
+    # 3D Numpy tensor to hold all pre-conditioning measurements in database
     pre_tensor = np.zeros([rows_per_measurement_file,
         sets_per_measurement_file,
         num_subjects])
 
-    # 3D Numpy tensor to hold all post-exercise measurements in database
+    # 3D Numpy tensor to hold all post-conditioning measurements in database
     post_tensor = np.zeros([rows_per_measurement_file,
         sets_per_measurement_file,
         num_subjects])
 
-    # Load pre-exercise measurements into memory
+    # Load pre-conditioning measurements into memory
     for i, filename in enumerate(pre_filenames):
         data = np.loadtxt(pre_input_dir + filename, delimiter=',',
                 skiprows=1, max_rows=rows_per_measurement_file)
         pre_tensor[:, :, i] = data
 
-    # Load post-exercise measurements into memory
+    # Load post-conditioning measurements into memory
     for i, filename in enumerate(post_filenames):
         data = np.loadtxt(post_input_dir + filename, delimiter=',',
                 skiprows=1, max_rows=rows_per_measurement_file)
@@ -107,8 +107,8 @@ def spm_tests_by_subj_across_sets_1mps():
         and significance clusters emphasized.
 
     """ 
-    pre_input_dir = constants.SPM_1MPS_DATA_DIR + "pre-exercise/"
-    post_input_dir = constants.SPM_1MPS_DATA_DIR + "post-exercise/"
+    pre_input_dir = constants.SPM_1MPS_DATA_DIR + "pre-conditioning/"
+    post_input_dir = constants.SPM_1MPS_DATA_DIR + "post-conditioning/"
     param_output_dir = constants.SPM_PARAMS_BY_SUBJ_ACROSS_SETS_1MPS_DIR
     plot_output_dir = constants.SPM_PLOTS_BY_SUBJ_ACROSS_SETS_1MPS_DIR
 
@@ -162,8 +162,8 @@ def spm_tests_by_subj_by_set_8mps():
         and significance clusters emphasized.
 
     """ 
-    pre_base_input_dir = constants.SPM_8MPS_DATA_DIR + "pre-exercise/"
-    post_base_input_dir = constants.SPM_8MPS_DATA_DIR + "post-exercise/"
+    pre_base_input_dir = constants.SPM_8MPS_DATA_DIR + "pre-conditioning/"
+    post_base_input_dir = constants.SPM_8MPS_DATA_DIR + "post-conditioning/"
     param_base_output_dir = constants.SPM_PARAMS_BY_SUBJ_BY_SET_8MPS_DIR
     plot_base_output_dir = constants.SPM_PLOTS_BY_SUBJ_BY_SET_8MPS_DIR
 
@@ -237,15 +237,15 @@ def _perform_spm_analysis(pre_data, post_data,
 def _get_spm_t_ti_paired_ttest(pre_data, post_data, alpha=0.01):
     """
     Returns the spm.t and spm.ti objects resulting from an SPM paired t-test
-    between the inputted pre- and post-exercise data.
+    between the inputted pre- and post-conditioning data.
 
     Parameters
     ----------
     pre_data : ndarray
-        2D Numpy array containing pre-exercise TMG measurements.
+        2D Numpy array containing pre-conditioning TMG measurements.
         Rows should correspond to time and columns to measurements.
     post_data : ndarray
-        2D Numpy array containing post-exercise TMG measurements
+        2D Numpy array containing post-conditioning TMG measurements
         Rows should correspond to time and columns to measurements.
     
     """
@@ -268,7 +268,7 @@ def _get_ti_parameters_as_df(ti,
     ----------
     ti : SPM TI inference object
         An SPM TI inference object generated from a comparison
-        of pre-exercise and post-exercise data.
+        of pre-conditioning and post-conditioning data.
 
     """
     # Clusters are portions of SPM t curve above threshold value

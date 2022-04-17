@@ -34,12 +34,12 @@ def tmg_stats_by_set_across_subj_1mps(first_set_as_baseline=False):
     Parameters
     ----------
     first_set_as_baseline : bool
-        If True, the post-exercise measurement in each set is compared
-        to the pre-exercise measurement in the FIRST set.
+        If True, the post-conditioning measurement in each set is compared
+        to the pre-conditioning measurement in the FIRST set.
 
     """
-    pre_input_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "pre-exercise/"
-    post_input_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "post-exercise/"
+    pre_input_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "pre-conditioning/"
+    post_input_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "post-conditioning/"
 
     if first_set_as_baseline:
         output_dir = constants.TMG_STATS_BY_SET_ACROSS_SUBJ_RELTO_BASELINE_DIR
@@ -57,17 +57,17 @@ def tmg_stats_by_set_across_subj_1mps(first_set_as_baseline=False):
     # only parameter names.
     usecols = tuple(range(1, 1 + max_sets))
 
-    # 3D Numpy arrays holding pre- and post-exercise parameter values
+    # 3D Numpy arrays holding pre- and post-conditioning parameter values
     # for all subjects, parameters, and measurement sets.
     pre_param_tensor = np.zeros((num_subjects, num_params, max_sets))
     post_param_tensor = np.zeros((num_subjects, num_params, max_sets))
 
-    # Read pre-exercise params into 3D Numpy array
+    # Read pre-conditioning params into 3D Numpy array
     for subj, filename in enumerate(frontiers_utils.natural_sort(os.listdir(pre_input_dir))):
         params = np.loadtxt(pre_input_dir + filename, skiprows=1, delimiter=',', usecols=usecols)
         pre_param_tensor[subj, :, :] = params
 
-    # Read post-exercise params into 3D Numpy array
+    # Read post-conditioning params into 3D Numpy array
     for subj, filename in enumerate(frontiers_utils.natural_sort(os.listdir(post_input_dir))):
         params = np.loadtxt(post_input_dir + filename, skiprows=1, delimiter=',', usecols=usecols)
         post_param_tensor[subj, :, :] = params
@@ -105,8 +105,8 @@ def tmg_stats_by_subj_by_set_8mps():
     analysis.
 
     """
-    pre_base_input_dir = constants.TMG_PARAMS_BY_SUBJ_8MPS_DIR + "pre-exercise/"
-    post_base_input_dir = constants.TMG_PARAMS_BY_SUBJ_8MPS_DIR + "post-exercise/"
+    pre_base_input_dir = constants.TMG_PARAMS_BY_SUBJ_8MPS_DIR + "pre-conditioning/"
+    post_base_input_dir = constants.TMG_PARAMS_BY_SUBJ_8MPS_DIR + "post-conditioning/"
     output_base_dir = constants.TMG_STATS_BY_SUBJ_BY_SET_8MPS_DIR
 
     param_names = constants.TMG_PARAM_NAMES
@@ -160,8 +160,8 @@ def tmg_stats_by_subj_across_sets_1mps():
     summarizing the results of the above-described statisical analysis.
 
     """
-    pre_input_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "pre-exercise/"
-    post_input_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "post-exercise/"
+    pre_input_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "pre-conditioning/"
+    post_input_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "post-conditioning/"
     output_dir = constants.TMG_STATS_BY_SUBJ_ACROSS_SETS_1MPS_DIR
 
     max_sets = 8

@@ -28,8 +28,8 @@ def make_sample_tmg_plot():
     else:
         file_basename = "subject-{}".format(subject_number)
 
-    pre_file = constants.RAW_CSV_1MPS_DATA_DIR + "pre-exercise/" + file_basename + "-pre.csv"
-    post_file = constants.RAW_CSV_1MPS_DATA_DIR + "post-exercise/" + file_basename + "-post.csv"
+    pre_file = constants.RAW_CSV_1MPS_DATA_DIR + "pre-conditioning/" + file_basename + "-pre.csv"
+    post_file = constants.RAW_CSV_1MPS_DATA_DIR + "post-conditioning/" + file_basename + "-post.csv"
     output_file = constants.ARTICLE_FIGURE_DIR + "tmg-example.jpg"
 
     pre_data = np.loadtxt(pre_file, delimiter=',', skiprows=1)
@@ -45,7 +45,7 @@ def make_sample_tmg_plot():
     N = np.shape(pre_tmg)[0]         # number of rows in pre/post_data
     time = np.linspace(0, N - 1, N)  # [ms] assuming 1 kHz sampling
 
-    # Only show TMG parameters for pre-exercise signal to avoid clutter
+    # Only show TMG parameters for pre-conditioning signal to avoid clutter
     params = tmg_params_pypi.get_params_of_tmg_signal(pre_tmg)
     dm = params[0]
     td = params[1]
@@ -206,8 +206,8 @@ def make_sample_spm_plot_by_subj_across_sets_1mps():
     else:
         file_basename = "subject-{}".format(subject_number)
 
-    pre_file = constants.SPM_1MPS_DATA_DIR + "pre-exercise/" + file_basename + "-pre.csv"
-    post_file = constants.SPM_1MPS_DATA_DIR + "post-exercise/" + file_basename + "-post.csv"
+    pre_file = constants.SPM_1MPS_DATA_DIR + "pre-conditioning/" + file_basename + "-pre.csv"
+    post_file = constants.SPM_1MPS_DATA_DIR + "post-conditioning/" + file_basename + "-post.csv"
 
     title = "Subject {}, Sets 1-8".format(subject_number)
     fig_format = "jpg"
@@ -231,8 +231,8 @@ def make_sample_spm_plot_by_subj_by_set_8mps():
         subject_basename = "subject-{}".format(subject_number)
 
     set_num = 1
-    pre_file = constants.SPM_8MPS_DATA_DIR + "pre-exercise/" + subject_basename + "/" + subject_basename + "-pre-set-{}.csv".format(set_num)
-    post_file = constants.SPM_8MPS_DATA_DIR + "post-exercise/" + subject_basename + "/" + subject_basename + "-post-set-{}.csv".format(set_num)
+    pre_file = constants.SPM_8MPS_DATA_DIR + "pre-conditioning/" + subject_basename + "/" + subject_basename + "-pre-set-{}.csv".format(set_num)
+    post_file = constants.SPM_8MPS_DATA_DIR + "post-conditioning/" + subject_basename + "/" + subject_basename + "-post-set-{}.csv".format(set_num)
 
     title = "Subject {}, Set 1".format(subject_number)
     fig_format = "jpg"
@@ -290,8 +290,8 @@ def make_sample_spm_plot_by_set_across_subj():
     fig_dpi = 400
     fig_format = "jpg"
 
-    pre_input_dir = constants.SPM_1MPS_DATA_DIR + "pre-exercise/"
-    post_input_dir = constants.SPM_1MPS_DATA_DIR + "post-exercise/"
+    pre_input_dir = constants.SPM_1MPS_DATA_DIR + "pre-conditioning/"
+    post_input_dir = constants.SPM_1MPS_DATA_DIR + "post-conditioning/"
     output_file = constants.ARTICLE_FIGURE_DIR + "spm-plot-by-set-across-subj.{}".format(fig_format)
 
     pre_filenames = frontiers_utils.natural_sort(os.listdir(pre_input_dir))
@@ -304,23 +304,23 @@ def make_sample_spm_plot_by_set_across_subj():
 
     title = "Subjects 1-{}, Sets 1-{}".format(subjects_in_database, max_sets)
 
-    # 3D Numpy tensor to hold all pre-exercise measurements in database
+    # 3D Numpy tensor to hold all pre-conditioning measurements in database
     pre_tensor = np.zeros([rows_per_measurement_file,
         max_sets,
         subjects_in_database])
 
-    # 3D Numpy tensor to hold all post-exercise measurements in database
+    # 3D Numpy tensor to hold all post-conditioning measurements in database
     post_tensor = np.zeros([rows_per_measurement_file,
         max_sets,
         subjects_in_database])
 
-    # Load pre-exercise measurements into memory
+    # Load pre-conditioning measurements into memory
     for i, filename in enumerate(pre_filenames):
         data = np.loadtxt(pre_input_dir + filename, delimiter=',', skiprows=1,
                 usecols=usecols)
         pre_tensor[:, :, i] = data
 
-    # Load post-exercise measurements into memory
+    # Load post-conditioning measurements into memory
     for i, filename in enumerate(post_filenames):
         data = np.loadtxt(post_input_dir + filename, delimiter=',',
                 skiprows=1, usecols=usecols)

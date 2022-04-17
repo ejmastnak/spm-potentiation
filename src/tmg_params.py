@@ -30,10 +30,10 @@ def compute_tmg_params_for_1mps_files():
         original measurement session (see `raw-data.md`)
 
     """
-    pre_input_dir = constants.RAW_CSV_1MPS_DATA_DIR + "pre-exercise/"
-    post_input_dir = constants.RAW_CSV_1MPS_DATA_DIR + "post-exercise/"
-    pre_output_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "pre-exercise/"
-    post_output_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "post-exercise/"
+    pre_input_dir = constants.RAW_CSV_1MPS_DATA_DIR + "pre-conditioning/"
+    post_input_dir = constants.RAW_CSV_1MPS_DATA_DIR + "post-conditioning/"
+    pre_output_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "pre-conditioning/"
+    post_output_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "post-conditioning/"
 
     _compute_tmg_params_for_files_in_dir(pre_input_dir, pre_output_dir)
     _compute_tmg_params_for_files_in_dir(post_input_dir, post_output_dir)
@@ -53,10 +53,10 @@ def compute_tmg_params_for_8mps_files():
     Output file structure: as in `compute_tmg_params_for_1mps_files`
 
     """
-    pre_base_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "pre-exercise/"
-    post_base_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "post-exercise/"
-    pre_base_output_dir = constants.TMG_PARAMS_BY_SUBJ_8MPS_DIR + "pre-exercise/"
-    post_base_output_dir = constants.TMG_PARAMS_BY_SUBJ_8MPS_DIR + "post-exercise/"
+    pre_base_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "pre-conditioning/"
+    post_base_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "post-conditioning/"
+    pre_base_output_dir = constants.TMG_PARAMS_BY_SUBJ_8MPS_DIR + "pre-conditioning/"
+    post_base_output_dir = constants.TMG_PARAMS_BY_SUBJ_8MPS_DIR + "post-conditioning/"
 
     # Loop through each pre-conditioning athlete directory
     for athlete_subdir in frontiers_utils.natural_sort(os.listdir(pre_base_input_dir)):

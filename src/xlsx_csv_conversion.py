@@ -6,7 +6,7 @@ import constants, frontiers_utils
 A set of functions for converting raw, TMG-formatted 
 Excel measurement files into plain-text CSV files.
 The functions implement various ways of organizing the Excel file's
-pre- and post-exercise measurements into formats more suitable to
+pre- and post-conditioning measurements into formats more suitable to
 later data processing.
 """
 
@@ -42,15 +42,15 @@ xlsx_file : str
     The input file's parent directory and filename are separated
     to make naming processed output files easier.
 pre_output_dir : str
-    Output directory for converted pre-exercise CSV files.
+    Output directory for converted pre-conditioning CSV files.
 post_output_dir : str
-    Output directory for converted post-exercise CSV files.
+    Output directory for converted post-conditioning CSV files.
 conversion_mode : int
     One of the conversion mode constants documented in `constants.py`
 msmnts_per_pre_set : int
-    The number of pre-exercise measurements per set in the Excel file
+    The number of pre-conditioning measurements per set in the Excel file
 msmnts_per_post_set : int
-    The number of post-exercise measurements per set in the Excel file
+    The number of post-conditioning measurements per set in the Excel file
 max_set : int
     The maximum set in the Excel file to write to CSV files.
     Sets in Excel file above this set number are ignored.
@@ -96,8 +96,8 @@ def split_by_pre_post(input_dir, xlsx_filename,
             post_col_nums.append(col)
             post_headers.append("S{}-M{}".format(s, col))
 
-    print("Pre-exercise column numbers: {}".format(pre_col_nums))
-    print("Post-exercise column numbers: {}".format(post_col_nums))
+    print("Pre-conditioning column numbers: {}".format(pre_col_nums))
+    print("Post-conditioning column numbers: {}".format(post_col_nums))
     print()
 
     # Write CSV files
@@ -114,8 +114,8 @@ def split_by_pre_post_and_set(input_dir, xlsx_filename,
     PRE_POST_BY_SET_ALL_REPS
     Input: One TMG-formatted Excel file
     Output: FOR EACH MEASUREMENT SET in Excel file:
-            - a file holding all pre-exercise measurements in that set.
-            - a file holding all post-exercise measurements in that set.
+            - a file holding all pre-conditioning measurements in that set.
+            - a file holding all post-conditioning measurements in that set.
             Net output: 2 * (number of sets in Excel file) CSV files.
 
     """
@@ -152,8 +152,8 @@ def split_by_pre_post_and_set(input_dir, xlsx_filename,
             post_col_nums.append(col)
             post_headers.append("S{}-M{}".format(s, col))
 
-        print("Pre-exercise column numbers: {}".format(pre_col_nums))
-        print("Post-exercise column numbers: {}".format(post_col_nums))
+        print("Pre-conditioning column numbers: {}".format(pre_col_nums))
+        print("Post-conditioning column numbers: {}".format(post_col_nums))
         print()
 
         # Write CSV files for the current set
@@ -172,10 +172,10 @@ def split_by_pre_post_and_set_using_first_msmt(input_dir, xlsx_filename,
     PRE_POST_BY_SET_FIRST_REP
     Input: One TMG-formatted Excel file
     Output: Two CSV files:
-            One file holds the FIRST pre-exercise measurement of each set.
-            One file holds the FIRST post-exercise measurement of each set.
+            One file holds the FIRST pre-conditioning measurement of each set.
+            One file holds the FIRST post-conditioning measurement of each set.
     The Excel file is divided into sets, and each set is further
-    divided into pre-exercise and post-exercise measurements, but only
+    divided into pre-conditioning and post-conditioning measurements, but only
     the first measurement in each set is saved to the outputted CSV file.
 
     """
@@ -205,8 +205,8 @@ def split_by_pre_post_and_set_using_first_msmt(input_dir, xlsx_filename,
         post_col_nums.append(post_col)
         post_headers.append("S{}-M{}".format(s, post_col))
 
-    print("Pre-exercise column numbers: {}".format(pre_col_nums))
-    print("Post-exercise column numbers: {}".format(post_col_nums))
+    print("Pre-conditioning column numbers: {}".format(pre_col_nums))
+    print("Post-conditioning column numbers: {}".format(post_col_nums))
     print()
 
     # Write CSV files
@@ -220,7 +220,7 @@ def _check_sets_before_conversion(xlsx_filename, raw_df, msmnts_per_pre_set, msm
     """
     Cross-checks consistency the measurement structure in a raw Excel file 
     (inputted as Pandas DataFrame, but no matter) with the user-specified
-    number of pre- and post-exercise measurements per set for the data in
+    number of pre- and post-conditioning measurements per set for the data in
     the inputted Excel file.
     In practice, this function helps check the inputted Excel file 
     for dropped measurements or other minor irregularities.
@@ -234,7 +234,7 @@ def _check_sets_before_conversion(xlsx_filename, raw_df, msmnts_per_pre_set, msm
     if not sets.is_integer():
         raise ValueError
         print("Aborting Excel to CSV conversion:")
-        print("The measurement structure of the inputted Excel file ({})\n does not appear to agree with the inputted number of measurements per pre-exercise measurement set ({})\n and number of measurements per post-exercise measurement set ({})".format(xlsx_filename, msmnts_per_pre_set, msmnts_per_post_set))
+        print("The measurement structure of the inputted Excel file ({})\n does not appear to agree with the inputted number of measurements per pre-conditioning measurement set ({})\n and number of measurements per post-conditioning measurement set ({})".format(xlsx_filename, msmnts_per_pre_set, msmnts_per_post_set))
         return None
     else:
         return int(sets)

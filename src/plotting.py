@@ -12,7 +12,7 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
         title=None, ti_params_df=None,
         show_plot=True, save_figures=False):
     """
-    Plots the pre and post-exercise data's mean and standard deviation clouds on axis 0.
+    Plots the pre and post-conditioning data's mean and standard deviation clouds on axis 0.
     Plots the SPM t-test between the pre and post-exericse data on axis 1.
 
     Parameters
@@ -22,9 +22,9 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
     ti : spm1d.stats._spm.SPMi_T
         The SPM TI inference object associated with `t`.
     pre_data : ndarray
-        2D numpy array containing pre-exercise measurement data.
+        2D numpy array containing pre-conditioning measurement data.
     post_data : ndarray
-        2D numpy array containing post-exercise measurement data.
+        2D numpy array containing post-conditioning measurement data.
         Should have the same number of rows as `pre_data`.
     time_offset : double
         Time TODO units (an integer number of milliseconds for TMG data)
