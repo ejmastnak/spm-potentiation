@@ -22,7 +22,12 @@ def make_sample_tmg_plot():
     save_figure=True
     show_plot=False
 
-    file_basename = "54-ZI20211112121510"
+    subject_number = 1
+    if subject_number < 10:  # accomodate leading zero for numbers 1-9
+        file_basename = "subject-0{}".format(subject_number)
+    else:
+        file_basename = "subject-{}".format(subject_number)
+
     pre_file = constants.RAW_CSV_1MPS_DATA_DIR + "pre-exercise/" + file_basename + "-pre.csv"
     post_file = constants.RAW_CSV_1MPS_DATA_DIR + "post-exercise/" + file_basename + "-post.csv"
     output_file = constants.ARTICLE_FIGURE_DIR + "tmg-example.jpg"
@@ -195,11 +200,16 @@ def make_sample_spm_plot_by_subj_across_sets_1mps():
     sets.
 
     """
-    file_basename = "54-ZI20211112121510"
+    subject_number = 1
+    if subject_number < 10:  # accomodate leading zero for numbers 1-9
+        file_basename = "subject-0{}".format(subject_number)
+    else:
+        file_basename = "subject-{}".format(subject_number)
+
     pre_file = constants.SPM_1MPS_DATA_DIR + "pre-exercise/" + file_basename + "-pre.csv"
     post_file = constants.SPM_1MPS_DATA_DIR + "post-exercise/" + file_basename + "-post.csv"
 
-    title = "Subject 1, Sets 1-8"
+    title = "Subject {}, Sets 1-8".format(subject_number)
     fig_format = "jpg"
     output_file = constants.ARTICLE_FIGURE_DIR + "spm-plot-by-subj-across-sets.{}".format(fig_format)
 
@@ -214,12 +224,17 @@ def make_sample_spm_plot_by_subj_by_set_8mps():
     from one test subject. 
 
     """
-    subject_basename = "54-ZI20211112121510"
+    subject_number = 1
+    if subject_number < 10:  # accomodate leading zero for numbers 1-9
+        subject_basename = "subject-0{}".format(subject_number)
+    else:
+        subject_basename = "subject-{}".format(subject_number)
+
     set_num = 1
     pre_file = constants.SPM_8MPS_DATA_DIR + "pre-exercise/" + subject_basename + "/" + subject_basename + "-pre-set-{}.csv".format(set_num)
     post_file = constants.SPM_8MPS_DATA_DIR + "post-exercise/" + subject_basename + "/" + subject_basename + "-post-set-{}.csv".format(set_num)
 
-    title = "Subject 1, Set 1"
+    title = "Subject {}, Set 1".format(subject_number)
     fig_format = "jpg"
     output_file = constants.ARTICLE_FIGURE_DIR + "spm-plot-by-subj-by-set.{}".format(fig_format)
 
@@ -274,7 +289,6 @@ def make_sample_spm_plot_by_set_across_subj():
 
     fig_dpi = 400
     fig_format = "jpg"
-    title = "Subjects 1-54, Sets 1-4"
 
     pre_input_dir = constants.SPM_1MPS_DATA_DIR + "pre-exercise/"
     post_input_dir = constants.SPM_1MPS_DATA_DIR + "post-exercise/"
@@ -287,6 +301,8 @@ def make_sample_spm_plot_by_set_across_subj():
     usecols = tuple(range(max_sets))
     rows_per_measurement_file = constants.TMG_ROWS_TO_USE_FOR_SPM - constants.TMG_ROWS_TO_SKIP_FOR_SPM
     subjects_in_database = len(pre_filenames)
+
+    title = "Subjects 1-{}, Sets 1-{}".format(subjects_in_database, max_sets)
 
     # 3D Numpy tensor to hold all pre-exercise measurements in database
     pre_tensor = np.zeros([rows_per_measurement_file,

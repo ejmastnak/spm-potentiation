@@ -18,9 +18,13 @@ def make_tmg_param_table_by_subj_by_set():
 
     """
     input_dir = constants.TMG_STATS_BY_SUBJ_BY_SET_8MPS_DIR
-    input_filename = "54-ZI20211112121510/set-1-tmg-stats.csv"
+    subject_number = 1
+    if subject_number < 10:  # accomodate leading zero for numbers 1-9
+        input_filename = "subject-0{}/set-1-tmg-stats.csv".format(subject_number)
+    else:
+        input_filename = "subject-{}/set-1-tmg-stats.csv".format(subject_number)
+    table_title = "Subject {}, Set 1".format(subject_number)
     output_file = constants.ARTICLE_TABLE_DIR + "tmg_stats_by_subj_by_set.tex"
-    table_title = "Subject 1, Set 1"
 
     _make_tmg_param_table(input_dir + input_filename, output_file,
             comment="Generated from {}".format(input_filename),
@@ -37,9 +41,13 @@ def make_tmg_param_table_by_subj_across_sets():
 
     """
     input_dir = constants.TMG_STATS_BY_SUBJ_ACROSS_SETS_1MPS_DIR
-    input_filename = "54-ZI20211112121510-tmg-stats.csv"
+    subject_number = 1
+    if subject_number < 10:  # accomodate leading zero for numbers 1-9
+        input_filename = "subject-0{}-tmg-stats.csv".format(subject_number)
+    else:
+        input_filename = "subject-{}-tmg-stats.csv".format(subject_number)
     output_file = constants.ARTICLE_TABLE_DIR + "tmg_stats_by_subj_across_sets.tex"
-    table_title = "Subject 1, Sets 1-8"
+    table_title = "Subject {}, Sets 1-8".format(subject_number)
 
     _make_tmg_param_table(input_dir + input_filename, output_file,
             comment="Generated from {}".format(input_filename),
@@ -507,6 +515,3 @@ if __name__ == "__main__":
     make_tmg_param_table_by_subj_by_set()
     make_tmg_param_table_by_subj_across_sets()
     make_tmg_param_table_by_set_across_subj()
-    # make_spm_param_table_by_set_across_subj()
-    # make_tmg_param_table_by_set_across_subj()
-    # make_tmg_param_table_by_set_across_subj(use_set1_as_baseline=True)
