@@ -82,12 +82,11 @@ More so, because SPM preserves the time-domain information contained in the orig
 \end{abstract}
 
 \section{Introduction}
-In the phenomenon generally called post-activation potentiation, a short, intense burst of muscle activity (called a \textit{conditioning exercise} in this context) temporarily increases the amplitude, force, and speed of both voluntary and electrically induced muscle contractions that immediately follow.
-[14][15][1][16][17].
+In the phenomenon generally called post-activation potentiation, a short, intense burst of muscle activity (called a \textit{conditioning exercise} in this context) temporarily increases the amplitude, force, and speed of both voluntary and electrically induced muscle contractions that immediately follow (\cite{brown, oleary, blazevich, mccann, skurvydas}).
 
 In general, prior muscle activity produces two different---and potentially coexistent---muscle responses: fatigue and potentiation.
 Limited by the inevitable onset of fatigue, one cannot use conditioning exercises to increase subsequent muscle performance via potentiation ad infinitum---eventually fatigue outweighs any potentiation-like performance improvement.
-Fatigue can coexist with PAP [18], and measured muscular performance represents the net balance between processes that cause fatigue and processes that cause potentiation [18].
+Fatigue can coexist with PAP (\cite{rassier}), and measured muscular performance represents the net balance between processes that cause fatigue and processes that cause potentiation (\cite{rassier}).
 Striking a favorable balance between fatigue and potentiation should be of interest to coaches, sports scientists, and athletes alike.
 Doing so requires a reliable means of detecting and quantifying potentiation, and this article offers a novel way of doing so---directly in the time domain in which the muscle response is originally measured.
 
@@ -113,25 +112,25 @@ generally involving confusion between the following two phenomena.
 \end{itemize}
 
 The present study concerns PAP, i.e. the short-term, post-conditioning enhancement in muscular contractile properties during electrically-induced twitch, and for this reason we will tend to use the more specific term \textit{twitch potentiation}.
-Borrowing the definition of Hodgson et al (2005) [2],
+Borrowing the definition of \cite{hodgson},
 ``a twitch is a brief muscle contraction in response to a single presynaptic action potential or a single, synchronised volley of action potentials.''
-Twitch potentiation (TP) is a well-established and reproducible phenomenon that manifests as both enhanced muscle twitch amplitude [19][27][28] and decreased time to attaining maximum amplitude [4] \cite{sale} [21].
+Twitch potentiation (TP) is a well-established and reproducible phenomenon that manifests as both enhanced muscle twitch amplitude (\cite{gossen, hamada, vandervoort}) and decreased time to attaining maximum amplitude (\cite{sasaki, sale, grange}).
 
-TP has been demonstrated using electrically induced twitch contractions and attributed to phosphorylation of myosin regulatory light chains [21], which makes actin and myosin more sensitive to \ce{Ca^2+} ions [2]
-The muscle's potentiated state has also been attributed to an increase in $ \alpha $-motoneuron excitability [16].
-Fatigue induces a decrease in amplitude and velocity of twitch contraction, while PAP causes an increase in amplitude and velocity of twitch contraction and thus enhanced contractile response [4][2][3].
+TP has been demonstrated using electrically induced twitch contractions and attributed to phosphorylation of myosin regulatory light chains (\cite{grange}), which makes actin and myosin more sensitive to \ce{Ca^2+} ions (\cite{hodgson}).
+The muscle's potentiated state has also been attributed to an increase in $ \alpha $-motoneuron excitability (\cite{mccann}).
+Fatigue induces a decrease in amplitude and velocity of twitch contraction, while PAP causes an increase in amplitude and velocity of twitch contraction and thus enhanced contractile response (\cite{hodgson, rodriguez-falces, sasaki}).
 
 \subsection{Quantifying potentiation}
 Currently, it is standard to quantify the level of twitch potentiation using discrete twitch contraction parameters computed retrospectively from measurements of muscle displacement, force production, or electrical activity with respect to time.
-Examples of these parameters include maximal amplitude of muscle contraction, time taken to reach peak contraction, maximal twitch rate of force development [29][30][31], and peak M-wave amplitude [3].
+Examples of these parameters include maximal amplitude of muscle contraction, time taken to reach peak contraction, maximal twitch rate of force development (\cite{cochrane, kuu, wallace}), and peak M-wave amplitude (\cite{rodriguez-falces}).
 In each case, computing these parameters reduces the originally-measured muscle response, which is generally a one-dimensional time series (e.g. muscle displacement with respect to time), to a single number, i.e. a zero-dimensional scalar value.
 One can then compare pre-conditioning and post-conditioning parameter values to retrospectively infer the presence (or lack) of post-activation potentiation.
 
 A promising new approach to quantifying TP would analyze 
 muscle response and detect and quantify potentiation directly in the time domain in which the muscle response was originally measured, without the dimensionality reduction imposed by computing discrete twitch contraction parameters.
-One way of performing such an analysis is the method of statistical parametric mapping (SPM) [32][33][34][35].
+One way of performing such an analysis is the method of statistical parametric mapping (SPM) (\cite{friston, pataky-spm1d, pataky-roi, pataky}).
 
-Borrowing the definition of Flandin and Friston \cite{flandin}, 
+Borrowing the definition of \cite{flandin},
 ``Statistical parametric mapping is the application of random field theory to make inferences about the topological features of statistical processes that are continuous functions of space or time''.
 SPM has so far found its greatest application in neuroimaging for detecting regionally-specific brain activations \cite{friston}.
 We use SPM similarly in the present study---applied to one-dimensional functions of time (i.e. twitch amplitude with respect to time) instead of three-dimensional functions of space (i.e. brain scans)---to detect regionally-specific differences between pre-conditioning and post-conditioning muscle responses directly in the time domain.
@@ -140,7 +139,7 @@ Most promisingly, because SPM preserves the time-domain information contained in
 Of course SPM and conventional twitch contraction parameters can be used together as a means of detection potentiation---there is no need for the to methods to be mutually exclusive.
 
 Quantifying twitch potentiation, then, requires two things: a means of measuring a muscle's contractile response following a conditioning exercise and a technique for analyzing the measured muscle response that can determine the presence (or lack) of potentiation.
-Tensiomyography (TMG) is a standard method for selectively measuring contractile response and assessing twitch contraction parameters in superficial skeletal muscles [36][37][38][39][40][41][42].
+Tensiomyography (TMG) is a standard method for selectively measuring contractile response and assessing twitch contraction parameters in superficial skeletal muscles (\cite{valencic, dahmane-fiber, dahmane-measurement, meglic, simunic, martin-rodriguez, ce}).
 This study assessed TP in a sports training setting by analyzing TMG measurements of electrically-induced muscle contraction both
 \begin{enumerate}
 
@@ -165,7 +164,7 @@ The investigation was approved by the Institutional Research Ethics Committee (U
 \subsubsection{Tensiomyography specifications}
 The study used tensiomyograhy (TMG) to measure the pre-conditioning and post-conditioning contractile responses of the rectus femoris (RF) muscle.
 TMG measurements were taken with the TMG S1 measurement system (TMG-BMC, Ljubljana, Slovenia), which uses an opto-inductive sensor with a spring of spring constant \SI{0.17}{\newton \per \milli \meter} that generates an initial pressure of approximately \SI{1.5e-2}{\newton \per \milli \meter \squared} on a tip area of \SI{11.34}{\milli \meter \squared}.
-Two self-adhesive electrodes (UltraStim\textregistered{} Wire, Axelgaard, USA) were positioned approximately along the anatomical axis of the femur, proximal on the beginning of RF and distal \SI{10}{\centi \meter} apart [11], symmetrically \SI{2}{\centi \meter} from the sensor on the RF muscle.
+Two self-adhesive electrodes (UltraStim\textregistered{} Wire, Axelgaard, USA) were positioned approximately along the anatomical axis of the femur, proximal on the beginning of RF and distal \SI{10}{\centi \meter} apart (\cite{maffulietti}), symmetrically \SI{2}{\centi \meter} from the sensor on the RF muscle.
 The positive electrode (anode) was placed proximally, and the negative electrode (cathode) distally, as shown in Figure~~\ref{fig:electrodes}.
 % TODO: image of sensor position
 
@@ -191,7 +190,7 @@ A typical TMG signal, along with the standard twitch contraction parameters comp
     \label{fig:tmg_example}
 \end{figure}
 
-The electrical stimulation intensity applied to the rectus femoris muscle was increased using the standard TMG protocol [36][37][38].
+The electrical stimulation intensity applied to the rectus femoris muscle was increased using the standard TMG protocol (\cite{valencic, dahmane-fiber, dahmane-measurement}).
 After each twitch electrical stimulus, the electrical current was increased until the muscle reached supramaximal response;
 the electrical current level for supramaximal muscle response was then used for electrical stimulation in all subsequent measurements.
 
@@ -238,12 +237,12 @@ The rationale for taking multiple measurements is to generate large enough sampl
 \end{figure}
 
 \subsubsection{Estimated Load on the Quadriceps Muscle}
-An inverse dynamics analysis of a three-segment planar human body model, assuming a quasi-static condition (see Appendix 1) [10][7][8], was used to estimate the load on the quadriceps muscles (especially the RF, which is loaded at the full amplitude of knee movement) during the ISQ.
-The model's body segment properties were estimated using anthropometric data and the subject’s body height and body mass as input parameters [9].
+An inverse dynamics analysis of a three-segment planar human body model, assuming a quasi-static condition (see Appendix 1) (\cite{yoshioka, fry, hof}), was used to estimate the load on the quadriceps muscles (especially the RF, which is loaded at the full amplitude of knee movement) during the ISQ.
+The model's body segment properties were estimated using anthropometric data and the subject’s body height and body mass as input parameters (\cite{winter}).
 % TODO: clarify with the anthropometric data is. Is this the distance from knee to foot?
 The subjects' motion in the sagittal plane was recorded on video, and one exercise repetition was selected for estimating the inter-segmental angles (Figure 4).
 The peak value of the net knee joint moment was estimated at the lowest body position in the ISQ,
-and normalized to the volunteer’s body mass to reduce the effect of inter-subject variance [5][6].
+and normalized to the volunteer’s body mass to reduce the effect of inter-subject variance (\cite{wannop, moiso}).
 The normalized peak values of the knee joint moment were used to compare the loading of the knee extensor muscles during the ISQ between the volunteers.
 
 \subsection{Analysis of Muscle Contractile Response} \label{ss:analysis}
@@ -251,15 +250,14 @@ The normalized peak values of the knee joint moment were used to compare the loa
 \subsubsection{Software}
 Data analysis and standard statistical tests were performed in the Python 3 programming language (\url{https://www.python.org/}) using the Numpy and SciPy libraries (\url{https://numpy.org/}, \url{https://scipy.org/});
 and with SPSS Statistics 20 (SPSS Inc., Chicago, IL, USA) and Microsoft Excel.
-Statistical parametric mapping analysis was performed in Python 3 using the SPM1d library [34][35] (\url{https://www.spm1d.org}).
+Statistical parametric mapping analysis was performed in Python 3 using the SPM1d library (\cite{pataky-spm1d}; \url{https://www.spm1d.org}).
 
 \subsubsection{Discrete Twitch Contraction Parameters} \label{sss:discrete_twitch_params}
-The RF's contractile response was measured with TMG.
-The TMG signal encodes muscle belly displacement with respect to time over the course of the muscle twitch.
+The RF's contractile response was measured with TMG, which records muscle belly displacement with respect to time over the course of the muscle twitch.
 The signal is sampled for \SI{1}{\second} at a sample rate of \SI{1}{\kilo \hertz}, for a total of 1000 data points.
 A typical TMG signal and its time derivative are shown in Figure~\ref{fig:tmg_example}.
 The TMG derivative was computed with a finite difference scheme using the Numpy library's \texttt{gradient} function with a time-spacing of \SI{1}{\milli \second} between data points;
-the \texttt{gradient} funciton uses second-order finite differences at central points and a first-order one-sided forward (backward) finite difference at the left (right) endpoint.
+the \texttt{gradient} function uses second-order finite differences at central points and a first-order one-sided forward (backward) finite difference at the left (right) endpoint.
 The following five discrete twitch contraction parameters were computed from every measured TMG signal.
 \begin{enumerate}
 
@@ -284,10 +282,9 @@ To estimate post-activation potentiation, the five above-described twitch contra
 The pairwise differences in pre- and post-conditioning parameter values then served as indicators of potentiation.
 
 \subsubsection{Statistical testing of discrete contraction parameters} \label{sss:discrete_twitch_param_stats}
-One way to identify post-activation potentiation is simply to compare pre- and post-conditioning parameter values with the naked eye.
+Broadly speaking, one identifies post-activation potentiation by comparing pre- and post-conditioning parameter values.
 Appreciably larger values of \Dm (indicating larger twitch amplitude) and \RDDMax (indicating greater rate of force development), and appreciably smaller values of \Td, \Tc, and \RDDMaxTime (indicating a faster muscle response) in the post-conditioning response relative to the pre-conditioning response indicate post-activation twitch potentiation.
 
-A more refined approach would use statistical hypothesis testing, and we adopt this method here.
 For each of the five twitch contraction parameters, we assume the null hypothesis that pre- and post-conditioning parameter values were drawn from populations with the same mean
 (interpreted more loosely, that any difference in pre- and post-conditioning values is due to chance alone and there is no meaningful difference in pre- and post-conditioning contraction properties)
 and then test this hypothesis with a paired Student's $ t $-test.
@@ -316,7 +313,7 @@ Broadly speaking, classical statistical tests on zero-dimensional datasets quant
 SPM-based statistical testing is a conceptually identical generalization to datasets consisting of continuous, and in our case one-dimensional,%
 \footnote{In this study the signals are one-dimensional TMG signals encoding muscle belly displacement with respect to time, but SPM generalizes straightforwardly to arbitrary-dimensional random fields.}
 \textit{signals}.
-SPM testing quantifies the probability that smooth, 1D random fields would produce a test statistic continuum whose maximum exceeds a threshold test statistic value.
+SPM testing quantifies the probability that smooth, 1D random fields would produce a test statistic continuum whose maximum exceeds a threshold test statistic value (\cite{pataky-spm1d, pataky-roi, pataky}).
 
 The study used one-dimensional paired SPM $ t $-tests to evaluate the effect of the ISQ conditioning exercise on the rectus femoris's twitch contraction properties in the time domain.
 Pre-conditioning TMG signals were compared against post-conditioning TMG signals and statistically significant differences between the two were interpreted as indicating a potentiated post-conditioning muscle response.
@@ -331,16 +328,16 @@ More formally, letting $ \mu_{\mathrm{pre}}(t) $ and $ \mu_{\mathrm{post}}(t) $ 
 while the alternate hypothesis is $ \mu_{\text{post}}(t) > \mu_{\text{pre}}(t) $, i.e. a larger mean twitch amplitude in post-ISQ signals.
 
 % TODO computing the t-continuum value is shown in Appendix
-We then apply the \texttt{stats.ttest\_paired} function provided by the SPM1d library to the set of pre- and post-conditioning TMG signals to construct a one-dimensional \textit{statistical parametric map}.
+We then apply the \texttt{stats.ttest\_paired} function provided by the SPM1d library to the set of pre- and post-conditioning TMG signals to construct a one-dimensional \textit{statistical parametric map} (\cite{pataky-spm1d}).
 This map, also called the \textit{SPM $ t $-continuum}, serves to quantify the difference in the pre- and post-conditioning TMG signals at each point in time.
 (Much like the classical, scalar $ t $-statistic associated with scalar twitch contraction parameters quantifies the difference between the pre- and post-conditioning parameter values.)
 Example SPM $ t $-continua are shown in Figures~\ref{fig:spm_example_result_by_subj_by_set} and~\ref{fig:spm_example_result_by_subj_across_sets} in the \hyperref[s:results]{Results} section.
 
 Finally, we perform a one-tailed\footnote{We make a one-tailed (and not two-tailed) inference under the a priori hypothesis that post-conditioning TMG signals will be larger-amplitude than pre-conditioning signals.} SPM inference on the SPM $ t $-continuum at the significance level $ \alpha = 0.01 $ using the \texttt{inference} function provided by the SPM1d library's \texttt{SPM\_T} class.
-The final inference step produces a threshold $ t $-statistic value $ t^{*} $, which is the threshold at which the maximum value of an SPM $ t $-continuum generated by smooth, Gaussian random continua (as opposed to, say, TMG signals) would exceed $ t^{*} $ with probability $ \alpha $.
+The final inference step produces a threshold $ t $-statistic value $ t^{*} $, which may be interpreted as the threshold at which the maximum value of an SPM $ t $-continuum generated by smooth, Gaussian random continua (as opposed to, say, TMG signals) would exceed $ t^{*} $ with probability $ \alpha $ (\cite{pataky-spm1d}).
 From the perspective of classical hypothesis testing, we reject the null hypothesis in Equation~\ref{eq:spm_null_hypothesis} at the significance level $ \alpha $ if the SPM $ t $-continuum generated from the pre- and post-conditioning TMG signals exceeds $ t^{*} $.
 The final inference step also produces a probability value $ p $ associated with each supra-threshold region of the SPM $ t $-continuum.
-This $ p $ value represents the probability that smooth, Gaussian random continuua would produce a supra-threshold region as wide or wider (relative to the width of the entire SPM $ t $-continuum) than the supra-threshold region observed in the SPM $ t $-continuum computed from the measured TMG signals.
+This $ p $ value represents the probability that smooth, Gaussian random continuua would produce a supra-threshold region as wide or wider (relative to the width of the entire SPM $ t $-continuum) than the supra-threshold region observed in the SPM $ t $-continuum computed from the measured TMG signals (\cite{pataky-spm1d}).
 
 % \begin{figure}
 % 	\centering
@@ -362,7 +359,7 @@ These configurations are as follows.
 
 \end{enumerate}
 
-To complement the SPM $ t $-continuum generated from each SPM paired $ t $-test, we also collected the following discrete parameters to make SPM test results easier to compare at a glance:
+To complement the SPM $ t $-continuum generated from each SPM paired $ t $-test, we also collected the following discrete metrics to make SPM test results easier to compare at a glance:
 \begin{itemize}
 
     \item The times $ T_{1} $ and $ T_{2} $ at which a supra-threshold region begins and ends, respectively.
@@ -370,7 +367,7 @@ To complement the SPM $ t $-continuum generated from each SPM paired $ t $-test,
     \item The area of the supra-threshold cluster in the (time, SPM-$ t $) plane.
 
 \end{itemize}
-The area of the supra-threshold cluster was computed using the trapezoid method for numerical integration.
+The area of the supra-threshold cluster was computed using the trapezoid method for numerical integration, while the other metrics are provided directly by the SPM1d library.
 
 \section{Results} \label{s:results}
 % As an estimate of muscle load, the calculated mean value of peak knee torque during the ISQ was \SI{126.5 \pm 17.6}{\newton \meter}.
