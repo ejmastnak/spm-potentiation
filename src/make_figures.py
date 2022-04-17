@@ -20,7 +20,7 @@ def make_sample_tmg_plot():
 
     """
     save_figure=True
-    show_plot=True
+    show_plot=False
 
     file_basename = "54-ZI20211112121510"
     pre_file = constants.RAW_CSV_1MPS_DATA_DIR + "pre-exercise/" + file_basename + "-pre.csv"
@@ -83,7 +83,7 @@ def make_sample_tmg_plot():
     ax.set_xlabel("Time [ms]")
     ax.set_ylabel("Displacement [mm]")
 
-    ax.plot(time, pre_tmg)
+    ax.plot(time, pre_tmg, color=constants.POST_COLOR)
 
     # Move y axis to t = 0
     ax.set_xlim(xmin=0)
@@ -142,7 +142,7 @@ def make_sample_tmg_plot():
     ax.set_xlabel("Time [ms]")
     ax.set_ylabel("Disp. per time [mm/ms]")
 
-    ax.plot(time, pre_rdd)
+    ax.plot(time, pre_rdd, color=constants.POST_COLOR)
 
     # Move y axis to t = 0
     ax.set_xlim(xmin=0)
@@ -322,9 +322,8 @@ def make_sample_spm_plot_by_set_across_subj():
     post_color   = constants.POST_COLOR
     pre_alpha    = constants.PRE_ALPHA
     post_alpha   = constants.POST_ALPHA
-    tline_color  = constants.T_LINE_COLOR
-    tfill_color  = constants.T_FILL_COLOR
-    tfill_color2 = constants.T_FILL_COLOR2
+    tline_color  = constants.SPM_T_LINE_COLOR
+    tfill_color  = constants.SPM_FILL_COLOR
 
     linewidth = 1.5
 
@@ -425,8 +424,8 @@ def make_sample_spm_plot_by_set_across_subj():
 
 
 if __name__ == "__main__":
-    # make_sample_tmg_plot()
-    # make_sample_spm_plot_by_subj_across_sets_1mps()
-    # make_sample_spm_plot_by_subj_by_set_8mps()
+    make_sample_tmg_plot()
+    make_sample_spm_plot_by_subj_across_sets_1mps()
+    make_sample_spm_plot_by_subj_by_set_8mps()
     make_sample_spm_plot_by_set_across_subj()
 

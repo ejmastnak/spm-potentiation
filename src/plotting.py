@@ -100,7 +100,7 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
     ax.set_ylabel("SPM $t$-continuum", labelpad=-0.1)
 
     # Plot SPM t-statistic
-    ax.plot(time, t.z, color=constants.T_LINE_COLOR)  # plot t-curve
+    ax.plot(time, t.z, color=constants.SPM_T_LINE_COLOR)  # plot t-curve
 
     # Plot dashed line at y = 0
     ax.axhline(y=0, color='black', linestyle=':')  
@@ -117,7 +117,7 @@ def plot_spm_ttest(t, ti, pre_data, post_data, time_offset,
 
     # Shade between curve and threshold
     ax.fill_between(time, t.z, ti.zstar, where=t.z >= ti.zstar,
-            interpolate=True, color=constants.T_FILL_COLOR)
+            interpolate=True, color=constants.SPM_FILL_COLOR)
 
     if title is not None:
         plt.suptitle(title, y=0.93, fontsize=16)

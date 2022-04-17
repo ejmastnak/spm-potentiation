@@ -198,13 +198,24 @@ PRE_POST_BY_SET_FIRST_REP = 4
 
 # Colors and other parametrs for Matplotlib plots
 # --------------------------------------------- #
-PRE_COLOR   = "#000000"  # black
-POST_COLOR  = "#dd502d"  # orange
-POST_COLOR2 = "#3997bf"  # blue
-PRE_ALPHA   = 0.20
-POST_ALPHA  = 0.75
+# From darkest to lightest
+blue0  = "#00112b"
+blue1  = "#002255"
+blue2  = "#003380"
+blue3  = "#0044aa"
+blue4  = "#0055d4"
+blue5  = "#0066ff"
+blue6  = "#2a7fff"
+blue7  = "#559955"
+blue8  = "#80b3ff"
+blue9  = "#aaccff"
+blue10 = "#d5e5ff"
 
-T_LINE_COLOR  = "#000000"  # black
-T_FILL_COLOR  = "#7e3728"  # light orange
-T_FILL_COLOR2 = "#244d90"  # light blue
+PRE_COLOR  = "#000000"  # black
+POST_COLOR = blue3
+PRE_ALPHA  = 0.20
+POST_ALPHA = 0.75
+
+SPM_T_LINE_COLOR  = "#000000"  # black
+SPM_FILL_COLOR = blue9
 # --------------------------------------------- #
