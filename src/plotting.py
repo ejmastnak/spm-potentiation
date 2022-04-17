@@ -186,14 +186,14 @@ def get_annotation_text(ti, ti_params_df=None):
     # scientific notation.
     # See https://stackoverflow.com/a/45359185
     if p == 0.0:
-        p_string =  "$p = 2 \\cdot 10^{{-16}}$\n"
+        p_string =  "$p < 10^{{-16}}$\n"
 
         return str.format((
-              "$\\alpha = {alpha:.2f}$\n"
+             "$t^* = {threshold:.2f}$\n"
+            + "$\\alpha = {alpha:.2f}$\n"
             + "$p = 2 \\cdot 10^{{-16}}$\n"
             + "$T_1 = {t_start:.1f} \, \\mathrm{{ms}}$\n"
             + "$T_2 = {t_end:.1f} \, \\mathrm{{ms}}$\n"
-            + "$t^* = {threshold:.2f}$\n"
             + "$t$-$\\mathrm{{max}} = {maximum:.1f}$\n"
             + "$\\mathrm{{Area}} = {area:.0f}$"
             ),
@@ -207,11 +207,11 @@ def get_annotation_text(ti, ti_params_df=None):
         man = Decimal(p).scaleb(-exp).normalize()
 
         return str.format((
-              "$\\alpha = {alpha:.2f}$\n"
+              "$t^* = {threshold:.2f}$\n"
+            + "$\\alpha = {alpha:.2f}$\n"
             + "$p = {man:.0f} \\cdot 10^{{{exp:.0f}}}$\n"
             + "$T_1 = {t_start:.1f} \, \\mathrm{{ms}}$\n"
             + "$T_2 = {t_end:.1f} \, \\mathrm{{ms}}$\n"
-            + "$t^* = {threshold:.2f}$\n"
             + "$t$-$\\mathrm{{max}} = {maximum:.1f}$\n"
             + "$\\mathrm{{Area}} = {area:.0f}$"
             ),
