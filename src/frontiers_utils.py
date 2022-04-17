@@ -5,8 +5,8 @@ import pandas as pd
 import constants
 
 """
-A mostly-miscellaneous set of utility functions 
-related to processing for the Frontiers project.
+A mostly miscellaneous set of utility functions related to file I/O for use
+with the SPM potentiation project.
 """
 
 def xlsx_to_pandas_df(xlsx_file, num_rows=constants.TMG_MAX_ROWS):
@@ -105,31 +105,3 @@ def natural_sort(list_to_sort):
     alphanum_key = lambda key: [convert(c) for c in re.split('([0-9]+)', key)]
     return sorted(list_to_sort, key=alphanum_key)
 
-
-def get_subject_ID_from_filename(filename):
-    """
-    Example input: "1-BR20200910125909-rdd-params.csv"
-    Example output: "1"
-
-    Parameters
-    ----------
-    filename : string
-        A filename in the form "{subject-ID}-{arbitrary-text}"
-
-    TODO: use index instead of find, since index gives value error
-    First try finding a '-' hyphen in the filename.
-    If no hyphen found use the first two letters, which are the subject initials.
-    
-    """
-    return filename[0:filename.find("-")]
-
-
-def print_tmg_params(params, param_names=constants.TMG_PARAM_NAMES):
-    """
-    Prints the inputted list of TMG parameters `params` and their 
-    corresponding labels `param_names` in human-friendly format.
-    `param_names` and `params` should be the same length.
-    """
-    for (i, param) in enumerate(params):
-        print("{}\t{:.3f}".format(param_names[i], param))
-    
