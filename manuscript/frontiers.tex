@@ -282,8 +282,8 @@ To estimate post-activation potentiation, the five above-described twitch contra
 The pairwise differences in pre- and post-conditioning parameter values then served as indicators of potentiation.
 
 \subsubsection{Statistical testing of discrete contraction parameters} \label{sss:discrete_twitch_param_stats}
-Broadly speaking, one identifies post-activation potentiation by comparing pre- and post-conditioning parameter values.
-Appreciably larger values of \Dm (indicating larger twitch amplitude) and \RDDMax (indicating greater rate of force development), and appreciably smaller values of \Td, \Tc, and \RDDMaxTime (indicating a faster muscle response) in the post-conditioning response relative to the pre-conditioning response indicate post-activation twitch potentiation.
+Broadly speaking, one identifies post-activation potentiation by comparing pre- and post-conditioning parameter values:
+appreciably larger values of \Dm (indicating larger twitch amplitude) and \RDDMax (indicating greater rate of force development), and appreciably smaller values of \Td, \Tc, and \RDDMaxTime (indicating a faster muscle response) in the post-conditioning response relative to the pre-conditioning response indicate post-activation twitch potentiation.
 
 For each of the five twitch contraction parameters, we assume the null hypothesis that pre- and post-conditioning parameter values were drawn from populations with the same mean
 (interpreted more loosely, that any difference in pre- and post-conditioning values is due to chance alone and there is no meaningful difference in pre- and post-conditioning contraction properties)
@@ -391,15 +391,16 @@ As a compromise, we present one representative test result for each test configu
 \begin{figure}
 	\centering
     \includegraphics[width=\textwidth]{spm-plot-by-subj-by-set.jpg}
-    \caption{A representative comparison of 8 pre- and 8 post-conditioning TMG signals from Subject \TODO{num}'s set 1.
-    Mean TMG signals and their standard deviation clouds appear on the left---note the large amplitude and faster time to peak contraction in the post-ISQ signals, indicating post-activation potentiation.
-    The SPM $ t $-continuum and threshold value $ t^{*} $ from an paired SPM $ t $-test of the pre- and post-ISQ signal pairs appears on the right;
-    the large supra-threshold SPM region and low $ p $ value indicate a very small probability that differences in the pre- and post-ISQ signals arose from chance alone.}
+    \caption{A representative comparison of 8 pre- and 8 post-conditioning TMG signals from Subject 1's set 1.
+    % TODO: correct subject name
+    Mean TMG signals and their standard deviation clouds appear on the left---note the larger amplitude and faster time to peak contraction in the post-ISQ signals, indicating post-activation potentiation.
+    The SPM $ t $-continuum and threshold value $ t^{*} $ from a paired SPM $ t $-test of the pre- and post-ISQ signal pairs appears on the right, together with the discrete SPM metrics defined in Section~\ref{sss:spm_analysis}.
+    The large supra-threshold SPM region and low $ p $ value indicate a very small probability that differences in the pre- and post-ISQ signals arose from chance alone.}
     \label{fig:spm_example_result_by_subj_by_set}
 \end{figure}
 
 We first show a representative test comparing 8 pre-ISQ and 8 post-ISQ TMG signals from a single measurement set for one subject---this test configuration would be used in practice to identify post-activation potentiation in a given subject after a single conditioning exercise set.
-A statistical comparison of pre-ISQ and post-ISQ discrete twitch contraction parameters appears in Table~\ref{tab:tmg_params_by_subj_by_set},
+A statistical comparison of the pre-ISQ and post-ISQ discrete twitch contraction parameters appears in Table~\ref{tab:tmg_params_by_subj_by_set},
 and the complementary SPM comparison of the pre-ISQ and post-ISQ TMG signals is shown in Figure~\ref{fig:spm_example_result_by_subj_by_set}.
 
 The pre-ISQ and post-ISQ TMG signals in Figure~\ref{fig:spm_example_result_by_subj_by_set} are clearly distinct even at a glance---the set of post-ISQ signals is larger in amplitude and reaches peak contraction faster than the corresponding set of pre-ISQ signals.
@@ -408,9 +409,10 @@ The discrete twitch contraction parameters in Table~\ref{tab:tmg_params_by_subj_
 
 \begin{table}
     \centering
-    \caption{A statistical comparison of pre- and post-ISQ TMG parameters from subject \TODO{number}'s measurement set 1.
+    \caption{A statistical comparison of pre- and post-ISQ TMG parameters from subject 1's measurement set 1.
+    % TODO: correct subject name
     The twitch contraction parameters in each row were defined in Section~\ref{sss:discrete_twitch_params}.
-    The columns $ \mu_{\mathrm{pre}} $ and $ \mu_{\mathrm{post}} $ show the mean value of each parameter across all eight measurements in the set, and $ \sigma_{\mathrm{pre}} $ and $ \sigma_{\mathrm{post}} $ show the corresponding standard deviations.
+    The columns $ \mu_{\mathrm{pre}} $ and $ \mu_{\mathrm{post}} $ show the mean value of each parameter across all eight measurements in the set, $ \sigma_{\mathrm{pre}} $ and $ \sigma_{\mathrm{post}} $ show the corresponding standard deviations, and the ``change'' column shows the percent change in each parameter relative to the pre-ISQ value.
     The $ \lvert t \rvert $ column shows the $ t $-statistic from a paired, two-tailed Student's $ t $-test comparing the (pre-ISQ, post-ISQ) pairs for each parameter, and the $ p $ column shows the associated $ p $ value.}
     \vspace{1ex}
     \renewcommand{\arraystretch}{1.2}
@@ -419,18 +421,21 @@ The discrete twitch contraction parameters in Table~\ref{tab:tmg_params_by_subj_
 \end{table}
 
 \subsection{Potentiation in a given subject across all conditioning sets}
-Next, we show the results of comparing one pre-ISQ TMG signal from each of subject \TODO{num}'s eight measurement sets (for a total of eight pre-ISQ signals) to the corresponding eight post-ISQ TMG signals.
+Next, we show the results of comparing one pre-ISQ TMG signal from each of subject 1's eight measurement sets (for a total of eight pre-ISQ signals) to the corresponding eight post-ISQ TMG signals.
+% TODO: correct subject name
 This test configuration evaluates the extent to which the subject consistently produced a potentiation-like post-conditioning state in each measurement set over the course of the entire testing protocol.
 A statistical comparison of pre-ISQ and post-ISQ discrete twitch contraction parameters appears in Table~\ref{tab:tmg_params_by_subj_across_sets},
 and the associated SPM comparison of pre-ISQ and post-ISQ TMG signals is shown in Figure~\ref{fig:spm_example_result_by_subj_by_set}.
 
 It is worth commenting on the larger TMG signal standard deviation clouds in Figure~\ref{fig:spm_example_result_by_subj_across_sets} relative to Figure~\ref{fig:spm_example_result_by_subj_by_set}.
 This is to be expected---Figure~\ref{fig:spm_example_result_by_subj_across_sets} compares signals across eight different sets while Figure~\ref{fig:spm_example_result_by_subj_by_set} compares eight signal pairs from a single set, and it is natural to expect signals from different exercise sets to have larger variance than signals from the same exercise set due to neuromuscular adaptations between sets.
-As a result of the relatively larger TMG signal variance in Figure~\ref{fig:spm_example_result_by_subj_across_sets}, the SPM paired $ t $-test produces a smaller supra-threshold cluster and somewhat higher $ p $ value than in Figure~\ref{fig:spm_example_result_by_subj_by_set}, but still comfortably rejects the null hypothesis that differences in pre-ISQ and post-ISQ signals arise from chance alone.
+As a result of the relatively larger TMG signal variance in Figure~\ref{fig:spm_example_result_by_subj_across_sets}, the SPM paired $ t $-test produces a smaller supra-threshold cluster than in Figure~\ref{fig:spm_example_result_by_subj_by_set}, but still comfortably rejects the null hypothesis that differences in pre-ISQ and post-ISQ signals arise from chance alone.
 
 \begin{table}
     \centering
-    \caption{A statistical comparison of pre-ISQ and post-ISQ TMG parameters across measurement sets using the first measurement from each of subject \TODO{num}'s eight measurement sets.
+    \caption{A statistical comparison of pre-ISQ and post-ISQ TMG parameters across measurement sets using the first measurement from each of subject 1's eight measurement sets.
+    % TODO: correct subject name
+    Each column has the same meaning as in Table~\ref{tab:tmg_params_by_subj_by_set}.
     Note the generally larger standard deviations in parameter values relative to Table~\ref{tab:tmg_params_by_subj_by_set}, in which parameter values all come from one set (rather than eight),
     mirroring the trend in Figures~\ref{fig:spm_example_result_by_subj_by_set} and~\ref{fig:spm_example_result_by_subj_across_sets}.}
     \vspace{1ex}
@@ -442,19 +447,19 @@ As a result of the relatively larger TMG signal variance in Figure~\ref{fig:spm_
 \begin{figure}
 	\centering
     \includegraphics[width=\textwidth]{spm-plot-by-subj-across-sets.jpg}
-    \caption{A representative comparison of pre- and post-conditioning TMG signals across measurement sets using the first measurement from each of subject \TODO{num}'s eight measurement sets.
+    \caption{A representative comparison of pre- and post-conditioning TMG signals across measurement sets using the first measurement from each of subject 1's eight measurement sets.
+    % TODO: correct subject name
     Mean TMG signals and their standard deviation clouds appear on the left, and the associated SPM $ t $-continuum and threshold value $ t^{*} $ on the right---see Figure~\ref{fig:spm_example_result_by_subj_by_set} for details.
-    Note the larger standard deviation clouds and smaller supra-threshold region than in Figure~\ref{fig:spm_example_result_by_subj_by_set}, as a result of (expected) neuromuscular adaptations between measurement sets.}
+    Note the larger standard deviation clouds and smaller supra-threshold region than in Figure~\ref{fig:spm_example_result_by_subj_by_set}, as a result of neuromuscular adaptations between measurement sets.}
     \label{fig:spm_example_result_by_subj_across_sets}
 \end{figure}
 
 \subsection{Potentiation across subjects for a given set}
 Finally, we show the results of comparing pre- and post-ISQ TMG signals across all subjects, using one pre-ISQ and one post-ISQ TMG signal per subject per set, for a total of 54 (pre-ISQ, post-ISQ) signal pairs.
 A comparison of TMG parameter values across all subjects for sets 1-4 appears in Table~\ref{tab:tmg_params_across_subj_by_set}, and each set exhibits the potentiation-like trend of larger contraction amplitude and faster contraction times, even when parameter values are averaged across all subjects.
-
 A complementary SPM comparison of (pre-ISQ, post-ISQ) TMG signals across all subjects appears in Figure~\ref{fig:spm_example_across_subj_by_set}.
 As might be expected for a comparison across all subjects, the variance in the TMG signals is quite large.
-Nonetheless, in each set the SPM paired $ t $-test comfortably detects a potentiation-like across subjects.
+Nonetheless, in each set the SPM paired $ t $-test strongly indicates a potentiation-like trend across subjects.
 
 \begin{table}
     \centering
@@ -476,11 +481,15 @@ Nonetheless, in each set the SPM paired $ t $-test comfortably detects a potenti
 \begin{figure}
 	\centering
     \includegraphics[width=\textwidth]{spm-plot-by-set-across-subj.jpg}
-    \caption{Results of an SPM comparison of (pre-ISQ, post-ISQ) TMG signals across all subjects.}
+    \caption{Results of an SPM comparison of (pre-ISQ, post-ISQ) TMG signals across all subjects for measurement sets 1-4, using one (pre-ISQ, post-ISQ) signal pair from each of the 54 subjects in each set.
+    Mean TMG signals and their standard deviation clouds appear on the left, and the associated SPM $ t $-continuum and threshold value $ t^{*} $ on the right---see Figure~\ref{fig:spm_example_result_by_subj_by_set} for details.
+    Despite the large TMG signal variance, as might be expected for a cross-subject comparison, the SPM tests reliably detect a potentiation-like trend across all subjects, as indicated by the large supra-threshold regions and small $ p $ values.}
+
     \label{fig:spm_example_across_subj_by_set}
 \end{figure}
 
 \section{Discussion}
+To-do.
 
 % https://www.frontiersin.org/about/policies-and-publication-ethics
 \section*{Conflict of Interest Statement}
