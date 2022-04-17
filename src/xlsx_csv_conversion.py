@@ -131,7 +131,7 @@ def split_by_pre_post_and_set(input_dir, xlsx_filename,
 
     # Create an additional directory layer for each Excel file
     pre_output_dir = frontiers_utils.make_output_dir(pre_output_dir + xlsx_filename.replace(".xlsx", "")) + "/"
-    post_output_dir = frontiers_utils.make_output_dir(post_output_dir + xlsx_filename.replace(".xlsx", ""))/
+    post_output_dir = frontiers_utils.make_output_dir(post_output_dir + xlsx_filename.replace(".xlsx", "")) + "/"
 
     for s in range(1, sets + 1):
         if s > max_set:
