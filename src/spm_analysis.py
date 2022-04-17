@@ -362,6 +362,6 @@ def _get_params_of_spm_cluster(cluster, alpha, threshold,
             A_above_x]
 
 if __name__ == "__main__":
-    # perform_spm_tests_by_set_across_subj()
+    perform_spm_tests_by_set_across_subj()
     spm_tests_by_subj_across_sets_1mps()
-    # spm_tests_by_subj_by_set_8mps()
+    spm_tests_by_subj_by_set_8mps()

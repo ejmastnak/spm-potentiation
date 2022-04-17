@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import constants, frontiers_utils
 
-import tmg_biomechanics.tmg_params_pypi as tmg_params_pypi
+import tmg_biomechanics.tmg_params as tmg_params_pypi
 import tmg_biomechanics.constants as tmg_constants
 
 """ 
