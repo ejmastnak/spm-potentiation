@@ -30,7 +30,6 @@ def convert_verbatim(xlsx_file, output_dir):
 
 
 """
-PARAMTER DOCUMENTATION FOR CONVERSION FUNCTIONS
 --------------------------------------------------------------------------
 The same parameters are used in multiple functions below, 
 and are documented in one place here to avoid repetition.

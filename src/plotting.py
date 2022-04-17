@@ -220,7 +220,7 @@ def get_annotation_text(ti, ti_params_df=None):
         
 
 def remove_spines(ax):
-    """ Simple auxiliary function to remove upper and right spines from the passed axis"""
+    """ Simple auxiliary function to remove upper and right spines from the passed axis """
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
     ax.get_xaxis().tick_bottom()

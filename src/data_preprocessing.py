@@ -8,21 +8,14 @@ import xlsx_csv_conversion
 """
 This script is used to process the raw TMG-formatted Excel measurements,
 which contain a variable number of measurement sets and measurements per
-measurement set, into a uniform, text-based format more conducive to 
+measurement set, into a uniform, text-based CSV format more conducive to 
 further data processing.
 
 This script reads input from the directory `/data/excel-raw/`
-and outputs processed data files into the directory `/data/csv-processed`
-
-After the processing performed by this script, the project's dataset
-has the following structure 
-- 55 subjects
-- 4 sets per subject
-- 1 pre-conditioning and 1 post-conditioning measurement per set
-- 1000 data points per measurement (1 second of data a 1 kHz sampling)
+and outputs processed data files into various other subdirectories of `data`
 
 For a longer description of the processed dataset, see the file
-`/doc/processed-data.md` in this project's documentation directory.
+`/doc/overview.md` in this project's documentation directory.
 
 """
 
