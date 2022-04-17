@@ -126,6 +126,8 @@ def prepare_1mps_csv_files_for_spm():
     pre_filenames = []
     post_filenames = []
 
+    include_normalized = True
+
     # Build up file names (name only; without path) of CSV files to process
     for filename in frontiers_utils.natural_sort(os.listdir(pre_input_dir)):
         pre_filenames.append(filename)
@@ -140,7 +142,8 @@ def prepare_1mps_csv_files_for_spm():
     _prepare_csv_files_for_spm(pre_input_dir, post_input_dir,
         pre_filenames, post_filenames,
         pre_output_dir, post_output_dir,
-        pre_normed_output_dir, post_normed_output_dir)
+        pre_normed_output_dir, post_normed_output_dir,
+        normalize=include_normalized)
 
 
 def prepare_8mps_csv_files_for_spm():
@@ -154,6 +157,7 @@ def prepare_8mps_csv_files_for_spm():
     """
     pre_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "pre-exercise/"
     post_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "post-exercise/"
+    include_normalized = True
 
     # Loop through each athlete directory
     for athlete_subdir in frontiers_utils.natural_sort(os.listdir(pre_input_dir)):
@@ -182,13 +186,15 @@ def prepare_8mps_csv_files_for_spm():
                 post_input_dir + athlete_subdir + "/",
                 pre_filenames, post_filenames,
                 pre_output_dir, post_output_dir,
-                pre_normed_output_dir, post_normed_output_dir)
+                pre_normed_output_dir, post_normed_output_dir,
+                normalize=include_normalized)
 
 
 def _prepare_csv_files_for_spm(pre_input_dir, post_input_dir,
         pre_filenames, post_filenames,
         pre_output_dir, post_output_dir,
-        pre_normed_output_dir, post_normed_output_dir):
+        pre_normed_output_dir, post_normed_output_dir,
+        normalize=False):
     """
     Performs the following processing steps on all pre-ISQ/post-ISQ TMG measurement pairs in the inputted `pre_input_dir`/`post_input_dir`
         1. Trim to first 100 ms
@@ -215,6 +221,9 @@ def _prepare_csv_files_for_spm(pre_input_dir, post_input_dir,
         # Drop first row and save files to CSV
         pre_df.iloc[skiprows:].to_csv(pre_output_dir + pre_filenames[i], index=False)
         post_df.iloc[skiprows:].to_csv(post_output_dir + post_filenames[i], index=False)
+
+        if not normalize:
+            continue
 
         # Normalize files and save again
         # --------------------------------------------- #
