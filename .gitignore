@@ -1,11 +1,11 @@
 # Project files
 # --------------------------------------------- #
 meta/
+collab/
 data/
 results/
 template/
-collab/
-src/misc/
+
 src/__pycache__/
 src/test.py
 
@@ -25,7 +25,3 @@ manuscript/tables/
 *.pdf
 *.synctex.gz
 *.toc
-
-# Binary image files generated from code
-*.jpg
-*.png
