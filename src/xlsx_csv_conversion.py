@@ -129,8 +129,10 @@ def split_by_pre_post_and_set(input_dir, xlsx_filename,
     msmnts_per_full_set = msmnts_per_pre_set + msmnts_per_post_set
 
     # Create an additional directory layer for each Excel file
-    pre_output_dir = frontiers_utils.make_output_dir(pre_output_dir + xlsx_filename.replace(".xlsx", "")) + "/"
-    post_output_dir = frontiers_utils.make_output_dir(post_output_dir + xlsx_filename.replace(".xlsx", "")) + "/"
+    pre_output_dir = frontiers_utils.make_output_dir(pre_output_dir + xlsx_filename.replace(".xlsx", ""),
+            use_existing=True) + "/"
+    post_output_dir = frontiers_utils.make_output_dir(post_output_dir + xlsx_filename.replace(".xlsx", ""), 
+            use_existing=True) + "/"
 
     for s in range(1, sets + 1):
         if s > max_set:
