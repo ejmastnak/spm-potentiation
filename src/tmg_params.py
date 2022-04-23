@@ -81,6 +81,8 @@ def _compute_tmg_params_for_files_in_dir(input_dir, output_dir, max_sets=8):
     """
     for filename in frontiers_utils.natural_sort(os.listdir(input_dir)):
 
+        print("Current file: {}".format(filename))
+
         # Measurement CSV files are first read into Pandas DataFrames
         # instead of directly into Numpy arrays for easier access to 
         # the header row than Numpy's `loadtxt` would allow.

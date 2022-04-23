@@ -50,7 +50,7 @@ def process_raw_excel_files():
 
     for xlsx_filename in frontiers_utils.natural_sort(os.listdir(input_dir)):
         if ".xlsx" in xlsx_filename and "$" not in xlsx_filename:
-            print(xlsx_filename)
+            print("Current file: {}".format(xlsx_filename))
             xlsx_csv_conversion.split_by_pre_post_and_set_using_first_msmt(
                     input_dir, xlsx_filename,
                     pre_output_dir, post_output_dir,
@@ -71,7 +71,7 @@ def process_raw_excel_files():
 
     for xlsx_filename in frontiers_utils.natural_sort(os.listdir(input_dir)):
         if ".xlsx" in xlsx_filename and "$" not in xlsx_filename:
-            print(xlsx_filename)
+            print("Current file: {}".format(xlsx_filename))
             xlsx_csv_conversion.split_by_pre_post_and_set_using_first_msmt(
                     input_dir, xlsx_filename,
                     pre_output_dir, post_output_dir,
@@ -91,7 +91,7 @@ def process_raw_excel_files():
 
     for xlsx_filename in frontiers_utils.natural_sort(os.listdir(input_dir)):
         if ".xlsx" in xlsx_filename and "$" not in xlsx_filename:
-            print(xlsx_filename)
+            print("Current file: {}".format(xlsx_filename))
             xlsx_csv_conversion.split_by_pre_post_and_set(
                     input_dir, xlsx_filename,
                     pre_output_dir, post_output_dir,

@@ -77,6 +77,7 @@ def perform_spm_tests_by_set_across_subj():
         pre_data = pre_tensor[:, s, :]
         post_data = post_tensor[:, s, :]
 
+        print("Analyzing across subjects for set {}".format(s + 1))
         _perform_spm_analysis(pre_data, post_data,
                 param_output_file, plot_output_file,
                 data_y_axis_label="Displacement",
@@ -132,6 +133,7 @@ def spm_tests_by_subj_across_sets_1mps():
         post_data = np.loadtxt(post_input_dir + post_filenames[i],
                 delimiter=',', skiprows=1)  # skip header row
 
+        print("Analyzing across sets for {}".format(pre_filenames[i]).replace("-pre.csv", ""))
         _perform_spm_analysis(pre_data, post_data,
                 param_output_file, plot_output_file, 
                 data_y_axis_label="Displacement",
@@ -198,6 +200,7 @@ def spm_tests_by_subj_by_set_8mps():
             post_data = np.loadtxt(post_filename,
                     delimiter=',', skiprows=1)  # skip header row
 
+            print("Analyzing set {} for {}".format(s + 1, pre_subject_subdirs[subj]))
             _perform_spm_analysis(pre_data, post_data,
                     param_output_file, plot_output_file,
                     data_y_axis_label="Displacement",

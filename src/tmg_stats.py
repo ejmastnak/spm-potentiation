@@ -74,7 +74,6 @@ def tmg_stats_by_set_across_subj_1mps(first_set_as_baseline=False):
 
     # Compute statistics across all subjects for each set
     for s in range(max_sets):
-
         post_params = post_param_tensor[:, :, s].T
         if first_set_as_baseline:
             pre_params = pre_param_tensor[:, :, 0].T
@@ -82,6 +81,7 @@ def tmg_stats_by_set_across_subj_1mps(first_set_as_baseline=False):
         else:
             pre_params = pre_param_tensor[:, :, s].T
             output_file = output_dir + "set-{}-tmg-stats.csv".format(s + 1)
+        print("Analyzing across subjects for set {}".format(s + 1))
         _compute_stats_for_tmg_params(pre_params, post_params, output_file)
 
 
@@ -139,6 +139,7 @@ def tmg_stats_by_subj_by_set_8mps():
             pre_params = np.loadtxt(pre_input_dir + pre_filename, skiprows=1, delimiter=',', usecols=usecols)
             post_params = np.loadtxt(post_input_dir + post_filename, skiprows=1, delimiter=',', usecols=usecols)
 
+            print("Analyzing set {} for {}".format(s + 1, pre_subject_subdirs[subj]))
             _compute_stats_for_tmg_params(pre_params, post_params, output_file)
 
 
@@ -177,6 +178,8 @@ def tmg_stats_by_subj_across_sets_1mps():
         pre_params = np.loadtxt(pre_input_dir + pre_filenames[subj], skiprows=1, delimiter=',', usecols=usecols)
         post_params = np.loadtxt(post_input_dir + post_filenames[subj], skiprows=1, delimiter=',', usecols=usecols)
         output_file = output_dir + pre_filenames[subj].replace("pre-tmg-params.csv", "tmg-stats.csv")
+
+        print("Analyzing across sets for {}".format(pre_filenames[subj]).replace("-pre-tmg-params.csv", ""))
         _compute_stats_for_tmg_params(pre_params, post_params, output_file)
 
 
