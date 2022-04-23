@@ -251,7 +251,7 @@ def _get_spm_t_ti_paired_ttest(pre_data, post_data, alpha=0.01):
     """
     try:
         t  = spm1d.stats.ttest_paired(post_data.T, pre_data.T)
-        ti = t.inference(alpha=alpha, two_tailed=False, interp=True)
+        ti = t.inference(alpha=alpha, two_tailed=True, interp=True)
         return t, ti
     except Exception as e:
         print("Error performing SPM analysis: " + str(e))
