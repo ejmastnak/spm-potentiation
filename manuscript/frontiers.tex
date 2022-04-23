@@ -94,13 +94,11 @@ Doing so requires a reliable means of detecting and quantifying potentiation, an
 
 \subsection{On PAP, PAPE, and twitch potentiation}
 We pause briefly to comment on some ambiguity in the literature surrounding post-conditioning enhancements in muscular performance,
-generally involving confusion between the following two phenomena.
-% \cite{prieske}
+generally involving confusion between the following two phenomena \citep{prieske}.
 \begin{itemize}
 
     \item \textit{Post-activation potentiation} (PAP) is a short-term enhancement in a muscle's contractile properties during an electrically-induced muscle twitch, which generally manifests as enhanced twitch force and amplitude, and decreased time to peak contraction.
-    PAP has a short half-life ($ \sim \SI{30}{\second} $),
-    % \cite{vandervoort}
+    PAP has a short half-life ($ \sim \SI{30}{\second} $; \cite{vandervoort}),
     is verified at the specific level of an individual muscle using a non-voluntary, electrically-induced muscle twitch, and generally requires nontrivial equipment and a standardized test environment to measure.
 % study in a controlled, systematic manner.
 
@@ -341,14 +339,6 @@ From the perspective of classical hypothesis testing, we reject the null hypothe
 The final inference step also produces a probability value $ p $ associated with each supra-threshold region of the SPM $ t $-continuum.
 This $ p $ value represents the probability that smooth, Gaussian random continua would produce a supra-threshold region as wide or wider (relative to the width of the entire SPM $ t $-continuum) than the supra-threshold region observed in the SPM $ t $-continuum computed from the measured TMG signals (\cite{pataky-spm1d}).
 
-% \begin{figure}
-% 	\centering
-%     \includegraphics[width=\textwidth]{spm-example.jpg}
-%     \caption{A representative set of pre- and post-conditioning TMG signals (left) and the resulting SPM $ t $-continuum and threshold value $ t^{*} $.
-%     Note the larger amplitude and shorter time to peak contraction in the post-ISQ signal.}
-%     \label{fig:spm_example}
-% \end{figure}
-
 We performed SPM testing with the same three test configurations described in Section~\ref{sss:discrete_twitch_param_stats} for classical hypothesis testing of discrete twitch contraction parameters.
 These configurations are as follows.
 \begin{enumerate}
@@ -491,7 +481,49 @@ Nonetheless, in each set the SPM paired $ t $-test strongly indicates a potentia
 \end{figure}
 
 \section{Discussion}
-To-do.
+The present study aimed to assess the potential of SPM for detecting and quantifying twitch potentiation following a conditioning exercise.
+We used SPM to compare TMG measurements of the rectus femoris muscle's contractile response before and after an incline squat, and found that SPM consistently distinguished between pre- and post-ISQ muscle responses (Figures~\ref{fig:spm_example_result_by_subj_by_set}, \ref{fig:spm_example_result_by_subj_across_sets}, \ref{fig:spm_example_across_subj_by_set}).
+
+In parallel, we wished to test SPM's compatibility with the traditional approach of comparing pre- and post-conditioning values of scalar twitch contraction parameters computed retrospectively from the muscle's contractile response \citep{cochrane, kuu, wallace, rodriguez-falces}.
+We paired every SPM analysis with a corresponding comparison of the scalar TMG parameters \Dm, \Td, \Tc, \RDDMax, and \RDDMaxTime (Section~\ref{sss:discrete_twitch_params}).
+The results were promising.
+Potentiation-like differences in scalar parameters (Tables~\ref{tab:tmg_params_by_subj_by_set}, \ref{tab:tmg_params_by_subj_across_sets}, \ref{tab:tmg_params_across_subj_by_set}) went hand in hand with SPM test results indicative of potentiation (Figures~\ref{fig:spm_example_result_by_subj_by_set}, \ref{fig:spm_example_result_by_subj_across_sets}, \ref{fig:spm_example_across_subj_by_set}), suggesting that SPM is compatible with traditional 0D comparison of scalar contraction parameters, as discussed in \cite{pataky-roi}.
+
+SPM-based detection of potentiation builds on comparison of 0D contraction parameters by offering more interpretable and perhaps more biomechanically meaningful results.
+Namely:
+\begin{itemize}
+
+    \item The result of SPM analysis---a test statistic continuum and associated significance threshold value---are directly interpretable in the time domain.
+    As a consequence, the result of SPM analysis has a far more intuitive visual representation than a tabular comparison of 0D parameter values---compare any of Figures~\ref{fig:spm_example_result_by_subj_by_set}, \ref{fig:spm_example_result_by_subj_across_sets} and \ref{fig:spm_example_across_subj_by_set} to the corresponding Tables~\ref{tab:tmg_params_by_subj_by_set}, \ref{tab:tmg_params_by_subj_across_sets} and \ref{tab:tmg_params_across_subj_by_set}.
+    Because the test statistic continuum is a time series just like the originally-measured muscle response, SPM also offers insight as to when a potentiation-like state occurred over the course of a muscle twitch.
+
+    \item Computing 0D twitch contraction parameters reduces the originally-measured muscle response---generally a one-dimensional time series---to a single scalar value. 
+    SPM, meanwhile, analyzes biomechanical measurements in their original time series form, which should mitigate information loss caused by preprocessing and dimensionality reduction.
+
+\end{itemize}
+
+\subsection{Practical use}
+The SPM1D package \citep{pataky-spm1d} makes practical use of SPM relatively straightforward---the practitioner need only measure pre- and post-conditioning muscle responses and plug these measurements into test-statistic and inference functions provided by the SPM1D API, which performs all necessary computations without further work required from the user.
+
+A practical experiment using SPM to detect PAP would proceed roughly as follows.
+The practitioner, after finding a volunteer and deciding on a target muscle and conditioning exercise, first takes a set---say 5 to 10---of baseline time-series measurements of the muscle's contractile response in a pre-conditioning state.
+The volunteer then performs a conditioning, followed immediately by a set of post-conditioning muscle response measurements.
+Letting $ \mu_{\mathrm{pre}}(t) $ and $ \mu_{\mathrm{post}}(t) $ denote the mean pre- and post-conditioning muscle response at time $ t $, respectively, as in Equation~\ref{eq:spm_null_hypothesis},
+the practitioner first assumes the null hypothesis that
+\begin{equation*}
+    \mu_{\mathrm{pre}} (t) - \mu_{\mathrm{post}} (t) = 0 \text{ for all } t,
+\end{equation*}
+interpreted loosely as differences in pre- and post-conditioning muscle responses arising from chance alone.
+The pre- and post-conditioning muscle responses are then compared with an SPM test provided by the SPM1D software, yielding an SPM test statistic continuum and associated significance threshold value $ t^{*} $, as described in Section~\ref{sss:spm_analysis} and shown in Figures~\ref{fig:spm_example_result_by_subj_by_set}, \ref{fig:spm_example_result_by_subj_across_sets} and \ref{fig:spm_example_across_subj_by_set}.
+Should the test statistic continuum exceed $ t^{*} $, the practitioner may reject the null hypothesis and interpret a larger-amplitude post-conditioning response as arising from PAP.
+
+SPM, like any statistical method, must act on a set of multiple muscle contraction measurements to give meaningful results.
+This imposes an experimental limitation: the set of post-conditioning measurements must be taken in rapid succession and completed in a time frame that is small in comparison with PAP's relative short ($ \sim \SI{30}{\second} $; \cite{vandervoort}) half-life.
+Doing so requires a fast, repeatable measurement technique, which may involve relatively sophisticated equipment beyond the scope of in-the-field tests.
+
+\subsection{Conclusion}
+In this study, SPM consistently distinguished between pre- and post-conditioning TMG muscle responses across a variety of subjects and test configurations.
+SPM appears to be a useful new tool for detecting and quantifying twitch potentiation that my be used in tandem with---or as a more intuitive and biomechanically relevant alternative to---traditional post-hoc analysis of 0D twitch contraction parameters.
 
 % https://www.frontiersin.org/about/policies-and-publication-ethics
 \section*{Conflict of Interest Statement}
@@ -506,7 +538,7 @@ Details of all funding sources should be provided, including grant numbers if ap
 Please ensure to add all necessary funding information, as after publication this is no longer possible.
 
 \section*{Acknowledgments}
-The authors thank ABC for help with XYZ.
+The authors thank all the volunteers for their time and patience.
 
 \section*{Supplemental Data}
  \href{http://home.frontiersin.org/about/author-guidelines#SupplementaryMaterial}{Supplementary Material} should be uploaded separately on submission, if there are Supplementary Figures, please include the caption in the same file as the figure. LaTeX Supplementary Material templates can be found in the Frontiers LaTeX folder.
