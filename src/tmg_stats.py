@@ -42,13 +42,13 @@ def tmg_stats_by_set_across_subj_1mps(first_set_as_baseline=False):
         to the pre-conditioning measurement in the FIRST set.
 
     """
-    pre_input_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "pre-conditioning/"
-    post_input_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "post-conditioning/"
+    pre_input_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "/pre-conditioning"
+    post_input_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "/post-conditioning"
 
     if first_set_as_baseline:
-        output_dir = constants.TMG_STATS_BY_SET_ACROSS_SUBJ_RELTO_BASELINE_DIR
+        output_dir = frontiers_utils.make_output_dir(constants.TMG_STATS_BY_SET_ACROSS_SUBJ_RELTO_BASELINE_DIR)
     else:
-        output_dir = constants.TMG_STATS_BY_SET_ACROSS_SUBJ_DIR
+        output_dir = frontiers_utils.make_output_dir(constants.TMG_STATS_BY_SET_ACROSS_SUBJ_DIR)
 
     param_names = constants.TMG_PARAM_NAMES
     stats_names = constants.TMG_STAT_NAMES
@@ -68,12 +68,12 @@ def tmg_stats_by_set_across_subj_1mps(first_set_as_baseline=False):
 
     # Read pre-conditioning params into 3D Numpy array
     for subj, filename in enumerate(frontiers_utils.natural_sort(os.listdir(pre_input_dir))):
-        params = np.loadtxt(pre_input_dir + filename, skiprows=1, delimiter=',', usecols=usecols)
+        params = np.loadtxt(pre_input_dir + "/" + filename, skiprows=1, delimiter=',', usecols=usecols)
         pre_param_tensor[subj, :, :] = params
 
     # Read post-conditioning params into 3D Numpy array
     for subj, filename in enumerate(frontiers_utils.natural_sort(os.listdir(post_input_dir))):
-        params = np.loadtxt(post_input_dir + filename, skiprows=1, delimiter=',', usecols=usecols)
+        params = np.loadtxt(post_input_dir + "/" + filename, skiprows=1, delimiter=',', usecols=usecols)
         post_param_tensor[subj, :, :] = params
 
     # Compute statistics across all subjects for each set
@@ -81,10 +81,10 @@ def tmg_stats_by_set_across_subj_1mps(first_set_as_baseline=False):
         post_params = post_param_tensor[:, :, s].T
         if first_set_as_baseline:
             pre_params = pre_param_tensor[:, :, 0].T
-            output_file = output_dir + "set-B1-P{}-tmg-stats.csv".format(s + 1)
+            output_file = output_dir + "/set-B1-P{}-tmg-stats.csv".format(s + 1)
         else:
             pre_params = pre_param_tensor[:, :, s].T
-            output_file = output_dir + "set-{}-tmg-stats.csv".format(s + 1)
+            output_file = output_dir + "/set-{}-tmg-stats.csv".format(s + 1)
         print("Analyzing across subjects for set {}".format(s + 1))
         _compute_stats_for_tmg_params(pre_params, post_params, output_file)
 
@@ -109,9 +109,9 @@ def tmg_stats_by_subj_by_set_8mps():
     analysis.
 
     """
-    pre_base_input_dir = constants.TMG_PARAMS_BY_SUBJ_8MPS_DIR + "pre-conditioning/"
-    post_base_input_dir = constants.TMG_PARAMS_BY_SUBJ_8MPS_DIR + "post-conditioning/"
-    output_base_dir = constants.TMG_STATS_BY_SUBJ_BY_SET_8MPS_DIR
+    pre_base_input_dir = constants.TMG_PARAMS_BY_SUBJ_8MPS_DIR + "/pre-conditioning"
+    post_base_input_dir = constants.TMG_PARAMS_BY_SUBJ_8MPS_DIR + "/post-conditioning"
+    output_base_dir = frontiers_utils.make_output_dir(constants.TMG_STATS_BY_SUBJ_BY_SET_8MPS_DIR)
 
     param_names = constants.TMG_PARAM_NAMES
     stats_names = constants.TMG_STAT_NAMES
@@ -126,9 +126,9 @@ def tmg_stats_by_subj_by_set_8mps():
 
     # Loop through all subjects
     for subj in range(len(pre_subject_subdirs)):
-        pre_input_dir = pre_base_input_dir + pre_subject_subdirs[subj] + "/"
-        post_input_dir = post_base_input_dir + post_subject_subdirs[subj] + "/"
-        output_dir = frontiers_utils.make_output_dir(output_base_dir + pre_subject_subdirs[subj])
+        pre_input_dir = pre_base_input_dir + "/" + pre_subject_subdirs[subj]
+        post_input_dir = post_base_input_dir + "/" + post_subject_subdirs[subj]
+        output_dir = frontiers_utils.make_output_dir(output_base_dir + "/" + pre_subject_subdirs[subj])
 
         pre_filenames = frontiers_utils.natural_sort(os.listdir(pre_input_dir))
         post_filenames = frontiers_utils.natural_sort(os.listdir(post_input_dir))
@@ -137,10 +137,10 @@ def tmg_stats_by_subj_by_set_8mps():
         for s in range(max_sets):
             pre_filename = pre_filenames[s]
             post_filename = post_filenames[s]
-            output_file = output_dir + "set-{}-tmg-stats.csv".format(s + 1)
+            output_file = output_dir + "/set-{}-tmg-stats.csv".format(s + 1)
 
-            pre_params = np.loadtxt(pre_input_dir + pre_filename, skiprows=1, delimiter=',', usecols=usecols)
-            post_params = np.loadtxt(post_input_dir + post_filename, skiprows=1, delimiter=',', usecols=usecols)
+            pre_params = np.loadtxt(pre_input_dir + "/" + pre_filename, skiprows=1, delimiter=',', usecols=usecols)
+            post_params = np.loadtxt(post_input_dir + "/" + post_filename, skiprows=1, delimiter=',', usecols=usecols)
 
             print("Analyzing set {} for {}".format(s + 1, pre_subject_subdirs[subj]))
             _compute_stats_for_tmg_params(pre_params, post_params, output_file)
@@ -164,9 +164,9 @@ def tmg_stats_by_subj_across_sets_1mps():
     summarizing the results of the above-described statisical analysis.
 
     """
-    pre_input_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "pre-conditioning/"
-    post_input_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "post-conditioning/"
-    output_dir = constants.TMG_STATS_BY_SUBJ_ACROSS_SETS_1MPS_DIR
+    pre_input_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "/pre-conditioning"
+    post_input_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "/post-conditioning"
+    output_dir = frontiers_utils.make_output_dir(constants.TMG_STATS_BY_SUBJ_ACROSS_SETS_1MPS_DIR)
 
     max_sets = 8
 
@@ -178,9 +178,9 @@ def tmg_stats_by_subj_across_sets_1mps():
     post_filenames = frontiers_utils.natural_sort(os.listdir(post_input_dir))
 
     for subj in range(len(pre_filenames)):
-        pre_params = np.loadtxt(pre_input_dir + pre_filenames[subj], skiprows=1, delimiter=',', usecols=usecols)
-        post_params = np.loadtxt(post_input_dir + post_filenames[subj], skiprows=1, delimiter=',', usecols=usecols)
-        output_file = output_dir + pre_filenames[subj].replace("pre-tmg-params.csv", "tmg-stats.csv")
+        pre_params = np.loadtxt(pre_input_dir + "/" + pre_filenames[subj], skiprows=1, delimiter=',', usecols=usecols)
+        post_params = np.loadtxt(post_input_dir + "/" + post_filenames[subj], skiprows=1, delimiter=',', usecols=usecols)
+        output_file = output_dir + "/" + pre_filenames[subj].replace("pre-tmg-params.csv", "tmg-stats.csv")
 
         print("Analyzing across sets for {}".format(pre_filenames[subj]).replace("-pre-tmg-params.csv", ""))
         _compute_stats_for_tmg_params(pre_params, post_params, output_file)

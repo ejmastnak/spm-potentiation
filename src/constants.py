@@ -1,95 +1,95 @@
 import numpy as np
 
 # Root project directory
-ROOT_PROJECT_DIR = "../"
-MANUSCRIPT_DIR = ROOT_PROJECT_DIR + "manuscript/"
+ROOT_PROJECT_DIR = ".."
+MANUSCRIPT_DIR = ROOT_PROJECT_DIR + "/manuscript"
 
 # Data
 # --------------------------------------------- #
 # Root directory with measurement data
-ROOT_DATA_DIR = ROOT_PROJECT_DIR + "data/"
+ROOT_DATA_DIR = ROOT_PROJECT_DIR + "/data"
 
 # Root directory for computed output data
-ROOT_OUTPUT_DIR = ROOT_PROJECT_DIR + "results/"
+ROOT_OUTPUT_DIR = ROOT_PROJECT_DIR + "/results"
 
 # Raw data
 # --------------------------------------------- #
 # Directory with raw Excel files with 1 measurement per measurement set
-RAW_EXCEL_1MPS_DATA_DIR = ROOT_DATA_DIR + "excel-raw/1mps/"
+RAW_EXCEL_1MPS_DATA_DIR = ROOT_DATA_DIR + "/excel-raw/1mps"
 
 # Directory with raw Excel files with 8 measurements per measurement set
-RAW_EXCEL_8MPS_DATA_DIR = ROOT_DATA_DIR + "excel-raw/8mps/"
+RAW_EXCEL_8MPS_DATA_DIR = ROOT_DATA_DIR + "/excel-raw/8mps"
 
 # Directory with raw CSV files with 1 measurement per measurement set
-RAW_CSV_1MPS_DATA_DIR = ROOT_DATA_DIR + "csv-raw-1mps/"
+RAW_CSV_1MPS_DATA_DIR = ROOT_DATA_DIR + "/csv-raw-1mps"
 
 # Directory with raw CSV files with 8 measurements per measurement set
-RAW_CSV_8MPS_DATA_DIR = ROOT_DATA_DIR + "csv-raw-8mps/"
+RAW_CSV_8MPS_DATA_DIR = ROOT_DATA_DIR + "/csv-raw-8mps"
 # --------------------------------------------- #
 
 # Data for SPM
 # --------------------------------------------- #
 # Further processed version of RAW_CSV_1MPS_DATA_DIR for use with SPM
-SPM_1MPS_DATA_DIR = ROOT_DATA_DIR + "csv-for-spm-1mps/"
+SPM_1MPS_DATA_DIR = ROOT_DATA_DIR + "/csv-for-spm-1mps"
 
 # Further processed version of RAW_CSV_8MPS_DATA_DIR for use with SPM
-SPM_8MPS_DATA_DIR = ROOT_DATA_DIR + "csv-for-spm-8mps/"
+SPM_8MPS_DATA_DIR = ROOT_DATA_DIR + "/csv-for-spm-8mps"
 
 # Normalized version of SPM_1MPS_DATA_DIR for cross-subject comparison
-NORMED_SPM_1MPS_DATA_DIR = ROOT_DATA_DIR + "csv-for-spm-1mps-normed/"
+NORMED_SPM_1MPS_DATA_DIR = ROOT_DATA_DIR + "/csv-for-spm-1mps-normed"
 
 # Normalized version of SPM_1MPS_DATA_DIR for cross-subject comparison
-NORMED_SPM_8MPS_DATA_DIR = ROOT_DATA_DIR + "csv-for-spm-8mps-normed/"
+NORMED_SPM_8MPS_DATA_DIR = ROOT_DATA_DIR + "/csv-for-spm-8mps-normed"
 # --------------------------------------------- #
 
 # TMG parameters
 # --------------------------------------------- #
 # Computed TMG parameters for each subject for 1MPS files
-TMG_PARAMS_BY_SUBJ_1MPS_DIR = ROOT_OUTPUT_DIR + "tmg-params-by-subj-1mps/"
+TMG_PARAMS_BY_SUBJ_1MPS_DIR = ROOT_OUTPUT_DIR + "/tmg-params-by-subj-1mps"
 
 # Computed TMG parameters for each subject for 8MPS files
-TMG_PARAMS_BY_SUBJ_8MPS_DIR = ROOT_OUTPUT_DIR + "tmg-params-by-subj-8mps/"
+TMG_PARAMS_BY_SUBJ_8MPS_DIR = ROOT_OUTPUT_DIR + "/tmg-params-by-subj-8mps"
 
 # Analysis of TMG parameters by set across all subjects
-TMG_STATS_BY_SET_ACROSS_SUBJ_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-set-across-subj/"
-TMG_STATS_BY_SET_ACROSS_SUBJ_RELTO_BASELINE_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-set-across-subj-relto-baseline/"
+TMG_STATS_BY_SET_ACROSS_SUBJ_DIR = ROOT_OUTPUT_DIR + "/tmg-stats-by-set-across-subj"
+TMG_STATS_BY_SET_ACROSS_SUBJ_RELTO_BASELINE_DIR = ROOT_OUTPUT_DIR + "/tmg-stats-by-set-across-subj-relto-baseline"
 
 # Analysis of TMG parameters by subject across sets for 1 MPS files
-TMG_STATS_BY_SUBJ_ACROSS_SETS_1MPS_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-subj-across-sets-1mps/"
+TMG_STATS_BY_SUBJ_ACROSS_SETS_1MPS_DIR = ROOT_OUTPUT_DIR + "/tmg-stats-by-subj-across-sets-1mps"
 
 # Analysis of TMG parameters by subject and by set for 8 MPS files
-TMG_STATS_BY_SUBJ_BY_SET_8MPS_DIR = ROOT_OUTPUT_DIR + "tmg-stats-by-subj-by-set-8mps/"
+TMG_STATS_BY_SUBJ_BY_SET_8MPS_DIR = ROOT_OUTPUT_DIR + "/tmg-stats-by-subj-by-set-8mps"
 # --------------------------------------------- #
 
 # SPM parameters
 # --------------------------------------------- #
 # SPM parameters by set across all subjects
-SPM_PARAMS_BY_SET_ACROSS_SUBJ_DIR = ROOT_OUTPUT_DIR + "spm-params-by-set-across-subj/"
+SPM_PARAMS_BY_SET_ACROSS_SUBJ_DIR = ROOT_OUTPUT_DIR + "/spm-params-by-set-across-subj"
 
 # SPM parameters by subject across sets for 1 MPS files
-SPM_PARAMS_BY_SUBJ_ACROSS_SETS_1MPS_DIR = ROOT_OUTPUT_DIR + "spm-params-by-subj-across-sets-1mps/"
+SPM_PARAMS_BY_SUBJ_ACROSS_SETS_1MPS_DIR = ROOT_OUTPUT_DIR + "/spm-params-by-subj-across-sets-1mps"
 
 # SPM parameters by subject and by set for 8 MPS files
-SPM_PARAMS_BY_SUBJ_BY_SET_8MPS_DIR = ROOT_OUTPUT_DIR + "spm-params-by-subj-by-set-8mps/"
+SPM_PARAMS_BY_SUBJ_BY_SET_8MPS_DIR = ROOT_OUTPUT_DIR + "/spm-params-by-subj-by-set-8mps"
 # --------------------------------------------- #
 
 # SPM Plots
 # --------------------------------------------- #
 # SPM plots by set across all subjects
-SPM_PLOTS_BY_SET_ACROSS_SUBJ_DIR = ROOT_OUTPUT_DIR + "spm-plots-by-set-across-subj/"
+SPM_PLOTS_BY_SET_ACROSS_SUBJ_DIR = ROOT_OUTPUT_DIR + "/spm-plots-by-set-across-subj"
 
 # SPM plots by subject across sets for 1 MPS files
-SPM_PLOTS_BY_SUBJ_ACROSS_SETS_1MPS_DIR = ROOT_OUTPUT_DIR + "spm-plots-by-subj-across-sets-1mps/"
+SPM_PLOTS_BY_SUBJ_ACROSS_SETS_1MPS_DIR = ROOT_OUTPUT_DIR + "/spm-plots-by-subj-across-sets-1mps"
 
 # SPM plots by subject and by set for 8 MPS files
-SPM_PLOTS_BY_SUBJ_BY_SET_8MPS_DIR = ROOT_OUTPUT_DIR + "spm-plots-by-subj-by-set-8mps/"
+SPM_PLOTS_BY_SUBJ_BY_SET_8MPS_DIR = ROOT_OUTPUT_DIR + "/spm-plots-by-subj-by-set-8mps"
 # --------------------------------------------- #
 
 # Figures appearing the LaTeX article
-MANUSCRIPT_FIG_DIR = MANUSCRIPT_DIR + "figures/"
+MANUSCRIPT_FIG_DIR = MANUSCRIPT_DIR + "/figures"
 
 # Tables appearing the LaTeX article
-MANUSCRIPT_TABLE_DIR = MANUSCRIPT_DIR + "tables/"
+MANUSCRIPT_TABLE_DIR = MANUSCRIPT_DIR + "/tables"
 
 # --------------------------------------------- #
 # The number of rows to skip from the beginning of a raw TMG signal

@@ -35,7 +35,7 @@ def xlsx_to_pandas_df(xlsx_file, num_rows=constants.TMG_MAX_ROWS):
             skiprows=constants.TMG_DATA_START_ROW).drop(columns=[0])
     
 
-def make_output_dir(dir_path, exist_ok=True, append_slash=True):
+def make_output_dir(dir_path, exist_ok=True):
     """
     Attempts to make a directory with the inputted base directory name.
     If `exist_ok=False` and a directory with the inputted base name already
@@ -52,8 +52,6 @@ def make_output_dir(dir_path, exist_ok=True, append_slash=True):
         use the existing directory.
         Behavior if False: If a directory with name `base_dir` already exists,
         try creating new directories `dir_path_01`,  `dir_path_02`, etc.
-    append_slash : bool
-        If True, appends a forward slash to the end of created directory name
     
     Returns
     -------
@@ -67,10 +65,7 @@ def make_output_dir(dir_path, exist_ok=True, append_slash=True):
     """
     try:  # try creating directory with base name only
         os.makedirs(dir_path, exist_ok=exist_ok)
-        if append_slash:
-            return dir_path + "/"
-        else:
-            return dir_path
+        return dir_path
     except FileExistsError as error:  # if a directoy with the base name exists
         success = False
         counter = 0
@@ -81,10 +76,7 @@ def make_output_dir(dir_path, exist_ok=True, append_slash=True):
                 return
             success = try_next_output_dir(dir_path + "_" + str(counter))
 
-        if append_slash:
-            return dir_path + "_" + str(counter) + "/"
-        else:
-            return dir_path + "_" + str(counter)
+        return dir_path + "_" + str(counter)
 
 
 def try_next_output_dir(base_dir_name):

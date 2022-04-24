@@ -31,12 +31,11 @@ def process_raw_excel_files():
       Example: `ID42-S1-M2`
 
     """
-
     # Convert files with 1 pre and post measurement per measurement set
     # --------------------------------------------- #
     input_dir = constants.RAW_EXCEL_1MPS_DATA_DIR
-    pre_output_dir  = constants.RAW_CSV_1MPS_DATA_DIR + "pre-conditioning/"
-    post_output_dir = constants.RAW_CSV_1MPS_DATA_DIR + "post-conditioning/"
+    pre_output_dir  = frontiers_utils.make_output_dir(constants.RAW_CSV_1MPS_DATA_DIR + "/pre-conditioning")
+    post_output_dir = frontiers_utils.make_output_dir(constants.RAW_CSV_1MPS_DATA_DIR + "/post-conditioning")
 
     # Number of pre/post exercise measurements per set
     msmnts_per_pre_set = 1   
@@ -58,8 +57,8 @@ def process_raw_excel_files():
     # taking only first measurement from each set
     # --------------------------------------------- #
     input_dir = constants.RAW_EXCEL_8MPS_DATA_DIR
-    pre_output_dir  = constants.RAW_CSV_1MPS_DATA_DIR + "pre-conditioning/"
-    post_output_dir = constants.RAW_CSV_1MPS_DATA_DIR + "post-conditioning/"
+    pre_output_dir  = frontiers_utils.make_output_dir(constants.RAW_CSV_1MPS_DATA_DIR + "/pre-conditioning")
+    post_output_dir = frontiers_utils.make_output_dir(constants.RAW_CSV_1MPS_DATA_DIR + "/post-conditioning")
     msmnts_per_pre_set = 8
     msmnt_per_post_set = 8
 
@@ -79,8 +78,8 @@ def process_raw_excel_files():
     # taking all measurements from each set
     # --------------------------------------------- #
     input_dir = constants.RAW_EXCEL_8MPS_DATA_DIR
-    pre_output_dir  = constants.RAW_CSV_8MPS_DATA_DIR + "pre-conditioning/"
-    post_output_dir = constants.RAW_CSV_8MPS_DATA_DIR + "post-conditioning/"
+    pre_output_dir  = frontiers_utils.make_output_dir(constants.RAW_CSV_8MPS_DATA_DIR + "/pre-conditioning")
+    post_output_dir = frontiers_utils.make_output_dir(constants.RAW_CSV_8MPS_DATA_DIR + "/post-conditioning")
 
     msmnts_per_pre_set = 8
     msmnts_per_post_set = 8
@@ -111,8 +110,8 @@ def prepare_1mps_csv_files_for_spm():
     processing steps performed on them
 
     """
-    pre_input_dir = constants.RAW_CSV_1MPS_DATA_DIR + "pre-conditioning/"
-    post_input_dir = constants.RAW_CSV_1MPS_DATA_DIR + "post-conditioning/"
+    pre_input_dir = constants.RAW_CSV_1MPS_DATA_DIR + "/pre-conditioning"
+    post_input_dir = constants.RAW_CSV_1MPS_DATA_DIR + "/post-conditioning"
     pre_filenames = []
     post_filenames = []
 
@@ -124,10 +123,10 @@ def prepare_1mps_csv_files_for_spm():
     for filename in frontiers_utils.natural_sort(os.listdir(post_input_dir)):
         post_filenames.append(filename)
 
-    pre_output_dir = constants.SPM_1MPS_DATA_DIR + "pre-conditioning/"
-    pre_normed_output_dir = constants.NORMED_SPM_1MPS_DATA_DIR + "pre-conditioning/"
-    post_output_dir = constants.SPM_1MPS_DATA_DIR + "post-conditioning/"
-    post_normed_output_dir = constants.NORMED_SPM_1MPS_DATA_DIR + "post-conditioning/"
+    pre_output_dir = frontiers_utils.make_output_dir(constants.SPM_1MPS_DATA_DIR + "/pre-conditioning")
+    pre_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_1MPS_DATA_DIR + "/pre-conditioning")
+    post_output_dir = frontiers_utils.make_output_dir(constants.SPM_1MPS_DATA_DIR + "/post-conditioning")
+    post_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_1MPS_DATA_DIR + "/post-conditioning")
 
     _prepare_csv_files_for_spm(pre_input_dir, post_input_dir,
         pre_filenames, post_filenames,
@@ -145,8 +144,8 @@ def prepare_8mps_csv_files_for_spm():
     `RAW_EXCEL_8MPS_DATA_DIR`.
 
     """
-    pre_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "pre-conditioning/"
-    post_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "post-conditioning/"
+    pre_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "/pre-conditioning"
+    post_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "/post-conditioning"
     include_normalized = True
 
     # Loop through each athlete directory
@@ -156,20 +155,20 @@ def prepare_8mps_csv_files_for_spm():
         post_filenames = []
 
         # Build up file names (name only; without path) of CSV files to process
-        for filename in frontiers_utils.natural_sort(os.listdir(pre_input_dir + athlete_subdir)):
+        for filename in frontiers_utils.natural_sort(os.listdir(pre_input_dir + "/" + athlete_subdir)):
             pre_filenames.append(filename)
-        for filename in frontiers_utils.natural_sort(os.listdir(post_input_dir + athlete_subdir)):
+        for filename in frontiers_utils.natural_sort(os.listdir(post_input_dir + "/" + athlete_subdir)):
             post_filenames.append(filename)
 
         # Create output directories
-        pre_output_dir = frontiers_utils.make_output_dir(constants.SPM_8MPS_DATA_DIR + "pre-conditioning")
-        pre_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_8MPS_DATA_DIR + "pre-conditioning" + athlete_subdir)
+        pre_output_dir = frontiers_utils.make_output_dir(constants.SPM_8MPS_DATA_DIR + "/pre-conditioning/" + athlete_subdir)
+        pre_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_8MPS_DATA_DIR + "/pre-conditioning/" + athlete_subdir)
 
-        post_output_dir = frontiers_utils.make_output_dir(constants.SPM_8MPS_DATA_DIR + "post-conditioning" + athlete_subdir)
-        post_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_8MPS_DATA_DIR + "post-conditioning" + athlete_subdir)
+        post_output_dir = frontiers_utils.make_output_dir(constants.SPM_8MPS_DATA_DIR + "/post-conditioning/" + athlete_subdir)
+        post_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_8MPS_DATA_DIR + "/post-conditioning/" + athlete_subdir)
 
-        _prepare_csv_files_for_spm(pre_input_dir + athlete_subdir + "/",
-                post_input_dir + athlete_subdir + "/",
+        _prepare_csv_files_for_spm(pre_input_dir + "/" + athlete_subdir,
+                post_input_dir + "/" + athlete_subdir,
                 pre_filenames, post_filenames,
                 pre_output_dir, post_output_dir,
                 pre_normed_output_dir, post_normed_output_dir,
@@ -195,9 +194,9 @@ def _prepare_csv_files_for_spm(pre_input_dir, post_input_dir,
     skiprows = constants.TMG_ROWS_TO_SKIP_FOR_SPM
 
     for i in range(len(pre_filenames)):
-        pre_df = pd.read_csv(pre_input_dir + pre_filenames[i],
+        pre_df = pd.read_csv(pre_input_dir + "/" + pre_filenames[i],
                 sep=',', header=0, nrows=max_rows_for_spm)
-        post_df = pd.read_csv(post_input_dir + post_filenames[i],
+        post_df = pd.read_csv(post_input_dir + "/" + post_filenames[i],
                 sep=',', header=0, nrows=max_rows_for_spm)
         pre_column_headers = pre_df.columns.values.tolist()
         post_column_headers = post_df.columns.values.tolist()
@@ -205,8 +204,8 @@ def _prepare_csv_files_for_spm(pre_input_dir, post_input_dir,
         pre_df, post_df = _remove_spm_significance_from_filter_artefact(pre_df, post_df)
 
         # Drop first row and save files to CSV
-        pre_df.iloc[skiprows:].to_csv(pre_output_dir + pre_filenames[i], index=False)
-        post_df.iloc[skiprows:].to_csv(post_output_dir + post_filenames[i], index=False)
+        pre_df.iloc[skiprows:].to_csv(pre_output_dir + "/" + pre_filenames[i], index=False)
+        post_df.iloc[skiprows:].to_csv(post_output_dir + "/" + post_filenames[i], index=False)
 
         if not normalize:
             continue
@@ -227,8 +226,8 @@ def _prepare_csv_files_for_spm(pre_input_dir, post_input_dir,
         post_df = post_df/pre_post_max
 
         # Drop first row and save files to CSV
-        pre_df.iloc[skiprows:].to_csv(pre_normed_output_dir + pre_filenames[i], header=pre_column_headers, index=False)
-        post_df.iloc[skiprows:].to_csv(post_normed_output_dir + post_filenames[i], header=post_column_headers, index=False)
+        pre_df.iloc[skiprows:].to_csv(pre_normed_output_dir + "/" + pre_filenames[i], header=pre_column_headers, index=False)
+        post_df.iloc[skiprows:].to_csv(post_normed_output_dir + "/" + post_filenames[i], header=post_column_headers, index=False)
 
 
 def _remove_spm_significance_from_filter_artefact(pre_df, post_df, 
