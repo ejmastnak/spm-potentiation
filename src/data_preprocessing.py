@@ -162,15 +162,11 @@ def prepare_8mps_csv_files_for_spm():
             post_filenames.append(filename)
 
         # Create output directories
-        pre_output_dir = frontiers_utils.make_output_dir(constants.SPM_8MPS_DATA_DIR + "pre-conditioning/" + athlete_subdir,
-                use_existing=True) + "/"
-        pre_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_8MPS_DATA_DIR + "pre-conditioning/" + athlete_subdir,
-                use_existing=True) + "/"
+        pre_output_dir = frontiers_utils.make_output_dir(constants.SPM_8MPS_DATA_DIR + "pre-conditioning")
+        pre_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_8MPS_DATA_DIR + "pre-conditioning" + athlete_subdir)
 
-        post_output_dir = frontiers_utils.make_output_dir(constants.SPM_8MPS_DATA_DIR + "post-conditioning/" + athlete_subdir,
-                use_existing=True) + "/"
-        post_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_8MPS_DATA_DIR + "post-conditioning/" + athlete_subdir,
-                use_existing=True) + "/"
+        post_output_dir = frontiers_utils.make_output_dir(constants.SPM_8MPS_DATA_DIR + "post-conditioning" + athlete_subdir)
+        post_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_8MPS_DATA_DIR + "post-conditioning" + athlete_subdir)
 
         _prepare_csv_files_for_spm(pre_input_dir + athlete_subdir + "/",
                 post_input_dir + athlete_subdir + "/",

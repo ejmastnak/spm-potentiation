@@ -185,10 +185,8 @@ def spm_tests_by_subj_by_set_8mps():
     for subj in range(len(pre_subject_subdirs)):
         pre_input_dir = pre_base_input_dir + pre_subject_subdirs[subj] + "/"
         post_input_dir = post_base_input_dir + post_subject_subdirs[subj] + "/"
-        param_output_dir = frontiers_utils.make_output_dir(param_base_output_dir + pre_subject_subdirs[subj],
-                use_existing=True) + "/"
-        plot_output_dir = frontiers_utils.make_output_dir(plot_base_output_dir + pre_subject_subdirs[subj],
-                use_existing=True) + "/"
+        param_output_dir = frontiers_utils.make_output_dir(param_base_output_dir + pre_subject_subdirs[subj])
+        plot_output_dir = frontiers_utils.make_output_dir(plot_base_output_dir + pre_subject_subdirs[subj])
 
         pre_filenames = frontiers_utils.natural_sort(os.listdir(pre_input_dir))
         post_filenames = frontiers_utils.natural_sort(os.listdir(post_input_dir))

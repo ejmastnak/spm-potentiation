@@ -65,15 +65,13 @@ def compute_tmg_params_for_8mps_files():
     # Loop through each pre-conditioning athlete directory
     for athlete_subdir in frontiers_utils.natural_sort(os.listdir(pre_base_input_dir)):
         pre_input_dir = pre_base_input_dir + athlete_subdir + "/"
-        pre_output_dir = frontiers_utils.make_output_dir(pre_base_output_dir + athlete_subdir,
-                use_existing=True) + "/"
+        pre_output_dir = frontiers_utils.make_output_dir(pre_base_output_dir + athlete_subdir)
         _compute_tmg_params_for_files_in_dir(pre_input_dir, pre_output_dir)
 
     # Loop through each post-conditioning athlete directory
     for athlete_subdir in frontiers_utils.natural_sort(os.listdir(post_base_input_dir)):
         post_input_dir = post_base_input_dir + athlete_subdir + "/"
-        post_output_dir = frontiers_utils.make_output_dir(post_base_output_dir + athlete_subdir,
-                use_existing=True) + "/"
+        post_output_dir = frontiers_utils.make_output_dir(post_base_output_dir + athlete_subdir)
         _compute_tmg_params_for_files_in_dir(post_input_dir, post_output_dir)
 
 
