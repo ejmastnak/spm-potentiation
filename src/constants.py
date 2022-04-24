@@ -1,9 +1,8 @@
 import numpy as np
 
 # Root project directory
-ROOT_PROJECT_DIR = "/home/ej/Documents/projects/tmg-bmc/frontiers-2022/"
-
-ARTICLE_DIR = "/home/ej/Documents/projects/tmg-bmc/frontiers-2022/manuscript/"
+ROOT_PROJECT_DIR = "../"
+ARTICLE_DIR = ROOT_PROJECT_DIR + "manuscript/"
 
 # Data
 # --------------------------------------------- #
