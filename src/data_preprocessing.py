@@ -16,21 +16,37 @@ and outputs processed data files into various other subdirectories of `../data`
 
 """
 
-def process_raw_excel_files():
+def process_raw_excel_files_1mps():
     """
     The first step in the data processing pipeline;
     used to process raw Excel TMG measurements.
 
-    Converts each subject's raw Excel TMG measurement file into...
-    - One pre-ISQ and one post-ISQ CSV file per subject
-    - Each file contains four columns; these columns hold the first pre-ISQ or post-ISQ measurement from each of the subject's first four measurement sets.
-    - Column headers contain:
-      - Subject ID
-      - The measurement's set number
-      - The measurement's number in the TMG Excel from original measurement session (see `raw-data.md`)
-      Example: `ID42-S1-M2`
+    Converts each subject's raw Excel TMG measurement file into one pre-ISQ and
+    one post-ISQ CSV file. Each file holds the first pre-ISQ or post-ISQ TMG
+    measurement from each of the subject's measurement sets.
 
     """
+    # Convert files with 8 pre and post measurements per measurement set,
+    # taking only first measurement from each set
+    # --------------------------------------------- #
+    input_dir = constants.RAW_EXCEL_8MPS_DATA_DIR
+    pre_output_dir  = frontiers_utils.make_output_dir(constants.RAW_CSV_1MPS_DATA_DIR + "/pre-conditioning")
+    post_output_dir = frontiers_utils.make_output_dir(constants.RAW_CSV_1MPS_DATA_DIR + "/post-conditioning")
+    msmnts_per_pre_set = 8
+    msmnt_per_post_set = 8
+
+    # Maximum number of sets to take measurements from
+    max_sets = 8
+
+    for xlsx_filename in frontiers_utils.natural_sort(os.listdir(input_dir)):
+        if ".xlsx" in xlsx_filename and "$" not in xlsx_filename:
+            print("Current file: {}".format(xlsx_filename))
+            xlsx_csv_conversion.split_by_pre_post_and_set_using_first_msmt(
+                    input_dir, xlsx_filename,
+                    pre_output_dir, post_output_dir,
+                    msmnts_per_pre_set, msmnt_per_post_set,
+                    max_set=max_sets)
+
     # Convert files with 1 pre and post measurement per measurement set
     # --------------------------------------------- #
     input_dir = constants.RAW_EXCEL_1MPS_DATA_DIR
@@ -53,30 +69,18 @@ def process_raw_excel_files():
                     msmnts_per_pre_set, msmnt_per_post_set,
                     max_set=max_sets)
 
-    # Convert files with 8 pre and post measurements per measurement set,
-    # taking only first measurement from each set
-    # --------------------------------------------- #
-    input_dir = constants.RAW_EXCEL_8MPS_DATA_DIR
-    pre_output_dir  = frontiers_utils.make_output_dir(constants.RAW_CSV_1MPS_DATA_DIR + "/pre-conditioning")
-    post_output_dir = frontiers_utils.make_output_dir(constants.RAW_CSV_1MPS_DATA_DIR + "/post-conditioning")
-    msmnts_per_pre_set = 8
-    msmnt_per_post_set = 8
 
-    # Maximum number of sets to take measurements from
-    max_sets = 8
+def process_raw_excel_files_8mps():
+    """
+    The first step in the data processing pipeline;
+    used to process raw Excel TMG measurements.
 
-    for xlsx_filename in frontiers_utils.natural_sort(os.listdir(input_dir)):
-        if ".xlsx" in xlsx_filename and "$" not in xlsx_filename:
-            print("Current file: {}".format(xlsx_filename))
-            xlsx_csv_conversion.split_by_pre_post_and_set_using_first_msmt(
-                    input_dir, xlsx_filename,
-                    pre_output_dir, post_output_dir,
-                    msmnts_per_pre_set, msmnt_per_post_set,
-                    max_set=max_sets)
+    For all 8mps subjects, converts the subject's raw Excel TMG measurement
+    file into 8 pre-ISQ and 8 post-ISQ CSV file, with one pre-ISQ and one
+    post-ISQ file per set. Each file holds the pre-ISQ or post-ISQ TMG
+    measurements from the given set.
 
-    # Convert files with 8 pre and post measurements per measurement set,
-    # taking all measurements from each set
-    # --------------------------------------------- #
+    """
     input_dir = constants.RAW_EXCEL_8MPS_DATA_DIR
     pre_output_dir  = frontiers_utils.make_output_dir(constants.RAW_CSV_8MPS_DATA_DIR + "/pre-conditioning")
     post_output_dir = frontiers_utils.make_output_dir(constants.RAW_CSV_8MPS_DATA_DIR + "/post-conditioning")
@@ -275,6 +279,7 @@ def _remove_spm_significance_from_filter_artefact(pre_df, post_df,
 
 
 if __name__ == "__main__":
-    process_raw_excel_files()
+    process_raw_excel_files_1mps()
+    process_raw_excel_files_8mps()
     prepare_1mps_csv_files_for_spm()
     prepare_8mps_csv_files_for_spm()
