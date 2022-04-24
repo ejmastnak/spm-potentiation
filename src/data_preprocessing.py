@@ -11,11 +11,8 @@ which contain a variable number of measurement sets and measurements per
 measurement set, into a uniform, text-based CSV format more conducive to 
 further data processing.
 
-This script reads input from the directory `/data/excel-raw/`
-and outputs processed data files into various other subdirectories of `data`
-
-For a longer description of the processed dataset, see the file
-`/doc/overview.md` in this project's documentation directory.
+This script reads input from the directory `../data/excel-raw/`
+and outputs processed data files into various other subdirectories of `../data`
 
 """
 

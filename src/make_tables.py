@@ -6,6 +6,10 @@ import constants, frontiers_utils
 A set of functions used to create the LaTeX tables that appear in the journal
 article; in this sense, this script represents the final step in this project's
 analysis pipeline.
+
+IMPORTANT: this script relies on TMG parameter statistics computed in
+`tmg_stats.py`. You should run `tmg_stats.py` before running this script.
+
 """
 
 def make_tmg_param_table_by_subj_by_set():

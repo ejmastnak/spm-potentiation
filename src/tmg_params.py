@@ -2,12 +2,16 @@ import os
 import numpy as np
 import pandas as pd
 import constants, frontiers_utils
-
 import tmg_biomechanics.tmg_params as tmg_params_pypi
 import tmg_biomechanics.constants as tmg_constants
 
 """ 
 This script is used to compute TMG parameters for each subject's measurements
+
+IMPORTANT: this script relies on processed data files created by
+`data_preprocessing.py`. You should run `data_preprocessing.py` before running
+this script.
+
 """
 
 def compute_tmg_params_for_1mps_files():

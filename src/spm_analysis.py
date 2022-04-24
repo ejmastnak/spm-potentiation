@@ -1,13 +1,18 @@
-""" 
-This script performs SPM analysis of TMG data.
-Input data: the per-subject TMG measurement files in `/data/csv-for-spm-normed/`
-
-"""
 import os
 import numpy as np
 import pandas as pd
 import spm1d
 import constants, frontiers_utils, plotting
+
+""" 
+This script performs SPM analysis of TMG data.
+Input data: the per-subject TMG measurement files in `/data/csv-for-spm-normed/`
+
+IMPORTANT: this script relies on processed data files created by
+`data_preprocessing.py`. You should run `data_preprocessing.py` before running
+this script.
+
+"""
 
 def perform_spm_tests_by_set_across_subj():
     """

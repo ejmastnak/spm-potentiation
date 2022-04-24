@@ -1,16 +1,20 @@
-""" 
-This script is used to:
-- Compute TMG parameters for each subject's measurements
-- Perform basic statistical analysis of TMG parameters across subjects
-"""
 import os
 import numpy as np
 import pandas as pd
 from scipy.stats import ttest_rel
 import constants, frontiers_utils
-
 import tmg_biomechanics.tmg_params as tmg_params_pypi
 import tmg_biomechanics.constants as tmg_constants
+
+""" 
+This script is used to:
+- Compute TMG parameters for each subject's measurements
+- Perform basic statistical analysis of TMG parameters across subjects
+
+IMPORTANT: this script relies on TMG parameters computed in `tmg_params.py`.
+You should run `tmg_params.py` before running this script.
+
+"""
 
 # Set-by-set TMG parameters averaged over subjects
 def tmg_stats_by_set_across_subj_1mps(first_set_as_baseline=False):

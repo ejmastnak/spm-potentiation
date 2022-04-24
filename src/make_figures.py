@@ -3,10 +3,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tmg_biomechanics.tmg_params as tmg_params_pypi
 import plotting, constants, frontiers_utils, spm_analysis
+
 """
 A set of functions used to create the Matplotlib figures that appear in the
 journal article; in this sense, this script represents the final step in this
 project's analysis pipeline.
+
+IMPORTANT: this script relies on processed data files created by
+`data_preprocessing.py` You should run `data_preprocessing.py` before running
+this script.
+
 """
 
 def make_sample_tmg_plot():
