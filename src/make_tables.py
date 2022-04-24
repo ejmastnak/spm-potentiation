@@ -24,7 +24,7 @@ def make_tmg_param_table_by_subj_by_set():
     else:
         input_filename = "subject-{}/set-1-tmg-stats.csv".format(subject_number)
     table_title = "Subject {}, Set 1".format(subject_number)
-    output_file = constants.ARTICLE_TABLE_DIR + "tmg_stats_by_subj_by_set.tex"
+    output_file = constants.MANUSCRIPT_TABLE_DIR + "tmg_stats_by_subj_by_set.tex"
 
     _make_tmg_param_table(input_dir + input_filename, output_file,
             comment="Generated from {}".format(input_filename),
@@ -46,7 +46,7 @@ def make_tmg_param_table_by_subj_across_sets():
         input_filename = "subject-0{}-tmg-stats.csv".format(subject_number)
     else:
         input_filename = "subject-{}-tmg-stats.csv".format(subject_number)
-    output_file = constants.ARTICLE_TABLE_DIR + "tmg_stats_by_subj_across_sets.tex"
+    output_file = constants.MANUSCRIPT_TABLE_DIR + "tmg_stats_by_subj_across_sets.tex"
     table_title = "Subject {}, Sets 1-8".format(subject_number)
 
     _make_tmg_param_table(input_dir + input_filename, output_file,
@@ -67,7 +67,7 @@ def make_tmg_param_table_by_set_across_subj():
 
     for s in sets_to_use:
         input_filename = "set-{}-tmg-stats.csv".format(s)
-        output_file = constants.ARTICLE_TABLE_DIR + "tmg_stats_across_subj_by_set_{}.tex".format(s)
+        output_file = constants.MANUSCRIPT_TABLE_DIR + "tmg_stats_across_subj_by_set_{}.tex".format(s)
         table_title = "Subjects 1-54, Set {}".format(s)
 
         _make_tmg_param_table(input_dir + input_filename, output_file,

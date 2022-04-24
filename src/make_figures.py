@@ -30,7 +30,7 @@ def make_sample_tmg_plot():
 
     pre_file = constants.RAW_CSV_1MPS_DATA_DIR + "pre-conditioning/" + file_basename + "-pre.csv"
     post_file = constants.RAW_CSV_1MPS_DATA_DIR + "post-conditioning/" + file_basename + "-post.csv"
-    output_file = constants.ARTICLE_FIGURE_DIR + "tmg-example.jpg"
+    output_file = constants.MANUSCRIPT_FIG_DIR + "tmg-example.jpg"
 
     pre_data = np.loadtxt(pre_file, delimiter=',', skiprows=1)
     post_data = np.loadtxt(post_file, delimiter=',', skiprows=1)
@@ -211,7 +211,7 @@ def make_sample_spm_plot_by_subj_across_sets_1mps():
 
     title = "Subject {}, Sets 1-8".format(subject_number)
     fig_format = "jpg"
-    output_file = constants.ARTICLE_FIGURE_DIR + "spm-plot-by-subj-across-sets.{}".format(fig_format)
+    output_file = constants.MANUSCRIPT_FIG_DIR + "spm-plot-by-subj-across-sets.{}".format(fig_format)
 
     _make_sample_spm_plot(pre_file, post_file, output_file,
             title=title, fig_format=fig_format)
@@ -236,7 +236,7 @@ def make_sample_spm_plot_by_subj_by_set_8mps():
 
     title = "Subject {}, Set 1".format(subject_number)
     fig_format = "jpg"
-    output_file = constants.ARTICLE_FIGURE_DIR + "spm-plot-by-subj-by-set.{}".format(fig_format)
+    output_file = constants.MANUSCRIPT_FIG_DIR + "spm-plot-by-subj-by-set.{}".format(fig_format)
 
     _make_sample_spm_plot(pre_file, post_file, output_file,
             title=title, fig_format=fig_format)
@@ -292,7 +292,7 @@ def make_sample_spm_plot_by_set_across_subj():
 
     pre_input_dir = constants.SPM_1MPS_DATA_DIR + "pre-conditioning/"
     post_input_dir = constants.SPM_1MPS_DATA_DIR + "post-conditioning/"
-    output_file = constants.ARTICLE_FIGURE_DIR + "spm-plot-by-set-across-subj.{}".format(fig_format)
+    output_file = constants.MANUSCRIPT_FIG_DIR + "spm-plot-by-set-across-subj.{}".format(fig_format)
 
     pre_filenames = frontiers_utils.natural_sort(os.listdir(pre_input_dir))
     post_filenames = frontiers_utils.natural_sort(os.listdir(post_input_dir))

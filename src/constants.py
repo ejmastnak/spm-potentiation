@@ -2,7 +2,7 @@ import numpy as np
 
 # Root project directory
 ROOT_PROJECT_DIR = "../"
-ARTICLE_DIR = ROOT_PROJECT_DIR + "manuscript/"
+MANUSCRIPT_DIR = ROOT_PROJECT_DIR + "manuscript/"
 
 # Data
 # --------------------------------------------- #
@@ -86,10 +86,10 @@ SPM_PLOTS_BY_SUBJ_BY_SET_8MPS_DIR = ROOT_OUTPUT_DIR + "spm-plots-by-subj-by-set-
 # --------------------------------------------- #
 
 # Figures appearing the LaTeX article
-ARTICLE_FIGURE_DIR = ARTICLE_DIR + "figures/"
+MANUSCRIPT_FIG_DIR = MANUSCRIPT_DIR + "figures/"
 
 # Tables appearing the LaTeX article
-ARTICLE_TABLE_DIR = ARTICLE_DIR + "tables/"
+MANUSCRIPT_TABLE_DIR = MANUSCRIPT_DIR + "tables/"
 
 # --------------------------------------------- #
 # The number of rows to skip from the beginning of a raw TMG signal
