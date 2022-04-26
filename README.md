@@ -18,6 +18,10 @@ See the `README.md` file in each directory for more detailed descriptions.
 - `results` holds the results of all analysis performed in the study (e.g. SPM tests, TMG contraction parameters, figures).
 - `src` holds the Python source code used to analyze the data.
 
+### Analysis
+
+See the `ANALYSIS.md` file for an overview of the full data analysis pipeline used in the study.
+
 ### License
 
 The project source code, i.e. the contents of the `src` directory, is licensed under the GNU General Public License v3.0.
