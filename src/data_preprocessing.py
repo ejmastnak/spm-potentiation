@@ -99,7 +99,7 @@ def process_raw_excel_files_8mps():
                     max_set=max_sets)
 
 
-def prepare_1mps_csv_files_for_spm():
+def prepare_1mps_csv_files_for_spm(normalize=False):
     """
     Input: All raw CSV measurement files in RAW_CSV_1MPS_DATA_DIR
 
@@ -119,8 +119,6 @@ def prepare_1mps_csv_files_for_spm():
     pre_filenames = []
     post_filenames = []
 
-    include_normalized = True
-
     # Build up file names (name only; without path) of CSV files to process
     for filename in frontiers_utils.natural_sort(os.listdir(pre_input_dir)):
         pre_filenames.append(filename)
@@ -128,18 +126,19 @@ def prepare_1mps_csv_files_for_spm():
         post_filenames.append(filename)
 
     pre_output_dir = frontiers_utils.make_output_dir(constants.SPM_1MPS_DATA_DIR + "/pre-conditioning")
-    pre_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_1MPS_DATA_DIR + "/pre-conditioning")
     post_output_dir = frontiers_utils.make_output_dir(constants.SPM_1MPS_DATA_DIR + "/post-conditioning")
-    post_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_1MPS_DATA_DIR + "/post-conditioning")
+
+    if normalize:
+        pre_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_1MPS_DATA_DIR + "/pre-conditioning")
+        post_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_1MPS_DATA_DIR + "/post-conditioning")
 
     _prepare_csv_files_for_spm(pre_input_dir, post_input_dir,
         pre_filenames, post_filenames,
         pre_output_dir, post_output_dir,
-        pre_normed_output_dir, post_normed_output_dir,
-        normalize=include_normalized)
+        normalize=normalize)
 
 
-def prepare_8mps_csv_files_for_spm():
+def prepare_8mps_csv_files_for_spm(normalize=False):
     """
     Input: All raw CSV measurement files in RAW_CSV_8MPS_DATA_DIR
     Processing: analog of `prepare_8mps_csv_files_for_spm`
@@ -150,7 +149,6 @@ def prepare_8mps_csv_files_for_spm():
     """
     pre_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "/pre-conditioning"
     post_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "/post-conditioning"
-    include_normalized = True
 
     # Loop through each athlete directory
     for athlete_subdir in frontiers_utils.natural_sort(os.listdir(pre_input_dir)):
@@ -166,32 +164,38 @@ def prepare_8mps_csv_files_for_spm():
 
         # Create output directories
         pre_output_dir = frontiers_utils.make_output_dir(constants.SPM_8MPS_DATA_DIR + "/pre-conditioning/" + athlete_subdir)
-        pre_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_8MPS_DATA_DIR + "/pre-conditioning/" + athlete_subdir)
-
         post_output_dir = frontiers_utils.make_output_dir(constants.SPM_8MPS_DATA_DIR + "/post-conditioning/" + athlete_subdir)
-        post_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_8MPS_DATA_DIR + "/post-conditioning/" + athlete_subdir)
+
+        if normalize:
+            pre_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_8MPS_DATA_DIR + "/pre-conditioning/" + athlete_subdir)
+            post_normed_output_dir = frontiers_utils.make_output_dir(constants.NORMED_SPM_8MPS_DATA_DIR + "/post-conditioning/" + athlete_subdir)
 
         _prepare_csv_files_for_spm(pre_input_dir + "/" + athlete_subdir,
                 post_input_dir + "/" + athlete_subdir,
                 pre_filenames, post_filenames,
                 pre_output_dir, post_output_dir,
-                pre_normed_output_dir, post_normed_output_dir,
-                normalize=include_normalized)
+                normalize=normalize)
 
 
 def _prepare_csv_files_for_spm(pre_input_dir, post_input_dir,
         pre_filenames, post_filenames,
         pre_output_dir, post_output_dir,
-        pre_normed_output_dir, post_normed_output_dir,
+        pre_normed_output_dir=None, post_normed_output_dir=None,
         normalize=False):
     """
     Performs the following processing steps on all pre-ISQ/post-ISQ TMG measurement pairs in the inputted `pre_input_dir`/`post_input_dir`
         1. Trim to first 100 ms
         2. Mitigate false SPM significance from transient TMG filter artefact
-        3. Normalize to the displacement maximum value in the pair 
 
-    Writes the result of steps 1 and 2 to `*_output_dir` and the result 
-    of steps 1, 2, and 3 to `*_normed_output_dir`.
+    If `normalize==True`, additionally...
+        3. Normalizes each pre/post-ISQ TMG measurement pair to the
+           maximum displacement value in the pair---generally the maximum
+           displacement occurs in the post-ISQ measurement, but no a priori
+           assumption is made.
+
+    Writes the result of steps 1 and 2 to `*_output_dir`.
+    If `normalize==True`, also writes the result of steps 1, 2, and 3 to
+    `*_normed_output_dir`.
 
     """
     max_rows_for_spm = constants.TMG_ROWS_TO_USE_FOR_SPM
