@@ -8,14 +8,16 @@ This directory holds the results of all analyses performed in this study, includ
 
 ### Generate results programmatically
 
-After downloading, this directory is empty except for the `README.md` file, with the following structure:
+After downloading, this directory is empty except for the `README.md` and license files, with the following structure:
 ```
 results
+├── LICENSE-CC-BY.md
 └── README.md
 ```
 But the directory structure should eventually look like this:
 ```
 results
+├── LICENSE-CC-BY.md
 ├── README.md
 ├── spm-params-by-set-across-subj
 ├── spm-params-by-subj-across-sets-1mps

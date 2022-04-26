@@ -10,6 +10,7 @@ After downloading, this directory has the following structure:
 ```
 data
 ├── excel-raw
+├── LICENSE-CC-BY.md
 └── README.md
 ```
 But the directory structure should eventually look like this:
@@ -20,6 +21,7 @@ data
 ├── csv-raw-1mps
 ├── csv-raw-8mps
 ├── excel-raw
+├── LICENSE-CC-BY.md
 └── README.md
 ```
 You are meant to generate the remaining files programmatically.
