@@ -2,12 +2,14 @@
 # --------------------------------------------- #
 meta/
 collab/
-results/
 template/
 
 /data/**/*.*
 !/data/README.md
 !/data/excel-raw/**/*.xlsx
+
+/results/**/*.*
+!/results/README.md
 
 src/__pycache__/
 src/test.py
