@@ -26,7 +26,7 @@ def convert_verbatim(xlsx_file, output_dir):
     """
     # Read Excel and drop first column, which is empty in TMG format
     df = pd.read_excel(xlsx_file, engine='openpyxl', header=None, skiprows=DATA_START_ROW).drop(columns=[0])
-    df.to_csv(output_dir + xlsx_filename.replace(".xlsx", ".csv"), header=False, index=False)
+    df.to_csv(output_dir + "/" + xlsx_filename.replace(".xlsx", ".csv"), header=False, index=False)
 
 
 """
@@ -69,7 +69,7 @@ def split_by_pre_post(input_dir, xlsx_filename,
     potentiated measurements are clumped into a separate CSV file.
 
     """
-    xlsx_file = input_dir + xlsx_filename
+    xlsx_file = input_dir + "/" + xlsx_filename
     df = frontiers_utils.xlsx_to_pandas_df(xlsx_file)
 
     try:
@@ -100,9 +100,9 @@ def split_by_pre_post(input_dir, xlsx_filename,
     print()
 
     # Write CSV files
-    df.to_csv(pre_output_dir + xlsx_filename.replace(".xlsx", "-pre.csv"),
+    df.to_csv(pre_output_dir + "/" + xlsx_filename.replace(".xlsx", "-pre.csv"),
             header=pre_headers, index=False, columns=pre_col_nums)
-    df.to_csv(post_output_dir + xlsx_filename.replace(".xlsx", "-post.csv"),
+    df.to_csv(post_output_dir + "/" + xlsx_filename.replace(".xlsx", "-post.csv"),
             header=post_headers, index=False, columns=post_col_nums)
 
 
@@ -118,7 +118,7 @@ def split_by_pre_post_and_set(input_dir, xlsx_filename,
             Net output: 2 * (number of sets in Excel file) CSV files.
 
     """
-    xlsx_file = input_dir + xlsx_filename
+    xlsx_file = input_dir + "/" + xlsx_filename
     df = frontiers_utils.xlsx_to_pandas_df(xlsx_file)
 
     try:
@@ -129,8 +129,8 @@ def split_by_pre_post_and_set(input_dir, xlsx_filename,
     msmnts_per_full_set = msmnts_per_pre_set + msmnts_per_post_set
 
     # Create an additional directory layer for each Excel file
-    pre_output_dir = frontiers_utils.make_output_dir(pre_output_dir + xlsx_filename.replace(".xlsx", "")) + "/"
-    post_output_dir = frontiers_utils.make_output_dir(post_output_dir + xlsx_filename.replace(".xlsx", "")) + "/"
+    pre_output_dir = frontiers_utils.make_output_dir(pre_output_dir + "/" + xlsx_filename.replace(".xlsx", ""))
+    post_output_dir = frontiers_utils.make_output_dir(post_output_dir + "/" + xlsx_filename.replace(".xlsx", ""))
 
     for s in range(1, sets + 1):
         if s > max_set:
@@ -156,10 +156,10 @@ def split_by_pre_post_and_set(input_dir, xlsx_filename,
         print()
 
         # Write CSV files for the current set
-        df.to_csv(pre_output_dir + xlsx_filename.replace(".xlsx",
+        df.to_csv(pre_output_dir + "/" + xlsx_filename.replace(".xlsx",
             "-pre-set-{}.csv".format(s)), header=pre_headers,
             index=False, columns=pre_col_nums)
-        df.to_csv(post_output_dir + xlsx_filename.replace(".xlsx",
+        df.to_csv(post_output_dir + "/" + xlsx_filename.replace(".xlsx",
             "-post-set-{}.csv".format(s)), header=post_headers,
             index=False, columns=post_col_nums)
 
@@ -178,7 +178,7 @@ def split_by_pre_post_and_set_using_first_msmt(input_dir, xlsx_filename,
     the first measurement in each set is saved to the outputted CSV file.
 
     """
-    xlsx_file = input_dir + xlsx_filename
+    xlsx_file = input_dir + "/" + xlsx_filename
     df = frontiers_utils.xlsx_to_pandas_df(xlsx_file)
 
     try:
@@ -209,9 +209,9 @@ def split_by_pre_post_and_set_using_first_msmt(input_dir, xlsx_filename,
     print()
 
     # Write CSV files
-    df.to_csv(pre_output_dir + xlsx_filename.replace(".xlsx", "-pre.csv"),
+    df.to_csv(pre_output_dir + "/" + xlsx_filename.replace(".xlsx", "-pre.csv"),
             header=pre_headers, index=False, columns=pre_col_nums)
-    df.to_csv(post_output_dir + xlsx_filename.replace(".xlsx", "-post.csv"),
+    df.to_csv(post_output_dir + "/" + xlsx_filename.replace(".xlsx", "-post.csv"),
             header=post_headers, index=False, columns=post_col_nums)
 
 

@@ -2,9 +2,15 @@
 # --------------------------------------------- #
 meta/
 collab/
-data/
-results/
 template/
+
+/data/**/*.*
+!/data/README.md
+!/data/LICENSE-CC-BY.md
+!/data/excel-raw/**/*.xlsx
+
+/results/**/*.*
+!/results/README.md
 
 src/__pycache__/
 src/test.py

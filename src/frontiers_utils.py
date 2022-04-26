@@ -35,60 +35,54 @@ def xlsx_to_pandas_df(xlsx_file, num_rows=constants.TMG_MAX_ROWS):
             skiprows=constants.TMG_DATA_START_ROW).drop(columns=[0])
     
 
-def make_output_dir(base_dir, use_existing=False):
+def make_output_dir(dir_path, exist_ok=True):
     """
     Attempts to make a directory with the inputted base directory name.
-    If a directory with the inputted base name already exists, the function
-    and appends natural numbers to the end of the base name until reaching
-    an available directory name.
+    If `exist_ok=False` and a directory with the inputted base name already
+    exists, the function and appends natural numbers to the end of the base
+    name until reaching an available directory name.
 
     Parameters
     ----------
-    base_dir : str
+    dir_path : str
         Desired base directory name
         Example: "~/test/tmg/converted"
-    use_existing : bool
-        Behavior if True: If a directory with name `base_dir` already
-        exists, use the existing `base_dir` name (instead of creating new
-        directories by appending a counter). This would be used to
-        intentionally overwrite files inside the existing `base_dir`.
+    exist_ok : bool
+        Behavior if True: If a directory with name `dir_path` already exists,
+        use the existing directory.
+        Behavior if False: If a directory with name `base_dir` already exists,
+        try creating new directories `dir_path_01`,  `dir_path_02`, etc.
     
     Returns
     -------
     created_dir : str
-        Name of actually created directory, with numbers appended as needed
-        to avoid conflict with existing directories.
+        Name of used or created directory, with numbers appended as needed to
+        avoid conflict with existing directories.
         Example: "~/test/tmg/converted"
         Example: "~/test/tmg/converted_01"
         Example: "~/test/tmg/converted_04"
     
     """
-    try:  # try created directory with base name only
-        os.mkdir(base_dir)
-        return base_dir
-    except OSError as error:  # if a directoy with the base name exists
-        if use_existing:
-            # Double-check directory with name `base_dir` indeed exists, (in
-            # case OSError was raised for some other reason).
-            if os.path.isdir(base_dir):
-                return base_dir
-
+    try:  # try creating directory with base name only
+        os.makedirs(dir_path, exist_ok=exist_ok)
+        return dir_path
+    except FileExistsError as error:  # if a directoy with the base name exists
         success = False
         counter = 0
         while not success:
             counter += 1
             if counter > 99:
-                print("Aborting. Maximum output directory count exceeded.")
+                print("Aborting. Maximum output directory count exceeded at {}_{}.".format(dir_path, counter))
                 return
-            success = try_next_output_dir(base_dir + "_" + str(counter))
+            success = try_next_output_dir(dir_path + "_" + str(counter))
 
-        return base_dir + "_" + str(counter)
+        return dir_path + "_" + str(counter)
 
 
 def try_next_output_dir(base_dir_name):
     """ Helper method for the make_output_dir method; see above """
     try:
-        os.mkdir(base_dir_name)
+        os.makedirs(base_dir_name)
         return True
     except OSError as error:
         return False

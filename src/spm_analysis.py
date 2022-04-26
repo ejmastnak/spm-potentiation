@@ -1,13 +1,18 @@
-""" 
-This script performs SPM analysis of TMG data.
-Input data: the per-subject TMG measurement files in `/data/csv-for-spm-normed/`
-
-"""
 import os
 import numpy as np
 import pandas as pd
 import spm1d
 import constants, frontiers_utils, plotting
+
+""" 
+This script performs SPM analysis of TMG data.
+Input data: the per-subject TMG measurement files in `/data/csv-for-spm-normed/`
+
+IMPORTANT: this script relies on processed data files created by
+`data_preprocessing.py`. You should run `data_preprocessing.py` before running
+this script.
+
+"""
 
 def perform_spm_tests_by_set_across_subj():
     """
@@ -31,10 +36,10 @@ def perform_spm_tests_by_set_across_subj():
         and significance clusters emphasized.
 
     """
-    pre_input_dir = constants.SPM_1MPS_DATA_DIR + "pre-conditioning/"
-    post_input_dir = constants.SPM_1MPS_DATA_DIR + "post-conditioning/"
-    param_output_dir = constants.SPM_PARAMS_BY_SET_ACROSS_SUBJ_DIR
-    plot_output_dir = constants.SPM_PLOTS_BY_SET_ACROSS_SUBJ_DIR
+    pre_input_dir = constants.SPM_1MPS_DATA_DIR + "/pre-conditioning"
+    post_input_dir = constants.SPM_1MPS_DATA_DIR + "/post-conditioning"
+    param_output_dir = frontiers_utils.make_output_dir(constants.SPM_PARAMS_BY_SET_ACROSS_SUBJ_DIR)
+    plot_output_dir = frontiers_utils.make_output_dir(constants.SPM_PLOTS_BY_SET_ACROSS_SUBJ_DIR)
 
     pre_filenames = frontiers_utils.natural_sort(os.listdir(pre_input_dir))
     post_filenames = frontiers_utils.natural_sort(os.listdir(post_input_dir))
@@ -59,24 +64,25 @@ def perform_spm_tests_by_set_across_subj():
 
     # Load pre-conditioning measurements into memory
     for i, filename in enumerate(pre_filenames):
-        data = np.loadtxt(pre_input_dir + filename, delimiter=',',
+        data = np.loadtxt(pre_input_dir + "/" + filename, delimiter=',',
                 skiprows=1, max_rows=rows_per_measurement_file)
         pre_tensor[:, :, i] = data
 
     # Load post-conditioning measurements into memory
     for i, filename in enumerate(post_filenames):
-        data = np.loadtxt(post_input_dir + filename, delimiter=',',
+        data = np.loadtxt(post_input_dir + "/" + filename, delimiter=',',
                 skiprows=1, max_rows=rows_per_measurement_file)
         post_tensor[:, :, i] = data
 
     # Perform SPM analysis for each set
     for s in range(sets_per_measurement_file):
-        param_output_file = param_output_dir + "set-{}-params.csv".format(s + 1)
-        plot_output_file = plot_output_dir + "set-{}-plot.{}".format(s + 1, fig_format)
+        param_output_file = param_output_dir + "/set-{}-params.csv".format(s + 1)
+        plot_output_file = plot_output_dir + "/set-{}-plot.{}".format(s + 1, fig_format)
 
         pre_data = pre_tensor[:, s, :]
         post_data = post_tensor[:, s, :]
 
+        print("Analyzing across subjects for set {}".format(s + 1))
         _perform_spm_analysis(pre_data, post_data,
                 param_output_file, plot_output_file,
                 data_y_axis_label="Displacement",
@@ -107,10 +113,10 @@ def spm_tests_by_subj_across_sets_1mps():
         and significance clusters emphasized.
 
     """ 
-    pre_input_dir = constants.SPM_1MPS_DATA_DIR + "pre-conditioning/"
-    post_input_dir = constants.SPM_1MPS_DATA_DIR + "post-conditioning/"
-    param_output_dir = constants.SPM_PARAMS_BY_SUBJ_ACROSS_SETS_1MPS_DIR
-    plot_output_dir = constants.SPM_PLOTS_BY_SUBJ_ACROSS_SETS_1MPS_DIR
+    pre_input_dir = constants.SPM_1MPS_DATA_DIR + "/pre-conditioning"
+    post_input_dir = constants.SPM_1MPS_DATA_DIR + "/post-conditioning"
+    param_output_dir = frontiers_utils.make_output_dir(constants.SPM_PARAMS_BY_SUBJ_ACROSS_SETS_1MPS_DIR)
+    plot_output_dir = frontiers_utils.make_output_dir(constants.SPM_PLOTS_BY_SUBJ_ACROSS_SETS_1MPS_DIR)
 
     pre_filenames = []
     post_filenames = []
@@ -124,14 +130,15 @@ def spm_tests_by_subj_across_sets_1mps():
     spm_alpha = 0.01
 
     for i in range(len(pre_filenames)):
-        param_output_file = param_output_dir + pre_filenames[i].replace("-pre.csv", "-spm-params.csv")
-        plot_output_file = plot_output_dir + pre_filenames[i].replace("-pre.csv", "-spm-plot.{}".format(fig_format))
+        param_output_file = param_output_dir + "/" + pre_filenames[i].replace("-pre.csv", "-spm-params.csv")
+        plot_output_file = plot_output_dir + "/" + pre_filenames[i].replace("-pre.csv", "-spm-plot.{}".format(fig_format))
 
-        pre_data = np.loadtxt(pre_input_dir + pre_filenames[i],
+        pre_data = np.loadtxt(pre_input_dir + "/" + pre_filenames[i],
                 delimiter=',', skiprows=1)  # skip header row
-        post_data = np.loadtxt(post_input_dir + post_filenames[i],
+        post_data = np.loadtxt(post_input_dir + "/" + post_filenames[i],
                 delimiter=',', skiprows=1)  # skip header row
 
+        print("Analyzing across sets for {}".format(pre_filenames[i]).replace("-pre.csv", ""))
         _perform_spm_analysis(pre_data, post_data,
                 param_output_file, plot_output_file, 
                 data_y_axis_label="Displacement",
@@ -162,10 +169,10 @@ def spm_tests_by_subj_by_set_8mps():
         and significance clusters emphasized.
 
     """ 
-    pre_base_input_dir = constants.SPM_8MPS_DATA_DIR + "pre-conditioning/"
-    post_base_input_dir = constants.SPM_8MPS_DATA_DIR + "post-conditioning/"
-    param_base_output_dir = constants.SPM_PARAMS_BY_SUBJ_BY_SET_8MPS_DIR
-    plot_base_output_dir = constants.SPM_PLOTS_BY_SUBJ_BY_SET_8MPS_DIR
+    pre_base_input_dir = constants.SPM_8MPS_DATA_DIR + "/pre-conditioning"
+    post_base_input_dir = constants.SPM_8MPS_DATA_DIR + "/post-conditioning"
+    param_base_output_dir = frontiers_utils.make_output_dir(constants.SPM_PARAMS_BY_SUBJ_BY_SET_8MPS_DIR)
+    plot_base_output_dir = frontiers_utils.make_output_dir(constants.SPM_PLOTS_BY_SUBJ_BY_SET_8MPS_DIR)
 
     pre_subject_subdirs = frontiers_utils.natural_sort(os.listdir(pre_base_input_dir))
     post_subject_subdirs = frontiers_utils.natural_sort(os.listdir(post_base_input_dir))
@@ -176,28 +183,27 @@ def spm_tests_by_subj_by_set_8mps():
 
     # Loop through all subjects
     for subj in range(len(pre_subject_subdirs)):
-        pre_input_dir = pre_base_input_dir + pre_subject_subdirs[subj] + "/"
-        post_input_dir = post_base_input_dir + post_subject_subdirs[subj] + "/"
-        param_output_dir = frontiers_utils.make_output_dir(param_base_output_dir + pre_subject_subdirs[subj],
-                use_existing=True) + "/"
-        plot_output_dir = frontiers_utils.make_output_dir(plot_base_output_dir + pre_subject_subdirs[subj],
-                use_existing=True) + "/"
+        pre_input_dir = pre_base_input_dir + "/" + pre_subject_subdirs[subj]
+        post_input_dir = post_base_input_dir + "/" + post_subject_subdirs[subj]
+        param_output_dir = frontiers_utils.make_output_dir(param_base_output_dir + "/" + pre_subject_subdirs[subj])
+        plot_output_dir = frontiers_utils.make_output_dir(plot_base_output_dir + "/" + pre_subject_subdirs[subj])
 
         pre_filenames = frontiers_utils.natural_sort(os.listdir(pre_input_dir))
         post_filenames = frontiers_utils.natural_sort(os.listdir(post_input_dir))
 
         # For a given subject, loop through all measurement sets
         for s in range(len(pre_filenames)):
-            pre_filename = pre_input_dir + pre_filenames[s]
-            post_filename = post_input_dir + post_filenames[s]
-            param_output_file = param_output_dir + "set-{}.csv".format(s + 1)
-            plot_output_file = plot_output_dir + "set-{}.{}".format(s + 1, fig_format)
+            pre_filename = pre_input_dir + "/" + pre_filenames[s]
+            post_filename = post_input_dir + "/" + post_filenames[s]
+            param_output_file = param_output_dir + "/set-{}.csv".format(s + 1)
+            plot_output_file = plot_output_dir + "/set-{}.{}".format(s + 1, fig_format)
 
             pre_data = np.loadtxt(pre_filename,
                     delimiter=',', skiprows=1)  # skip header row
             post_data = np.loadtxt(post_filename,
                     delimiter=',', skiprows=1)  # skip header row
 
+            print("Analyzing set {} for {}".format(s + 1, pre_subject_subdirs[subj]))
             _perform_spm_analysis(pre_data, post_data,
                     param_output_file, plot_output_file,
                     data_y_axis_label="Displacement",
@@ -251,7 +257,7 @@ def _get_spm_t_ti_paired_ttest(pre_data, post_data, alpha=0.01):
     """
     try:
         t  = spm1d.stats.ttest_paired(post_data.T, pre_data.T)
-        ti = t.inference(alpha=alpha, two_tailed=False, interp=True)
+        ti = t.inference(alpha=alpha, two_tailed=True, interp=True)
         return t, ti
     except Exception as e:
         print("Error performing SPM analysis: " + str(e))

@@ -6,6 +6,10 @@ import constants, frontiers_utils
 A set of functions used to create the LaTeX tables that appear in the journal
 article; in this sense, this script represents the final step in this project's
 analysis pipeline.
+
+IMPORTANT: this script relies on TMG parameter statistics computed in
+`tmg_stats.py`. You should run `tmg_stats.py` before running this script.
+
 """
 
 def make_tmg_param_table_by_subj_by_set():
@@ -24,9 +28,10 @@ def make_tmg_param_table_by_subj_by_set():
     else:
         input_filename = "subject-{}/set-1-tmg-stats.csv".format(subject_number)
     table_title = "Subject {}, Set 1".format(subject_number)
-    output_file = constants.ARTICLE_TABLE_DIR + "tmg_stats_by_subj_by_set.tex"
+    output_dir = frontiers_utils.make_output_dir(constants.MANUSCRIPT_TABLE_DIR)
+    output_file = output_dir + "/tmg_stats_by_subj_by_set.tex"
 
-    _make_tmg_param_table(input_dir + input_filename, output_file,
+    _make_tmg_param_table(input_dir + "/" + input_filename, output_file,
             comment="Generated from {}".format(input_filename),
             table_title=table_title)
 
@@ -46,10 +51,11 @@ def make_tmg_param_table_by_subj_across_sets():
         input_filename = "subject-0{}-tmg-stats.csv".format(subject_number)
     else:
         input_filename = "subject-{}-tmg-stats.csv".format(subject_number)
-    output_file = constants.ARTICLE_TABLE_DIR + "tmg_stats_by_subj_across_sets.tex"
+    output_dir = frontiers_utils.make_output_dir(constants.MANUSCRIPT_TABLE_DIR)
+    output_file = output_dir + "/tmg_stats_by_subj_across_sets.tex"
     table_title = "Subject {}, Sets 1-8".format(subject_number)
 
-    _make_tmg_param_table(input_dir + input_filename, output_file,
+    _make_tmg_param_table(input_dir + "/" + input_filename, output_file,
             comment="Generated from {}".format(input_filename),
             table_title=table_title)
 
@@ -63,14 +69,15 @@ def make_tmg_param_table_by_set_across_subj():
 
     """
     input_dir = constants.TMG_STATS_BY_SET_ACROSS_SUBJ_DIR
+    output_dir = frontiers_utils.make_output_dir(constants.MANUSCRIPT_TABLE_DIR)
     sets_to_use = [1, 2, 3, 4]
 
     for s in sets_to_use:
         input_filename = "set-{}-tmg-stats.csv".format(s)
-        output_file = constants.ARTICLE_TABLE_DIR + "tmg_stats_across_subj_by_set_{}.tex".format(s)
+        output_file = output_dir + "/tmg_stats_across_subj_by_set_{}.tex".format(s)
         table_title = "Subjects 1-54, Set {}".format(s)
 
-        _make_tmg_param_table(input_dir + input_filename, output_file,
+        _make_tmg_param_table(input_dir + "/" + input_filename, output_file,
                 comment="Generated from {}".format(input_filename),
                 table_title=table_title)
 

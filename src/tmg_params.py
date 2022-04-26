@@ -2,12 +2,16 @@ import os
 import numpy as np
 import pandas as pd
 import constants, frontiers_utils
-
 import tmg_biomechanics.tmg_params as tmg_params_pypi
 import tmg_biomechanics.constants as tmg_constants
 
 """ 
 This script is used to compute TMG parameters for each subject's measurements
+
+IMPORTANT: this script relies on processed data files created by
+`data_preprocessing.py`. You should run `data_preprocessing.py` before running
+this script.
+
 """
 
 def compute_tmg_params_for_1mps_files():
@@ -30,10 +34,10 @@ def compute_tmg_params_for_1mps_files():
         original measurement session (see `raw-data.md`)
 
     """
-    pre_input_dir = constants.RAW_CSV_1MPS_DATA_DIR + "pre-conditioning/"
-    post_input_dir = constants.RAW_CSV_1MPS_DATA_DIR + "post-conditioning/"
-    pre_output_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "pre-conditioning/"
-    post_output_dir = constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "post-conditioning/"
+    pre_input_dir = constants.RAW_CSV_1MPS_DATA_DIR + "/pre-conditioning"
+    post_input_dir = constants.RAW_CSV_1MPS_DATA_DIR + "/post-conditioning"
+    pre_output_dir = frontiers_utils.make_output_dir(constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "/pre-conditioning")
+    post_output_dir = frontiers_utils.make_output_dir(constants.TMG_PARAMS_BY_SUBJ_1MPS_DIR + "/post-conditioning")
 
     _compute_tmg_params_for_files_in_dir(pre_input_dir, pre_output_dir)
     _compute_tmg_params_for_files_in_dir(post_input_dir, post_output_dir)
@@ -53,23 +57,21 @@ def compute_tmg_params_for_8mps_files():
     Output file structure: as in `compute_tmg_params_for_1mps_files`
 
     """
-    pre_base_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "pre-conditioning/"
-    post_base_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "post-conditioning/"
-    pre_base_output_dir = constants.TMG_PARAMS_BY_SUBJ_8MPS_DIR + "pre-conditioning/"
-    post_base_output_dir = constants.TMG_PARAMS_BY_SUBJ_8MPS_DIR + "post-conditioning/"
+    pre_base_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "/pre-conditioning"
+    post_base_input_dir = constants.RAW_CSV_8MPS_DATA_DIR + "/post-conditioning"
+    pre_base_output_dir = frontiers_utils.make_output_dir(constants.TMG_PARAMS_BY_SUBJ_8MPS_DIR + "/pre-conditioning")
+    post_base_output_dir = frontiers_utils.make_output_dir(constants.TMG_PARAMS_BY_SUBJ_8MPS_DIR + "/post-conditioning")
 
     # Loop through each pre-conditioning athlete directory
     for athlete_subdir in frontiers_utils.natural_sort(os.listdir(pre_base_input_dir)):
-        pre_input_dir = pre_base_input_dir + athlete_subdir + "/"
-        pre_output_dir = frontiers_utils.make_output_dir(pre_base_output_dir + athlete_subdir,
-                use_existing=True) + "/"
+        pre_input_dir = pre_base_input_dir + "/" + athlete_subdir
+        pre_output_dir = frontiers_utils.make_output_dir(pre_base_output_dir + "/" + athlete_subdir)
         _compute_tmg_params_for_files_in_dir(pre_input_dir, pre_output_dir)
 
     # Loop through each post-conditioning athlete directory
     for athlete_subdir in frontiers_utils.natural_sort(os.listdir(post_base_input_dir)):
-        post_input_dir = post_base_input_dir + athlete_subdir + "/"
-        post_output_dir = frontiers_utils.make_output_dir(post_base_output_dir + athlete_subdir,
-                use_existing=True) + "/"
+        post_input_dir = post_base_input_dir + "/" + athlete_subdir
+        post_output_dir = frontiers_utils.make_output_dir(post_base_output_dir + "/" + athlete_subdir)
         _compute_tmg_params_for_files_in_dir(post_input_dir, post_output_dir)
 
 
@@ -81,10 +83,12 @@ def _compute_tmg_params_for_files_in_dir(input_dir, output_dir, max_sets=8):
     """
     for filename in frontiers_utils.natural_sort(os.listdir(input_dir)):
 
+        print("Current file: {}".format(filename))
+
         # Measurement CSV files are first read into Pandas DataFrames
         # instead of directly into Numpy arrays for easier access to 
         # the header row than Numpy's `loadtxt` would allow.
-        df = pd.read_csv(input_dir + filename, sep=',', header=0)
+        df = pd.read_csv(input_dir + "/" + filename, sep=',', header=0)
         column_headers = df.columns.values.tolist()
         data = df.to_numpy()
 
@@ -98,7 +102,7 @@ def _compute_tmg_params_for_files_in_dir(input_dir, output_dir, max_sets=8):
                 columns=column_headers,
                 index=tmg_constants.TMG_PARAM_NAMES)
         output_filename = filename.replace(".csv", "-tmg-params.csv")
-        param_df.to_csv(output_dir + output_filename)
+        param_df.to_csv(output_dir + "/" + output_filename)
 
 
 if __name__ == "__main__":

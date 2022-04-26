@@ -3,10 +3,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tmg_biomechanics.tmg_params as tmg_params_pypi
 import plotting, constants, frontiers_utils, spm_analysis
+
 """
 A set of functions used to create the Matplotlib figures that appear in the
 journal article; in this sense, this script represents the final step in this
 project's analysis pipeline.
+
+IMPORTANT: this script relies on processed data files created by
+`data_preprocessing.py` You should run `data_preprocessing.py` before running
+this script.
+
 """
 
 def make_sample_tmg_plot():
@@ -28,9 +34,11 @@ def make_sample_tmg_plot():
     else:
         file_basename = "subject-{}".format(subject_number)
 
-    pre_file = constants.RAW_CSV_1MPS_DATA_DIR + "pre-conditioning/" + file_basename + "-pre.csv"
-    post_file = constants.RAW_CSV_1MPS_DATA_DIR + "post-conditioning/" + file_basename + "-post.csv"
-    output_file = constants.ARTICLE_FIGURE_DIR + "tmg-example.jpg"
+    pre_file = constants.RAW_CSV_1MPS_DATA_DIR + "/pre-conditioning/" + file_basename + "-pre.csv"
+    post_file = constants.RAW_CSV_1MPS_DATA_DIR + "/post-conditioning/" + file_basename + "-post.csv"
+
+    output_dir = frontiers_utils.make_output_dir(constants.MANUSCRIPT_FIG_DIR)
+    output_file = output_dir + "/tmg-example.jpg"
 
     pre_data = np.loadtxt(pre_file, delimiter=',', skiprows=1)
     post_data = np.loadtxt(post_file, delimiter=',', skiprows=1)
@@ -206,12 +214,14 @@ def make_sample_spm_plot_by_subj_across_sets_1mps():
     else:
         file_basename = "subject-{}".format(subject_number)
 
-    pre_file = constants.SPM_1MPS_DATA_DIR + "pre-conditioning/" + file_basename + "-pre.csv"
-    post_file = constants.SPM_1MPS_DATA_DIR + "post-conditioning/" + file_basename + "-post.csv"
+    pre_file = constants.SPM_1MPS_DATA_DIR + "/pre-conditioning/" + file_basename + "-pre.csv"
+    post_file = constants.SPM_1MPS_DATA_DIR + "/post-conditioning/" + file_basename + "-post.csv"
 
     title = "Subject {}, Sets 1-8".format(subject_number)
     fig_format = "jpg"
-    output_file = constants.ARTICLE_FIGURE_DIR + "spm-plot-by-subj-across-sets.{}".format(fig_format)
+
+    output_dir = frontiers_utils.make_output_dir(constants.MANUSCRIPT_FIG_DIR)
+    output_file = output_dir + "/spm-plot-by-subj-across-sets.{}".format(fig_format)
 
     _make_sample_spm_plot(pre_file, post_file, output_file,
             title=title, fig_format=fig_format)
@@ -231,12 +241,13 @@ def make_sample_spm_plot_by_subj_by_set_8mps():
         subject_basename = "subject-{}".format(subject_number)
 
     set_num = 1
-    pre_file = constants.SPM_8MPS_DATA_DIR + "pre-conditioning/" + subject_basename + "/" + subject_basename + "-pre-set-{}.csv".format(set_num)
-    post_file = constants.SPM_8MPS_DATA_DIR + "post-conditioning/" + subject_basename + "/" + subject_basename + "-post-set-{}.csv".format(set_num)
+    pre_file = constants.SPM_8MPS_DATA_DIR + "/pre-conditioning/" + subject_basename + "/" + subject_basename + "-pre-set-{}.csv".format(set_num)
+    post_file = constants.SPM_8MPS_DATA_DIR + "/post-conditioning/" + subject_basename + "/" + subject_basename + "-post-set-{}.csv".format(set_num)
 
     title = "Subject {}, Set 1".format(subject_number)
     fig_format = "jpg"
-    output_file = constants.ARTICLE_FIGURE_DIR + "spm-plot-by-subj-by-set.{}".format(fig_format)
+    output_dir = frontiers_utils.make_output_dir(constants.MANUSCRIPT_FIG_DIR)
+    output_file = output_dir + "/spm-plot-by-subj-by-set.{}".format(fig_format)
 
     _make_sample_spm_plot(pre_file, post_file, output_file,
             title=title, fig_format=fig_format)
@@ -290,9 +301,10 @@ def make_sample_spm_plot_by_set_across_subj():
     fig_dpi = 400
     fig_format = "jpg"
 
-    pre_input_dir = constants.SPM_1MPS_DATA_DIR + "pre-conditioning/"
-    post_input_dir = constants.SPM_1MPS_DATA_DIR + "post-conditioning/"
-    output_file = constants.ARTICLE_FIGURE_DIR + "spm-plot-by-set-across-subj.{}".format(fig_format)
+    pre_input_dir = constants.SPM_1MPS_DATA_DIR + "/pre-conditioning/"
+    post_input_dir = constants.SPM_1MPS_DATA_DIR + "/post-conditioning/"
+    output_dir = frontiers_utils.make_output_dir(constants.MANUSCRIPT_FIG_DIR)
+    output_file = output_dir + "/spm-plot-by-set-across-subj.{}".format(fig_format)
 
     pre_filenames = frontiers_utils.natural_sort(os.listdir(pre_input_dir))
     post_filenames = frontiers_utils.natural_sort(os.listdir(post_input_dir))
@@ -316,13 +328,13 @@ def make_sample_spm_plot_by_set_across_subj():
 
     # Load pre-conditioning measurements into memory
     for i, filename in enumerate(pre_filenames):
-        data = np.loadtxt(pre_input_dir + filename, delimiter=',', skiprows=1,
+        data = np.loadtxt(pre_input_dir + "/" + filename, delimiter=',', skiprows=1,
                 usecols=usecols)
         pre_tensor[:, :, i] = data
 
     # Load post-conditioning measurements into memory
     for i, filename in enumerate(post_filenames):
-        data = np.loadtxt(post_input_dir + filename, delimiter=',',
+        data = np.loadtxt(post_input_dir + "/" + filename, delimiter=',',
                 skiprows=1, usecols=usecols)
         post_tensor[:, :, i] = data
     
