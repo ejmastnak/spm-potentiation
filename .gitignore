@@ -10,6 +10,7 @@ template/
 !/data/excel-raw/**/*.xlsx
 
 /results/**/*.*
+!/results/LICENSE-CC-BY.md
 !/results/README.md
 
 src/__pycache__/
