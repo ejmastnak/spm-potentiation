@@ -14,6 +14,9 @@ The `src` directory contains the source code and instructions needed to reproduc
 The [ANALYSIS.md](ANALYSIS.md) file summarizes the full data analysis pipeline used in the study.
 You might find it helpful to read before attempting to reproduce results.
 
+Here is a representative result of an SPM paired t-test comparing a set of pre- and post-conditioning TMG signals:
+![spm-example](https://user-images.githubusercontent.com/50270681/165354794-bcc3d412-1ce1-4da4-a8e3-8b8074b12332.jpg)
+
 ### Project structure
 
 Following is a one-sentence summary of each directory.
