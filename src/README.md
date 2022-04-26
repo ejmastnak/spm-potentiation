@@ -20,13 +20,14 @@ After installing Python, each of the required Python packages can be installed w
 
 ### Reproducing results
 
-The code is intentionally written to make results straightforward to reproduce.
-That said, some experience working with Python would be helpful before installing dependencies and reproducing results---suggested prerequisites are (1) installing Python packages with `pip` and (2) running a Python file, either from the command line or using a graphical Python launcher.
+Some experience working with Python would be helpful before installing dependencies and reproducing results—suggested prerequisites are (1) familiarity installing Python packages with `pip` and (2) running a Python file, either from the command line or using a graphical Python launcher.
+
+Reproduce the study results as follows:
 
 1. Install all dependencies.
 1. Clone this GitHub repository onto your local computer.
-1. Navigate to the project's `src` directory.
-1. Run each of the following Python files in the order they are listed.
+1. Change into the project's `src` directory.
+1. Run each of the following Python files in the following order:
    1. `data_preprocessing.py`
    1. `tmg_params.py`
    1. `tmg_stats.py`
@@ -34,9 +35,9 @@ That said, some experience working with Python would be helpful before installin
    1. `make_tables.py`
    1. `make_figures.py`
 
-### Source code structure
+### What each script does
 
-Here is a summary of how the code is organized:
+Here is a one-sentence summary of what each Python script does:
 
 - `constants.py`: organizes project-wide constants into one location.
 - `data_preprocessing.py`: converts raw TMG measurements into text-based CSV files better suited to further analysis with SPM.

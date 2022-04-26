@@ -1,6 +1,6 @@
 ## Results
 
-This directory holds the results of all analyses performed in this study, including:
+This directory holds the results of all analysis performed in this study, including:
 - TMG twitch contraction parameters for all TMG measurements
 - Statistical analysis of TMG contraction parameters before and after the conditioning exercise
 - SPM analysis of TMG signals before and after the conditioning exercise
